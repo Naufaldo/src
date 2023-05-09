@@ -137,7 +137,7 @@ int main(int argc, char **argv)
   ros::Publisher leg_height_pub_ = nh_.advertise<std_msgs::Bool>("/leg", 100);
   ros::Publisher body_scalar_pub_ = nh_.advertise<geometry_msgs::AccelStamped>("/body_scalar", 100);
   ros::Publisher head_scalar_pub_ = nh_.advertise<geometry_msgs::AccelStamped>("/head_scalar", 100);
-  ros::Publisher servo_pub = nh_.advertise<std_msgs::UInt16>("servo_position", 10);
+  ros::Publisher servo_pub_ = nh_.advertise<std_msgs::UInt16>("servo_position", 10);
   // Create message
   geometry_msgs::Twist twist;
   geometry_msgs::AccelStamped body_scalar_;
@@ -310,7 +310,7 @@ int main(int argc, char **argv)
     body_scalar_pub_.publish(body_scalar_);
     head_scalar_pub_.publish(head_scalar_);
     gripper_.data = servo_position;
-    servo_pub.publish(gripper_);
+    servo_pub_.publish(gripper_);
 
     ros::spinOnce();
   }
