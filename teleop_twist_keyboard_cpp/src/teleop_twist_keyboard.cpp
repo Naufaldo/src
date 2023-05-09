@@ -141,6 +141,7 @@ int main(int argc, char **argv)
   std_msgs::Bool state_;
   std_msgs::Bool imu_override_;
   std_msgs::Bool leg_height_;
+  std_msgs::Bool gripper_;
   // Init Publisher variable
   state_.data = false;
   imu_override_.data = false;
