@@ -133,6 +133,7 @@ int main(int argc, char **argv)
   ros::Publisher leg_height_pub_ = nh_.advertise<std_msgs::Bool>("/leg", 100);
   ros::Publisher body_scalar_pub_ = nh_.advertise<geometry_msgs::AccelStamped>("/body_scalar", 100);
   ros::Publisher head_scalar_pub_ = nh_.advertise<geometry_msgs::AccelStamped>("/head_scalar", 100);
+  ros::Publisher gripper_pub_ = nh_.advertise<std_msgs::Bool>("/gripper", 100);
   // Create message
   geometry_msgs::Twist twist;
   geometry_msgs::AccelStamped body_scalar_;
@@ -144,6 +145,7 @@ int main(int argc, char **argv)
   state_.data = false;
   imu_override_.data = false;
   leg_height_.data = true;
+  gripper_.data = false;
  
   // Print Reminder Message
   ROS_WARN("%s", msg);
@@ -213,7 +215,23 @@ int main(int argc, char **argv)
         imu_override_.data = true;
         ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | IMU Override On ", speed, turn, key);
       }
+
     }
+    else if(key == '['){
+      if(gripper_.data = false){
+        gripper_.data = true;
+        ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: %d ", speed, turn, key, gripper_.data);
+      }
+    }
+    else if (key == ']')
+    {
+      if (gripper_.data = true)
+      {
+        gripper_.data = false;
+        ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: %d ", speed, turn, key, gripper_.data);
+      }
+    }
+    
 
     // If the key corresponds to a key in moveBindings
     else if (moveBindings.count(key) == 1)
@@ -291,6 +309,7 @@ int main(int argc, char **argv)
     leg_height_pub_.publish(leg_height_);
     body_scalar_pub_.publish(body_scalar_);
     head_scalar_pub_.publish(head_scalar_);
+    gripper_pub_.publish(gripper_);
 
     ros::spinOnce();
   }
