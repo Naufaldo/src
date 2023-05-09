@@ -1,5 +1,5 @@
 import rospy
-from std_srvs.srv import SetBool
+from std_msgs.msg import Bool
 from gpiozero import Servo
 from time import sleep
 
@@ -15,7 +15,7 @@ def handle_toggle(gripper):
 
 def listener():
     rospy.init_node('gripper')
-    s = rospy.Service('gripper', SetBool, handle_toggle)
+    s = rospy.Service('gripper', Bool, handle_toggle)
     rospy.spin()
 
 if __name__ == '__main__':

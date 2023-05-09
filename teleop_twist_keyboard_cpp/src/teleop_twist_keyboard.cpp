@@ -218,17 +218,18 @@ int main(int argc, char **argv)
       }
 
     }
-    else if(key == '['){
-      if(gripper_.data = false){
-        gripper_.data = true;
+    else if(key == '-'){
+      if(gripper_.data = true)
+      {
+        gripper_.data = false;
         ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: %d ", speed, turn, key, gripper_.data);
       }
     }
-    else if (key == ']')
+    else if (key == '=')
     {
-      if (gripper_.data = true)
+      if (gripper_.data = false)
       {
-        gripper_.data = false;
+        gripper_.data = true;
         ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: %d ", speed, turn, key, gripper_.data);
       }
     }
