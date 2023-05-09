@@ -1,29 +1,37 @@
+#!/usr/bin/env python
+
 import rospy
-from std_msgs.msg import Bool
+from std_msgs.msg import Float32
+
 import RPi.GPIO as GPIO
 import time
 
-servoPIN = 6
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(servoPIN, GPIO.OUT)
+def callback(data):
+    angle = data.data
+    duty = angle / 18 + 2
+    GPIO.output(6, True)
+    pwm.ChangeDutyCycle(duty)
+    time.sleep(0.5)
+    GPIO.output(6, False)
+    pwm.ChangeDutyCycle(0)
 
+def gripper_subscriber():
+    rospy.init_node('gripper_subscriber', anonymous=True)
 
-def handle_toggle(gripper):
-    p = GPIO.PWM(servoPIN, 50) # GPIO 17 for PWM with 50Hz
-    p.start(2.5) # Initialization
-    req = gripper.data
-    if req == True:
-        p.ChangeDutyCycle(13)
-    else:
-        p.ChangeDutyCycle(7.5)
-    return []
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(6, GPIO.OUT)
+    pwm = GPIO.PWM(6, 50)
+    pwm.start(0)
 
-def listener():
-    rospy.init_node('gripper')
-    s = rospy.Service('gripper', Bool, handle_toggle)
+    rospy.Subscriber('gripper_angle', Float32, callback)
+
     rospy.spin()
 
+    pwm.stop()
+    GPIO.cleanup()
+
 if __name__ == '__main__':
-    listener()
-
-
+    try:
+        gripper_subscriber()
+    except rospy.ROSInterruptException:
+        pass
