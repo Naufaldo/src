@@ -1,37 +1,39 @@
 #!/usr/bin/env python
 
 import rospy
-from std_msgs.msg import Float32
-
+from std_msgs.msg import UInt16
 import RPi.GPIO as GPIO
-import time
 
-def callback(data):
-    angle = data.data
-    duty = angle / 18 + 2
-    GPIO.output(6, True)
-    pwm.ChangeDutyCycle(duty)
-    time.sleep(0.5)
-    GPIO.output(6, False)
-    pwm.ChangeDutyCycle(0)
+SERVO_PIN = 6
+SERVO_MIN_DUTY_CYCLE = 75   # 7.3% duty cycle = 0 degrees
+SERVO_MAX_DUTY_CYCLE = 150  # 14.6% duty cycle = 180 degrees
 
-def gripper_subscriber():
-    rospy.init_node('gripper_subscriber', anonymous=True)
+def servo_callback(msg):
+    # Set the duty cycle for the servo based on the received message
+    duty_cycle = msg.data
 
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(6, GPIO.OUT)
-    pwm = GPIO.PWM(6, 50)
+    # Limit the duty cycle to the valid range
+    duty_cycle = max(duty_cycle, SERVO_MIN_DUTY_CYCLE)
+    duty_cycle = min(duty_cycle, SERVO_MAX_DUTY_CYCLE)
+
+    # Write the duty cycle to the PWM pin
+    pwm = GPIO.PWM(SERVO_PIN, 50)
     pwm.start(0)
+    pwm.ChangeDutyCycle(duty_cycle)
 
-    rospy.Subscriber('gripper_angle', Float32, callback)
+def main():
+    # Initialize the ROS node
+    rospy.init_node('gripper_subscriber')
 
+    # Set up GPIO pin 6 as a PWM output
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(SERVO_PIN, GPIO.OUT)
+
+    # Create a subscriber for the servo position
+    servo_sub = rospy.Subscriber('servo_position', UInt16, servo_callback)
+
+    # Spin and wait for callbacks
     rospy.spin()
 
-    pwm.stop()
-    GPIO.cleanup()
-
 if __name__ == '__main__':
-    try:
-        gripper_subscriber()
-    except rospy.ROSInterruptException:
-        pass
+    main()
