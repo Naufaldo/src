@@ -281,8 +281,8 @@ int main(int argc, char **argv)
     body_scalar_.accel.angular.z = za * turn;
 
     head_scalar_.header.stamp = current_time;
-    head_scalar_.accel.angular.z = xb * speed;
-    head_scalar_.accel.angular.y = yb * speed;
+    head_scalar_.accel.angular.z = xb * turn;
+    head_scalar_.accel.angular.y = yb * turn;
 
     // Publish it and resolve any remaining callbacks
     state_pub_.publish(state_);
