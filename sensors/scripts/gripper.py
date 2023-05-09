@@ -18,7 +18,7 @@ def servo_callback(msg):
 
     # Write the duty cycle to the PWM pin
     pwm = GPIO.PWM(SERVO_PIN, 50)
-    pwm.start(0)
+    pwm.start(2.5)
     pwm.ChangeDutyCycle(duty_cycle)
 
 def main():
