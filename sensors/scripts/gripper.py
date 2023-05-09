@@ -5,8 +5,9 @@ from time import sleep
 
 servo = Servo(6)
 
-def handle_toggle(req):
-    if req.data:
+def handle_toggle(gripper):
+    req = gripper.data
+    if req == True:
         servo.max()
     else:
         servo.min()
