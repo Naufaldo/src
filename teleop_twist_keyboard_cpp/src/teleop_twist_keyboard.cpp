@@ -223,19 +223,13 @@ int main(int argc, char **argv)
 
     }
     else if(key == '-'){
-      if(gripper_.data = true)
-      {
         gripper_.data = 90;
         ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: %d ", speed, turn, key, gripper_.data);
-      }
     }
     else if (key == '=')
     {
-      if (gripper_.data = false)
-      {
         gripper_.data = 180;
         ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: %d ", speed, turn, key, gripper_.data);
-      }
     }
     
 
