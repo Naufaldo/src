@@ -1,16 +1,21 @@
 import rospy
 from std_msgs.msg import Bool
-from gpiozero import Servo
-from time import sleep
+import RPi.GPIO as GPIO
+import time
 
-servo = Servo(6)
+servoPIN = 6
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(servoPIN, GPIO.OUT)
+
 
 def handle_toggle(gripper):
+    p = GPIO.PWM(servoPIN, 50) # GPIO 17 for PWM with 50Hz
+    p.start(2.5) # Initialization
     req = gripper.data
     if req == True:
-        servo.max()
+        p.ChangeDutyCycle(13)
     else:
-        servo.min()
+        p.ChangeDutyCycle(7.5)
     return []
 
 def listener():
