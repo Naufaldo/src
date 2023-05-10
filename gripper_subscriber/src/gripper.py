@@ -28,6 +28,7 @@ def main():
     # Set up GPIO pin 6 as a PWM output
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(SERVO_PIN, GPIO.OUT)
+    GPIO.setwarnings(False)
 
     # Create a subscriber for the servo position
     servo_sub = rospy.Subscriber('servo_position', UInt16, servo_callback)
