@@ -146,14 +146,14 @@ int main(int argc, char **argv)
   std_msgs::Bool state_;
   std_msgs::Bool imu_override_;
   std_msgs::Bool leg_height_;
-  std_msgs::Bool servo_position_;
+  std_msgs::Bool servo_position;
   //std_msgs::UInt16 gripper_;
   // Init Publisher variable
   state_.data = false;
   imu_override_.data = false;
   leg_height_.data = true;
   //uint16_t servo_position = 0;
-  servo_position_.data = false;
+  servo_position.data = false;
  
   // Print Reminder Message
   ROS_WARN("%s", msg);
@@ -226,13 +226,13 @@ int main(int argc, char **argv)
 
     }
     else if(key == '-'){
-      servo_position_.data = true;
+      servo_position.data = true;
        //servo_position = SERVO_MIN_DUTY_CYCLE;
         ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: true ", speed, turn, key);
     }
     else if (key == '=')
     {
-      servo_position_.data = false;
+      servo_position.data = false;
         //servo_position = SERVO_MAX_DUTY_CYCLE;
         ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: false", speed, turn, key);
     }
@@ -315,7 +315,7 @@ int main(int argc, char **argv)
     body_scalar_pub_.publish(body_scalar_);
     head_scalar_pub_.publish(head_scalar_);
     //gripper_.data = servo_position;
-    servo_pub_.publish(servo_position_);
+    servo_pub_.publish(servo_position);
 
     ros::spinOnce();
   }
