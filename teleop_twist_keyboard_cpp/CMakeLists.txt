@@ -4,11 +4,12 @@ project(teleop_twist_keyboard_cpp)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   geometry_msgs
+  std_msgs
 )
 
 catkin_package(
   INCLUDE_DIRS src
-  CATKIN_DEPENDS roscpp geometry_msgs
+  CATKIN_DEPENDS roscpp geometry_msgs std_msgs
 )
 
 include_directories(${catkin_INCLUDE_DIRS})
