@@ -21,9 +21,9 @@ def servo_callback(msg):
     pwm = GPIO.PWM(SERVO_PIN, 50)
     pwm.start(2.5)
     if msg.data == True:
-        pwm.ChangeDutyCycle(130)
+        pwm.ChangeDutyCycle(13)
     else:
-        pwm.ChangeDutyCycle(75)
+        pwm.ChangeDutyCycle(7.5)
     return []
 
     
@@ -33,6 +33,7 @@ def main():
     rospy.init_node('gripper_subscriber')
 
     # Set up GPIO pin 6 as a PWM output
+    GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(SERVO_PIN, GPIO.OUT)
 
