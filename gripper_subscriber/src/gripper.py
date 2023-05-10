@@ -5,13 +5,15 @@ from std_msgs.msg import UInt16
 import RPi.GPIO as GPIO
 
 SERVO_PIN = 6
+SERVO_MIN_DUTY_CYCLE = 75   # 7.3% duty cycle = 0 degrees
+SERVO_MAX_DUTY_CYCLE = 150
 
 def servo_callback(msg):
     # Set the duty cycle for the servo based on the received message
     duty_cycle = msg.data
-
     # Limit the duty cycle to the valid range
-
+    duty_cycle = max(duty_cycle, SERVO_MIN_DUTY_CYCLE)
+    duty_cycle = min(duty_cycle, SERVO_MAX_DUTY_CYCLE)
     # Write the duty cycle to the PWM pin
     pwm = GPIO.PWM(SERVO_PIN, 50)
     pwm.start(2.5)
