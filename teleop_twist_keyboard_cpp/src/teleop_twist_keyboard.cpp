@@ -3,15 +3,15 @@
 #include <geometry_msgs/AccelStamped.h>
 #include <std_msgs/Bool.h>
 #include <sensor_msgs/Imu.h>
-#include <std_msgs/UInt16.h>
+//#include <std_msgs/UInt16.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <termios.h>
 #include <map>
 
 
-#define SERVO_MIN_DUTY_CYCLE 15   // 7.3% duty cycle = 0 degrees
-#define SERVO_MAX_DUTY_CYCLE 90  // 14.6% duty cycle = 180 degrees
+// #define SERVO_MIN_DUTY_CYCLE 15   // 7.3% duty cycle = 0 degrees
+// #define SERVO_MAX_DUTY_CYCLE 90  // 14.6% duty cycle = 180 degrees
 
 // Map for movement keys
 std::map<char, std::vector<float>> moveBindings{
@@ -137,7 +137,8 @@ int main(int argc, char **argv)
   ros::Publisher leg_height_pub_ = nh_.advertise<std_msgs::Bool>("/leg", 100);
   ros::Publisher body_scalar_pub_ = nh_.advertise<geometry_msgs::AccelStamped>("/body_scalar", 100);
   ros::Publisher head_scalar_pub_ = nh_.advertise<geometry_msgs::AccelStamped>("/head_scalar", 100);
-  ros::Publisher servo_pub_ = nh_.advertise<std_msgs::UInt16>("servo_position", 10);
+//  ros::Publisher servo_pub_ = nh_.advertise<std_msgs::UInt16>("servo_position", 10);
+  ros::Publisher servo_pub_ = nh_.advertise<std_msgs::Bool>("servo_position", 10);
   // Create message
   geometry_msgs::Twist twist;
   geometry_msgs::AccelStamped body_scalar_;
@@ -145,12 +146,14 @@ int main(int argc, char **argv)
   std_msgs::Bool state_;
   std_msgs::Bool imu_override_;
   std_msgs::Bool leg_height_;
-  std_msgs::UInt16 gripper_;
+  std_msgs::Bool servo_position_;
+  //std_msgs::UInt16 gripper_;
   // Init Publisher variable
   state_.data = false;
   imu_override_.data = false;
   leg_height_.data = true;
-  uint16_t servo_position = 0;
+  //uint16_t servo_position = 0;
+  servo_position_.data = false;
  
   // Print Reminder Message
   ROS_WARN("%s", msg);
@@ -223,13 +226,15 @@ int main(int argc, char **argv)
 
     }
     else if(key == '-'){
-       servo_position = SERVO_MIN_DUTY_CYCLE;
-        ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: %f ", speed, turn, key, servo_position);
+      servo_position = true;
+       //servo_position = SERVO_MIN_DUTY_CYCLE;
+        ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: true ", speed, turn, key, servo_position);
     }
     else if (key == '=')
     {
-        servo_position = SERVO_MAX_DUTY_CYCLE;
-        ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: %f", speed, turn, key, servo_position);
+      servo_position = false;
+        //servo_position = SERVO_MAX_DUTY_CYCLE;
+        ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: false", speed, turn, key, servo_position);
     }
     
 
@@ -309,8 +314,8 @@ int main(int argc, char **argv)
     leg_height_pub_.publish(leg_height_);
     body_scalar_pub_.publish(body_scalar_);
     head_scalar_pub_.publish(head_scalar_);
-    gripper_.data = servo_position;
-    servo_pub_.publish(gripper_);
+    //gripper_.data = servo_position;
+    servo_pub_.publish(servo_position);
 
     ros::spinOnce();
   }
