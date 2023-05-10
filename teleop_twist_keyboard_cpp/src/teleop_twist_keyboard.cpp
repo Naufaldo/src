@@ -10,8 +10,8 @@
 #include <map>
 
 
-#define SERVO_MIN_DUTY_CYCLE 75   // 7.3% duty cycle = 0 degrees
-#define SERVO_MAX_DUTY_CYCLE 150  // 14.6% duty cycle = 180 degrees
+#define SERVO_MIN_DUTY_CYCLE 7.5   // 7.3% duty cycle = 0 degrees
+#define SERVO_MAX_DUTY_CYCLE 13  // 14.6% duty cycle = 180 degrees
 
 // Map for movement keys
 std::map<char, std::vector<float>> moveBindings{
