@@ -224,12 +224,12 @@ int main(int argc, char **argv)
     }
     else if(key == '-'){
        servo_position = SERVO_MIN_DUTY_CYCLE;
-        ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: 90 ", speed, turn, key);
+        ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: %f ", speed, turn, key, servo_position);
     }
     else if (key == '=')
     {
         servo_position = SERVO_MAX_DUTY_CYCLE;
-        ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: 180 ", speed, turn, key);
+        ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: %f", speed, turn, key, servo_position);
     }
     
 
