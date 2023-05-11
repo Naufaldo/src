@@ -225,16 +225,25 @@ int main(int argc, char **argv)
       }
 
     }
-    else if(key == '-'){
-      servo_position.data = true;
+    else if(key == '-')
+    {
+      if (servo_position.data = false)
+      {
+        imu_override_.data = false;
+        servo_position.data = true;
        //servo_position = SERVO_MIN_DUTY_CYCLE;
         ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: true ", speed, turn, key);
+      }
     }
     else if (key == '=')
     {
-      servo_position.data = false;
+      if(servo_positon.data = true)
+      {
+        imu_override_.data = false;
+        servo_position.data = false;
         //servo_position = SERVO_MAX_DUTY_CYCLE;
         ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c  | Gripper: false", speed, turn, key);
+      }
     }
     
 

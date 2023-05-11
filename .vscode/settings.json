@@ -7,5 +7,10 @@
     "python.analysis.extraPaths": [
         "C:\\opt\\ros\\noetic\\x64\\lib/site-packages",
         "C:\\opt\\ros\\noetic\\x64\\Lib\\site-packages"
-    ]
+    ],
+    "files.associations": {
+        "vector": "cpp",
+        "xstring": "cpp",
+        "xutility": "cpp"
+    }
 }
