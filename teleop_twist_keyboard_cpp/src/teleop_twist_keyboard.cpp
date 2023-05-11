@@ -237,7 +237,7 @@ int main(int argc, char **argv)
     }
     else if (key == '=')
     {
-      if(servo_positon.data = true)
+      if(servo_position.data = true)
       {
         imu_override_.data = false;
         servo_position.data = false;
