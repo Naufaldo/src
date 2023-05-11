@@ -3,7 +3,7 @@
 
 <launch>
     <include file="$(find navstack_pub)/launch/aa.launch" /> 
-    <include file="$(find navstack_pub)/launch/g.launch" /> 
+    <include file="$(find rplidar_ros)/launch/rplidar.launch" /> 
     <include file="$(find navstack_pub)/launch/ac.launch" /> 
     <include file="$(find navstack_pub)/launch/j.launch" /> 
 </launch>
