@@ -6,4 +6,5 @@
     <include file="$(find rplidar_ros)/launch/rplidar.launch" /> 
     <include file="$(find navstack_pub)/launch/ac.launch" /> 
     <include file="$(find navstack_pub)/launch/j.launch" /> 
+    <include file="$(find hexapod_bringup)/launch/rviz.launch" />
 </launch>
