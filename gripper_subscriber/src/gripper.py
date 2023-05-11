@@ -21,9 +21,9 @@ def servo_callback(msg):
     pwm = GPIO.PWM(SERVO_PIN, 50)
     pwm.start(2.5)
     if msg.data == True:
-        pwm.ChangeDutyCycle(13)
+        pwm.ChangeDutyCycle(15)
     else:
-        pwm.ChangeDutyCycle(7.5)
+        pwm.ChangeDutyCycle(95)
     return []
 
     
