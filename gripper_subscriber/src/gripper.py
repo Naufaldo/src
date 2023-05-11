@@ -22,7 +22,7 @@ def callback(msg):
         pwm.ChangeDutyCycle(9)
     # If the message value is False, set the servo to 90 degrees
     else:
-        pwm.ChangeDutyCycle(6.5)
+        pwm.ChangeDutyCycle(6)
 
 # Initialize the node
 rospy.init_node('gripper_subscriber')
