@@ -317,6 +317,7 @@ int main(int argc, char **argv)
     head_scalar_.accel.angular.y = yb * turn;
 
     // Publish it and resolve any remaining callbacks
+    servo_pub_.publish(servo_position);
     state_pub_.publish(state_);
     pub.publish(twist);
     imu_override_pub_.publish(imu_override_);
@@ -324,7 +325,7 @@ int main(int argc, char **argv)
     body_scalar_pub_.publish(body_scalar_);
     head_scalar_pub_.publish(head_scalar_);
     //gripper_.data = servo_position;
-    servo_pub_.publish(servo_position);
+    
 
     ros::spinOnce();
   }
