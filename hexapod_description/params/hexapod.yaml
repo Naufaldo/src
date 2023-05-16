@@ -59,7 +59,8 @@ BODY_MAX_ROLL: !degrees 10
 BODY_MAX_PITCH: !degrees 10
 
 # Body Standing Height
-STANDING_BODY_HEIGHT: 0.022
+# STANDING_BODY_HEIGHT: 0.022
+STANDING_BODY_HEIGHT: 0.018
 
 # Head FK maximum rotation
 HEAD_MAX_YAW: !degrees 90
