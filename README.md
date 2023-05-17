@@ -69,25 +69,34 @@ Reading from the keyboard and Publishing to Twist!
 
 ```
 Moving around:
-   u    i    o
-   j    k    l
-   m    ,    .
+   q    w    e
+   a    s    d
+   z    x    c
    ```
 
 ```
 For Holonomic mode (strafing), hold down the shift key:
-   U    I    O
-   J    K    L
-   M    <    >
+   Q    W    E
+   A    S    D
+   Z    X    C
    ```
 
+Body twist:
+   u    i    
+   j    k    
+   m    ,    
+   ``
 ```
-t : up (+z)
-b : down (-z)
+r : rise up
+t : sit dowm
 anything else : stop
-q/z : increase/decrease max speeds by 10%
-w/x : increase/decrease only linear speed by 10%
-e/c : increase/decrease only angular speed by 10%
+o : lifter up
+p : lifter down
+- : gripper open
+= : gripper close
+```
+
+```
 ```
 
 ```CTRL-C to quit```
@@ -101,7 +110,7 @@ roslaunch hexapod_bringup hexapod_simple.launch
 
 Clone Git Repository :
 ```
-git clone https://github.com/RDzRyan/src.git
+git clone https://github.com/Naufaldo/src.git
 ```
 
 Install All Dependencies :
@@ -124,24 +133,15 @@ sudo apt-get install -y ros-noetic-navfn
 sudo apt-get install -y ros-noetic-amcl
 sudo apt-get install -y libusb-1.0-0-dev
 ```
+into the catkin folder then make a catkin by :
+catkin_make
 
-For Raspberry Pi2 please add these compiler optimizations after first build.
-```
-[workspace]/build/CMakeCache.txt
-Change: CMAKE_CXX_FLAGS:STRING=-O3 -mfloat-abi=hard -mfpu=neon-vfpv4 -mcpu=cortex-a7
-```
+then source the catkin by :
+```source devel/setup.bash```
 
-For ODROID XU3 please add these compiler optimizations after first build.
-```
-[workspace]/build/CMakeCache.txt
-Change: CMAKE_CXX_FLAGS:STRING=-O3 -pipe -march=armv7-a -mcpu=cortex-a9 -mfloat-abi=hard
-```
+then can launch the program
 
-Fix DNS Problem :
-```
-echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
-```
-TEST :
-```
-ROBOT : 
+hexapod simple :
+
+roslaunch hexapod_bringup hexapod_simple.launch
 ```

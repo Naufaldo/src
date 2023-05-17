@@ -5,8 +5,8 @@
         A hexapod robot stack that provides locomotion and provides odometry and depth sensor
         streams.
     </description>
-    <author email="ryandzulfiqarr@gmail.com">Ryan Dzulfiqar Rashif</author>
-    <maintainer email="ryandzulfiqarr@gmail.com">Ryan Dzulfiqar Rashif</maintainer>
+   <author email="naufaldo1301@gmail.com">Naufaldo</author>
+    <maintainer email="naufaldo1301@gmail.com">Naufaldo</maintainer>
     <license>None</license>
     <url></url>
 
