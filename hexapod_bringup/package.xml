@@ -3,8 +3,8 @@
   <name>hexapod_bringup</name>
   <version>0.0.1</version>
   <description>Hexapod package for hexapod research platform</description>
-  <author email="ryandzulfiqarr@gmail.com">Ryan Dzulfiqar Rashif</author>
-  <maintainer email="ryandzulfiqarr@gmail.com">Ryan Dzulfiqar Rashif</maintainer>
+  <author email="naufaldo1301@gmail.com">Naufaldo</author>
+  <maintainer email="naufaldo1301@gmail.com">Naufaldo</maintainer>
   <license>None</license>
 
   <url type="website">http://ros.org</url>
