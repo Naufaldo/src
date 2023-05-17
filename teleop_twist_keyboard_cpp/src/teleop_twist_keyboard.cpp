@@ -73,10 +73,8 @@ k : Body y+
 m : Body z-
 , : Body z+
 
-o : Head z-
-p : Head z+
-l : Head y-
-; : Head y+
+o : lifter up
+p : lifter down
 
 r : Stand up
 t : Sit down
@@ -85,6 +83,8 @@ g : Uneven Terrain
 v : IMU Override Off
 b : IMU Override On
 
+- : gripper open
+= : gripper close
 anything else : stop
 
 CTRL-C to quit
