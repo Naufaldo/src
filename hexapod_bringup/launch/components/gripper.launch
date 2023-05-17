@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <launch>
-    <node name="gripper_subscriberr" pkg="gripper_subscriber" type="gripper.py"/>
+    <node name="gripper_subscriber" pkg="gripper_subscriber" type="gripper.py"/>
 </launch>
