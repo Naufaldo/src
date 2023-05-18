@@ -5,6 +5,7 @@ from sensor_msgs.msg import Imu
 from std_msgs.msg import Float64
 from adafruit_mpu6050 import MPU6050
 from time import sleep
+import board
 
 
 class MPU6050Node:
@@ -13,7 +14,8 @@ class MPU6050Node:
         self.pub_imu = rospy.Publisher('/imu/data', Imu, queue_size=10)
         self.pub_temp = rospy.Publisher('/imu/temperature', Float64, queue_size=10)
         self.rate = rospy.Rate(100)  # Publish at 100 Hz
-        self.mpu = MPU6050()
+        i2c = board.I2C()
+        self.mpu = MPU6050(i2c)
 
     def read_imu_data(self):
         accel_x, accel_y, accel_z = self.mpu.acceleration
