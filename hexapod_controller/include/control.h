@@ -103,7 +103,7 @@ private:
     ros::Subscriber imu_override_sub_;
     void imuOverrideCallback(const std_msgs::BoolConstPtr &imu_override_msg);
     // ros::Subscriber imu_sub_;
-    // void imuCallback(const sensor_msgs::ImuConstPtr &imu_msg);
+    void imuCallback(const sensor_msgs::ImuConstPtr &imu_msg);
     ros::Subscriber subInitialPose;
     void set_initial_2d(const geometry_msgs::PoseStamped &rvizClick);
 
@@ -125,8 +125,8 @@ private:
     
 
     // Services we call
-    // ros::ServiceClient imu_calibrate_;
-    // std_srvs::Empty calibrate_;
+    ros::ServiceClient imu_calibrate_;
+    std_srvs::Empty calibrate_;
 
     // Node Handle
     ros::NodeHandle nh_;
