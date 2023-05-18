@@ -72,7 +72,7 @@ Control::Control(void)
     head_scalar_sub_ = nh_.subscribe<geometry_msgs::AccelStamped>("/head_scalar", 1, &Control::headCallback, this);
     state_sub_ = nh_.subscribe<std_msgs::Bool>("/state", 1, &Control::stateCallback, this);
     imu_override_sub_ = nh_.subscribe<std_msgs::Bool>("/imu/imu_override", 1, &Control::imuOverrideCallback, this);
-    // imu_sub_ = nh_.subscribe<sensor_msgs::Imu>("/imu/data", 1, &Control::imuCallback, this);
+    imu_sub_ = nh_.subscribe<sensor_msgs::Imu>("/imu/data", 1, &Control::imuCallback, this);
     //subInitialPose = nh_.subscribe<geometry_msgs::PoseStamped>("/initial_2d", 1, &Control::set_initial_2d, this);
     //sub = n.subscribe("/tld_tracked_object", 20, &callback);
     subInitialPose = nh_.subscribe("initial_2d", 1, &Control::set_initial_2d, this);
@@ -86,8 +86,8 @@ Control::Control(void)
     chatter_pub3 = nh_.advertise<std_msgs::Float32>("/chatter3", 1);
 
     // Send service request to the imu to re-calibrate
-    // imu_calibrate_ = nh_.serviceClient<std_srvs::Empty>("/imu/calibrate");
-    // imu_calibrate_.call(calibrate_);
+    imu_calibrate_ = nh_.serviceClient<std_srvs::Empty>("/imu/calibrate");
+    imu_calibrate_.call(calibrate_);
 }
 
 void Control::set_initial_2d(const geometry_msgs::PoseStamped &rvizClick)
