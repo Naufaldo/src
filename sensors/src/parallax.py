@@ -15,9 +15,7 @@ def sensor_node():
             pub.publish(data_msg)
             print("Published sensor data:", sensor_data)
             rate.sleep()
-    except KeyboardInterrupt:
-        print("Measurement stopped by user")
-        GPIO.cleanup()
+    
 
 def read_sensor_data():
     sensor_data = []
@@ -65,7 +63,8 @@ def read_sensor_data():
 if __name__ == '__main__':
     try:
         sensor_node()
-    except rospy.ROSInterruptException:
-        pass
+    except KeyboardInterrupt:
+        print("Measurement stopped by user")
+        GPIO.cleanup()
 
 
