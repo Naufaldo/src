@@ -7,7 +7,7 @@ from sensor_msgs.msg import Imu
 # Import the required libraries
 import time
 import board
-import Adafruit_MPU6050 
+import adafruit_mpu6050 
 
 def imu_publisher():
     # Initialize the ROS node
