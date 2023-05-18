@@ -6,6 +6,7 @@ from sensor_msgs.msg import Imu
 
 # Import the required libraries
 import time
+import board
 import Adafruit_MPU6050 
 
 def imu_publisher():
@@ -14,9 +15,9 @@ def imu_publisher():
 
     # Create a publisher for the IMU topic
     imu_pub = rospy.Publisher('imu_data', Imu, queue_size=10)
-
+    i2c = board.I2C()  # uses board.SCL and board.SDA
     # Initialize the MPU6050 sensor
-    mpu6050 = MPU6050()
+    mpu6050 = adafruit_mpu6050.MPU6050(i2c)
 
     # Create the IMU message
     imu_msg = Imu()
