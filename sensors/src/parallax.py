@@ -10,11 +10,14 @@ def sensor_node():
     rate = rospy.Rate(10)  # 10Hz publishing rate
 
     while not rospy.is_shutdown():
-        sensor_data = read_sensor_data()
-
-        # Publish the sensor data as a Float32MultiArray message
-        pub.publish(Float32MultiArray(data=sensor_data))
-        rate.sleep()
+            sensor_data = read_sensor_data()
+            data_msg = Float32MultiArray(data=sensor_data)
+            pub.publish(data_msg)
+            print("Published sensor data:", sensor_data)
+            rate.sleep()
+    except KeyboardInterrupt:
+        print("Measurement stopped by user")
+        GPIO.cleanup()
 
 def read_sensor_data():
     sensor_data = []
