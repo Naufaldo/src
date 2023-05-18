@@ -37,6 +37,7 @@ def imu_publisher():
         imu_msg.linear_acceleration.y = accel[1]
         imu_msg.linear_acceleration.z = accel[2]
 
+
         # Publish the IMU message
         imu_pub.publish(imu_msg)
 
