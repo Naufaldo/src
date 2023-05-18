@@ -22,7 +22,7 @@ sensor_publisher = rospy.Publisher('sensor_data', Float32MultiArray, queue_size=
 # Create a callback function to handle incoming servo position messages
 def servo_callback(msg):
     GPIO.setup(servo_pin, GPIO.OUT)
-
+    GPIO.setwarnings(False)
     # Set up PWM on the GPIO pin for the servo
     pwm = GPIO.PWM(servo_pin, 50)
     pwm.start(0)
@@ -36,6 +36,7 @@ def servo_callback(msg):
 # Function to measure distance for each sensor
 def measure_distance(pin):
     GPIO.setup(pin, GPIO.OUT)
+    GPIO.setwarnings(False)
     GPIO.output(pin, 0)
 
     time.sleep(0.000002)
@@ -48,7 +49,7 @@ def measure_distance(pin):
     GPIO.output(pin, 0)
 
     GPIO.setup(pin, GPIO.IN)
-
+    GPIO.setwarnings(False)
     while GPIO.input(pin) == 0:
         starttime = time.time()
 
