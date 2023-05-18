@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+  <arg name="port" default="/dev/ttyACM0"/>
+  <arg name="baud" default="57600"/>
+
+  <node name="serial_node" pkg="rosserial_python" type="serial_node.py">
+    <param name="port" value="$(arg port)"/>
+    <param name="baud" value="$(arg baud)"/>
+  </node>
+</launch>
