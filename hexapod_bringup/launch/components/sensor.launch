@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <launch>
-    <node name="sensor_node" pkg="sensors" type="parallax.py"/>
+    <node name="sensor_node" pkg="sensors" type="senvo.py"/>
 </launch>
