@@ -1,53 +1,54 @@
 #!/usr/bin/env python3
 
 import rospy
-from std_msgs.msg import Float32MultiArray
 from sensor_msgs.msg import Imu
+from std_msgs.msg import Float64
+from adafruit_mpu6050 import MPU6050
+from time import sleep
 
-# Import the required libraries
-import time
-import board
-import adafruit_mpu6050 
 
-def imu_publisher():
-    # Initialize the ROS node
-    rospy.init_node('imu_publisher', anonymous=True)
+class MPU6050Node:
+    def __init__(self):
+        rospy.init_node('mpu6050_node')
+        self.pub_imu = rospy.Publisher('/imu/data', Imu, queue_size=10)
+        self.pub_temp = rospy.Publisher('/imu/temperature', Float64, queue_size=10)
+        self.rate = rospy.Rate(100)  # Publish at 100 Hz
+        self.mpu = MPU6050()
 
-    # Create a publisher for the IMU topic
-    imu_pub = rospy.Publisher('imu_data', Imu, queue_size=10)
-    i2c = board.I2C()  # uses board.SCL and board.SDA
-    # Initialize the MPU6050 sensor
-    mpu6050 = adafruit_mpu6050.MPU6050(i2c)
+    def read_imu_data(self):
+        accel_x, accel_y, accel_z = self.mpu.acceleration
+        gyro_x, gyro_y, gyro_z = self.mpu.gyro
+        temp = self.mpu.temperature
 
-    # Create the IMU message
-    imu_msg = Imu()
+        return accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, temp
 
-    rate = rospy.Rate(10)  # Publish at 10 Hz
+    def run(self):
+        while not rospy.is_shutdown():
+            imu_data = Imu()
+            accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, temp = self.read_imu_data()
 
-    while not rospy.is_shutdown():
-        # Read the accelerometer data from the MPU6050 sensor
-        accel_data = mpu6050.acceleration()
+            # Publish IMU data
+            imu_data.linear_acceleration.x = accel_x
+            imu_data.linear_acceleration.y = accel_y
+            imu_data.linear_acceleration.z = accel_z
+            imu_data.angular_velocity.x = gyro_x
+            imu_data.angular_velocity.y = gyro_y
+            imu_data.angular_velocity.z = gyro_z
+            imu_data.header.stamp = rospy.Time.now()
+            imu_data.header.frame_id = 'imu_link'
+            self.pub_imu.publish(imu_data)
 
-        # Read the gyroscope data from the MPU6050 sensor
-        gyro_data = mpu6050.gyro()
+            # Publish temperature data
+            temp_msg = Float64()
+            temp_msg.data = temp
+            self.pub_temp.publish(temp_msg)
 
-        # Set the IMU message fields for linear acceleration
-        imu_msg.linear_acceleration.x = accel_data['x']
-        imu_msg.linear_acceleration.y = accel_data['y']
-        imu_msg.linear_acceleration.z = accel_data['z']
+            self.rate.sleep()
 
-        # Set the IMU message fields for angular velocity
-        imu_msg.angular_velocity.x = gyro_data['x']
-        imu_msg.angular_velocity.y = gyro_data['y']
-        imu_msg.angular_velocity.z = gyro_data['z']
-
-        # Publish the IMU message
-        imu_pub.publish(imu_msg)
-
-        rate.sleep()
 
 if __name__ == '__main__':
     try:
-        imu_publisher()
+        mpu6050_node = MPU6050Node()
+        mpu6050_node.run()
     except rospy.ROSInterruptException:
         pass
