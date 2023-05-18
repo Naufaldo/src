@@ -29,6 +29,7 @@ def read_sensor_data():
     for pin in GPIO_SIG:
         # Measure distance for each sensor
         GPIO.setup(pin, GPIO.OUT)
+        GPIO.setwarnings(False)
         GPIO.output(pin, 0)
 
         time.sleep(0.000002)
