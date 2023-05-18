@@ -1,11 +1,12 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import rospy
 from std_msgs.msg import Float32MultiArray
 from sensor_msgs.msg import Imu
 
-# Import ADXL345 library
-import Adafruit_ADXL345
+# Import the required libraries
+import time
+from Adafruit_MPU6050 import MPU6050
 
 def imu_publisher():
     # Initialize the ROS node
@@ -14,14 +15,8 @@ def imu_publisher():
     # Create a publisher for the IMU topic
     imu_pub = rospy.Publisher('imu_data', Imu, queue_size=10)
 
-    # Initialize the ADXL345 sensor
-    adxl345 = Adafruit_ADXL345.ADXL345()
-
-    # Set the range of the sensor (optional)
-    adxl345.set_range(Adafruit_ADXL345.ADXL345_RANGE_16_G)
-
-    # Set the data rate (optional)
-    adxl345.set_data_rate(Adafruit_ADXL345.ADXL345_DATARATE_100_HZ)
+    # Initialize the MPU6050 sensor
+    mpu6050 = MPU6050()
 
     # Create the IMU message
     imu_msg = Imu()
@@ -29,14 +24,21 @@ def imu_publisher():
     rate = rospy.Rate(10)  # Publish at 10 Hz
 
     while not rospy.is_shutdown():
-        # Read the acceleration values from the ADXL345 sensor
-        accel = adxl345.read()
+        # Read the accelerometer data from the MPU6050 sensor
+        accel_data = mpu6050.get_accel_data()
 
-        # Set the IMU message fields
-        imu_msg.linear_acceleration.x = accel[0]
-        imu_msg.linear_acceleration.y = accel[1]
-        imu_msg.linear_acceleration.z = accel[2]
+        # Read the gyroscope data from the MPU6050 sensor
+        gyro_data = mpu6050.get_gyro_data()
 
+        # Set the IMU message fields for linear acceleration
+        imu_msg.linear_acceleration.x = accel_data['x']
+        imu_msg.linear_acceleration.y = accel_data['y']
+        imu_msg.linear_acceleration.z = accel_data['z']
+
+        # Set the IMU message fields for angular velocity
+        imu_msg.angular_velocity.x = gyro_data['x']
+        imu_msg.angular_velocity.y = gyro_data['y']
+        imu_msg.angular_velocity.z = gyro_data['z']
 
         # Publish the IMU message
         imu_pub.publish(imu_msg)
