@@ -26,10 +26,10 @@ def imu_publisher():
 
     while not rospy.is_shutdown():
         # Read the accelerometer data from the MPU6050 sensor
-        accel_data = mpu6050.get_accel_data()
+        accel_data = mpu6050.acceleration()
 
         # Read the gyroscope data from the MPU6050 sensor
-        gyro_data = mpu6050.get_gyro_data()
+        gyro_data = mpu6050.gyro()
 
         # Set the IMU message fields for linear acceleration
         imu_msg.linear_acceleration.x = accel_data['x']
