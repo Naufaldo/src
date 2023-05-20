@@ -80,7 +80,7 @@ For Holonomic mode (strafing), hold down the shift key:
    A    S    D
    Z    X    C
    ```
-
+```
 Body twist:
    u    i    
    j    k    
@@ -97,6 +97,7 @@ p : lifter down
 ```
 
 ```
+added imu_topic with mpu6050 but didn't worked it with the controller 
 ```
 
 ```CTRL-C to quit```
