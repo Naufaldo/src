@@ -59,6 +59,7 @@ def measure_distance(pin):
     duration = endtime - starttime
     # Distance is defined as time/2 (there and back) * speed of sound 34000 cm/s
     distance = (duration * 34000) / 2
+    GPIO.cleanup()
 
     return distance
 
