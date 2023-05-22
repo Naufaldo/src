@@ -134,6 +134,7 @@ sudo apt-get install -y ros-noetic-navfn
 sudo apt-get install -y ros-noetic-amcl
 sudo apt-get install -y libusb-1.0-0-dev
 ```
+```
 into the catkin folder then make a catkin by :
 catkin_make
 
@@ -146,4 +147,5 @@ hexapod simple :
 
 roslaunch hexapod_bringup hexapod_simple.launch
 ```
+Hector Slam Rqt Graph
 ![rqt grpah](documents/graph/rosgraph_map_2.png)
