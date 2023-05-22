@@ -87,6 +87,7 @@ Body twist:
    m    ,    
    ``
 ```
+```
 r : rise up
 t : sit dowm
 anything else : stop
@@ -95,7 +96,7 @@ p : lifter down
 - : gripper open
 = : gripper close
 ```
-
+```
 ```
 added imu_topic with mpu6050 but didn't worked it with the controller 
 ```
@@ -115,7 +116,6 @@ git clone https://github.com/Naufaldo/src.git
 ```
 
 Install All Dependencies :
-```
 sudo apt-get install -y ros-noetic-sound-play
 sudo apt-get install -y ros-noetic-diagnostic-updater
 sudo apt-get install -y ros-noetic-xacro
@@ -134,10 +134,9 @@ sudo apt-get install -y ros-noetic-navfn
 sudo apt-get install -y ros-noetic-amcl
 sudo apt-get install -y libusb-1.0-0-dev
 ```
-```
 into the catkin folder then make a catkin by :
 catkin_make
-
+```
 then source the catkin by :
 ```source devel/setup.bash```
 
