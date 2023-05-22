@@ -146,3 +146,4 @@ hexapod simple :
 
 roslaunch hexapod_bringup hexapod_simple.launch
 ```
+![rqt grpah](documents/graph/rosgraph_map_2.png)
