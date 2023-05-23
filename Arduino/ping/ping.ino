@@ -31,8 +31,14 @@ void setup() {
   nh.initNode();
   nh.advertise(sensorPublisher);
 
+  sensorData.layout.dim = (std_msgs::MultiArrayDimension*)malloc(sizeof(std_msgs::MultiArrayDimension) * 1);
+  sensorData.layout.dim[0].label = "distance";
+  sensorData.layout.dim[0].size = PING_PIN;
+  sensorData.layout.dim[0].stride = PING_PIN;
+  sensorData.layout.data_offset = 0;
+
   sensorData.data_length = PING_PIN;
-  sensorData.data.resize(PING_PIN);
+  sensorData.data = (uint16_t*)malloc(sizeof(uint16_t) * PING_PIN);
 }
 
 void loop() {
