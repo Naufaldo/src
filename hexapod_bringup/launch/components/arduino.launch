@@ -2,7 +2,8 @@
 <!-- depth sensor and laser scan launch file -->
 
 <launch>
-     <node name="serial_node"        pkg="rosserial_python"      type="serial_node.py">
-    <param name="port"              value="/dev/Arduino"/>
-    </node>
+  <node pkg="rosserial_python" type="serial_node.py" name="arduino_serial_node">
+    <param name="port" value="/dev/Arduino" /> <!-- Replace with the correct serial port -->
+    <param name="baud" value="57600" /> <!-- Adjust the baud rate if necessary -->
+  </node>
 </launch>
