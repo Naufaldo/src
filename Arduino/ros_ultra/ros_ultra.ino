@@ -24,6 +24,8 @@ NewPing ping[PING_PIN] = {        // Sensor object array.
 };
 
 void setup() {
+  Serial.begin(115200);
+  nh.getHardware()->setBaud(115200);
   nh.initNode();
   nh.advertise(sensor_array_pub);
 
