@@ -87,6 +87,7 @@ Body twist:
    m    ,    
    ``
 ```
+```
 r : rise up
 t : sit dowm
 anything else : stop
@@ -95,10 +96,7 @@ p : lifter down
 - : gripper open
 = : gripper close
 ```
-
-```
 added imu_topic with mpu6050 but didn't worked it with the controller 
-```
 
 ```CTRL-C to quit```
 
@@ -135,7 +133,8 @@ sudo apt-get install -y ros-noetic-amcl
 sudo apt-get install -y libusb-1.0-0-dev
 ```
 into the catkin folder then make a catkin by :
-catkin_make
+
+```catkin_make```
 
 then source the catkin by :
 ```source devel/setup.bash```
@@ -143,6 +142,8 @@ then source the catkin by :
 then can launch the program
 
 hexapod simple :
-
+```
 roslaunch hexapod_bringup hexapod_simple.launch
 ```
+Hector Slam Rqt Graph
+![rqt grpah](documents/graph/rosgraph_map_2.png)
