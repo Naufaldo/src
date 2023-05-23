@@ -1,14 +1,15 @@
 #include <NewPing.h>
 #include <ros.h>
-#include <std_msgs/Float32MultiArray.h>
+#include <std_msgs/Float64MultiArray.h>
 
 ros::NodeHandle nh;
-std_msgs::Float32MultiArray sensor_array_msg;
+std_msgs::Float64MultiArray sensor_array_msg;
 ros::Publisher sensor_array_pub("sensor_array_topic", &sensor_array_msg);
 
 #define PING_PIN     5    // Number of sensors.
 #define MAX_DISTANCE 500  // Maximum distance (in cm) to ping.
 #define PING_INTERVAL 33  // Milliseconds between sensor pings (29ms is about the min to avoid cross-sensor echo).
+#define ARRAY_SIZE    5    // Number of sensors
 
 unsigned long pingTimer[PING_PIN]; // Holds the times when the next ping should happen for each sensor.
 unsigned int cm[PING_PIN];         // Where the ping distances are stored.
@@ -53,7 +54,7 @@ void echoCheck() {                                                          // I
 }
 
 void oneSensorCycle() {                     // Sensor ping cycle complete, do something with the results.
-  for (uint8_t i = 0; i < PING_PIN; i++) {
+  for (uint8_t i = 0; i < ARRAY_SIZE; i++) {
     sensor_array_msg.data[i] = cm[i];
   }
 }
