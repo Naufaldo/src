@@ -19,8 +19,8 @@ NewPing ping[PING_PIN] = {        // Sensor object array.
 };
 
 ros::NodeHandle nh;
-ros::Publisher sensorPublisher;
 std_msgs::UInt16MultiArray sensorData;
+ros::Publisher sensorPublisher("/sensor_data", &sensorData);
 
 void setup() {
   Serial.begin(115200);
@@ -29,8 +29,8 @@ void setup() {
     pingTimer[i] = pingTimer[i - 1] + PING_INTERVAL;
 
   nh.initNode();
+  nh.advertise(sensorPublisher);
 
-  sensorPublisher = nh.advertise<std_msgs::UInt16MultiArray>("/sensor_data", 1);
   sensorData.data_length = PING_PIN;
   sensorData.data.resize(PING_PIN);
 }
@@ -64,7 +64,7 @@ void oneSensorCycle() { // Sensor ping cycle complete, do something with the res
 }
 
 int main() {
-setup();
+  setup();
   while (1) {
     loop();
   }
