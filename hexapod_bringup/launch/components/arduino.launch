@@ -6,5 +6,5 @@
     <param name="port" value="/dev/Arduino" /> <!-- Replace with the correct serial port -->
     <param name="baud" value="57600" /> <!-- Adjust the baud rate if necessary -->
   </node>
-  <!-- <node name="sensor_node" pkg="sensors" type="ping_array_subscriber.py"/> -->
+  <node name="sensor_node" pkg="sensors" type="senvo.py"/>
 </launch>
