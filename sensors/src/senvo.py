@@ -1,94 +1,59 @@
 #!/usr/bin/env python3
 
 import rospy
-from std_msgs.msg import Bool, Float32MultiArray
-import RPi.GPIO as GPIO
-import time
+from std_msgs.msg import Int32
+from hexapod_msgs.msg import MergedPingArray
 
-# Assign GPIO Pins for each sensor
-GPIO_SIG = [17, 18, 19, 20, 21]  # Modify these pins based on your wiring
-#kanan depan , kanan belakang, tengah belakang, kiri belakang, kiri depan
+ping_1_data = None
+ping_2_data = None
+ping_3_data = None
+ping_4_data = None
+ping_5_data = None
 
-# Set the GPIO pin for the servo motor
-servo_pin = 6
+def ping_1_callback(data):
+    global ping_1_data
+    ping_1_data = data.data
 
-# Initialize the GPIO pins
-GPIO.setmode(GPIO.BCM)
+def ping_2_callback(data):
+    global ping_2_data
+    ping_2_data = data.data
 
+def ping_3_callback(data):
+    global ping_3_data
+    ping_3_data = data.data
 
-# Create a publisher for the sensor data
-sensor_publisher = rospy.Publisher('sensor_data', Float32MultiArray, queue_size=10)
+def ping_4_callback(data):
+    global ping_4_data
+    ping_4_data = data.data
 
-# Create a callback function to handle incoming servo position messages
-def servo_callback(msg):
-    GPIO.setup(servo_pin, GPIO.OUT)
-    GPIO.setwarnings(False)
-    # Set up PWM on the GPIO pin for the servo
-    pwm = GPIO.PWM(servo_pin, 50)
-    pwm.start(0)
-    # If the message value is True, set the servo to 180 degrees
-    if msg.data:
-        pwm.ChangeDutyCycle(8)
-    # If the message value is False, set the servo to 90 degrees
-    else:
-        pwm.ChangeDutyCycle(4)
+def ping_5_callback(data):
+    global ping_5_data
+    ping_5_data = data.data
 
-# Function to measure distance for each sensor
-def measure_distance(pin):
-    GPIO.setup(pin, GPIO.OUT)
-    GPIO.setwarnings(False)
-    GPIO.output(pin, 0)
+def publish_merged_ping_data():
+    global ping_1_data, ping_2_data, ping_3_data, ping_4_data, ping_5_data
 
-    time.sleep(0.000002)
+    merged_ping_array_msg = MergedPingArray()
+    merged_ping_array_msg.merged_ping_array = [ping_1_data, ping_2_data, ping_3_data, ping_4_data, ping_5_data]
 
-    # Send trigger signal
-    GPIO.output(pin, 1)
+    pub.publish(merged_ping_array_msg)
 
-    time.sleep(0.000005)
+def merged_topics():
+    rospy.init_node('ping_fusion_node')
 
-    GPIO.output(pin, 0)
+    rospy.Subscriber('ping_1_topic', Int32, ping_1_callback)
+    rospy.Subscriber('ping_2_topic', Int32, ping_2_callback)
+    rospy.Subscriber('ping_3_topic', Int32, ping_3_callback)
+    rospy.Subscriber('ping_4_topic', Int32, ping_4_callback)
+    rospy.Subscriber('ping_5_topic', Int32, ping_5_callback)
 
-    GPIO.setup(pin, GPIO.IN)
-    GPIO.setwarnings(False)
-    while GPIO.input(pin) == 0:
-        starttime = time.time()
+    pub = rospy.Publisher('merged_ping_topic', MergedPingArray, queue_size=10)
 
-    while GPIO.input(pin) == 1:
-        endtime = time.time()
+    rate = rospy.Rate(10)  # Publish rate of 10 Hz
 
-    duration = endtime - starttime
-    # Distance is defined as time/2 (there and back) * speed of sound 34000 cm/s
-    distance = (duration * 34000) / 2
-    GPIO.cleanup()
+    while not rospy.is_shutdown():
+        publish_merged_ping_data()
+        rate.sleep()
 
-    return distance
-
-# Function to publish sensor data
-def publish_sensor_data():
-    sensor_data = []
-    for pin in GPIO_SIG:
-        distance = measure_distance(pin)
-        sensor_data.append(distance)
-
-    # Create a Float32MultiArray message
-    sensor_msg = Float32MultiArray(data=sensor_data)
-
-    # Publish the sensor data
-    sensor_publisher.publish(sensor_msg)
-
-# Initialize the node
-rospy.init_node('sensor_and_gripper')
-
-# Create a subscriber for the servo position control with topic name '/servo_position' and message type Bool
-servo_subscriber = rospy.Subscriber('servo_position', Bool, servo_callback)
-
-# Set the publishing rate for the sensor data
-rate = rospy.Rate(1)  # 1 Hz
-
-# Publish the sensor data at the specified rate
-while not rospy.is_shutdown():
-    publish_sensor_data()
-    rate.sleep()
-
-# Clean up the GPIO pins
-GPIO.cleanup()
+if __name__ == '__main__':
+    merged_topics()
