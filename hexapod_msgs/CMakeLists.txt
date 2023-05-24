@@ -20,6 +20,7 @@ add_message_files(
    Pose.msg
    RPY.msg
    Sounds.msg
+   MergedPingArray.msg
 )
 
 ## Generate added messages and services with any dependencies listed here
