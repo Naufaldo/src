@@ -263,6 +263,7 @@ int main(int argc, char **argv)
     else if (baseBindings.count(key) == 1)
     {
       // Grab the manipulating data
+      
       xa = baseBindings[key][0];
       ya = baseBindings[key][1];
       za = baseBindings[key][2];
@@ -312,7 +313,7 @@ int main(int argc, char **argv)
     body_scalar_.accel.angular.y = ya * turn;
     body_scalar_.accel.angular.z = za * turn;
 
-    // head_scalar_.header.stamp = current_time;
+    head_scalar_.header.stamp = current_time;
     head_scalar_.accel.angular.z = xb * turn;
     // head_scalar_.accel.angular.y = yb * turn;
 
