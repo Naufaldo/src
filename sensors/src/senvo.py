@@ -4,41 +4,38 @@ import rospy
 from std_msgs.msg import Int32
 from hexapod_msgs.msg import MergedPingArray
 
-ping_1_data = None
-ping_2_data = None
-ping_3_data = None
-ping_4_data = None
-ping_5_data = None
+ping_data = [None, None, None, None, None]
+pub = None
 
 def ping_1_callback(data):
-    global ping_1_data
-    ping_1_data = data.data
+    global ping_data
+    ping_data[0] = data.data
 
 def ping_2_callback(data):
-    global ping_2_data
-    ping_2_data = data.data
+    global ping_data
+    ping_data[1] = data.data
 
 def ping_3_callback(data):
-    global ping_3_data
-    ping_3_data = data.data
+    global ping_data
+    ping_data[2] = data.data
 
 def ping_4_callback(data):
-    global ping_4_data
-    ping_4_data = data.data
+    global ping_data
+    ping_data[3] = data.data
 
 def ping_5_callback(data):
-    global ping_5_data
-    ping_5_data = data.data
+    global ping_data
+    ping_data[4] = data.data
 
 def publish_merged_ping_data():
-    global ping_1_data, ping_2_data, ping_3_data, ping_4_data, ping_5_data
-
+    global ping_data, pub
     merged_ping_array_msg = MergedPingArray()
-    merged_ping_array_msg.merged_ping_array = [ping_1_data, ping_2_data, ping_3_data, ping_4_data, ping_5_data]
+    merged_ping_array_msg.merged_ping_array = ping_data
 
     pub.publish(merged_ping_array_msg)
 
 def merged_topics():
+    global pub
     rospy.init_node('ping_fusion_node')
 
     rospy.Subscriber('ping_1_topic', Int32, ping_1_callback)
