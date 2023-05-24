@@ -2,7 +2,7 @@
 #include "std_msgs/String.h"
 
 #include <nav_msgs/Odometry.h>
-
+#include <hexapod_msgs/MergedPingArray.h>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/AccelStamped.h>
 #include <std_msgs/Bool.h>
@@ -15,7 +15,16 @@
 #include <termios.h>
 #include <map>
 
-float laser[5]={5,5,5,5,5,5,5,5,5};
+int ping[5]={0,0,0,0,0};
+// Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri
+void mergedPingCallback(const hexapod_msgs::MergedPingArray::ConstPtr& msg)
+{
+  for (int i=0;i<5;i++){
+    ping[i]=msg->ranges[i];
+  }
+  // Process the merged ping data received
+  // Perform any required operations with the merged ping data
+}
 
 
 
@@ -99,7 +108,7 @@ int gerak_1_[]={0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,1,0};
 
 int a_lifter[] ={'o','o','p'}
 
-std::map<int, std::vector<float>,int,bool> step{
+std::map<int, std::vector<int>,int,bool> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   {0, {0,0,-4,0,0,0,0,0,0,0}},
   {1, {0,0,0,0,0,0,0,0,0,0}},
@@ -205,7 +214,7 @@ bool pilih;
 void kontrol(char arah_, int step_, char lifter_ ){
   key=arah_;
   keys = lifter_;
-  float batas[5];
+  int batas[5];
   if (step.count(step_) == 1)
     {
       for(int a=0;a<5;a++){
@@ -244,6 +253,7 @@ void kontrol(char arah_, int step_, char lifter_ ){
     twist.angular.y = 0;
     twist.angular.z = th * turn
 
+    head_scalar_.header.stamp = current_time;
     head_scalar_.accel.angular.z = xb * turn;
 
   
@@ -257,14 +267,14 @@ void kontrol(char arah_, int step_, char lifter_ ){
   if(pilih==true){
     for (int a=0; a<5; a++){
       if(flag_[a]==true){
-        if(laser[a]<=batas[a])
+        if(ping[a]<=batas[a])
         {
           s[a]=true;
         }
         else{s[a]=false;}
       }
       else{
-        if(laser[a]>=batas[a])
+        if(ping[a]>=batas[a])
         {
           s[a]=true;
         }
