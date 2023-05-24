@@ -263,12 +263,12 @@ int main(int argc, char **argv)
     else if (baseBindings.count(key) == 1)
     {
       // Grab the manipulating data
-      imu_override_.data = true;
       xa = baseBindings[key][0];
       ya = baseBindings[key][1];
       za = baseBindings[key][2];
       xb = baseBindings[key][3];
       yb = baseBindings[key][4];
+      imu_override_.data = true;
       ROS_INFO("\rCurrent: speed %f\tturn %f | Last command: %c   ", speed, turn, key);
     }
     
@@ -312,9 +312,9 @@ int main(int argc, char **argv)
     body_scalar_.accel.angular.y = ya * turn;
     body_scalar_.accel.angular.z = za * turn;
 
-    head_scalar_.header.stamp = current_time;
+    // head_scalar_.header.stamp = current_time;
     head_scalar_.accel.angular.z = xb * turn;
-    head_scalar_.accel.angular.y = yb * turn;
+    // head_scalar_.accel.angular.y = yb * turn;
 
     // Publish it and resolve any remaining callbacks
     servo_pub_.publish(servo_position);
