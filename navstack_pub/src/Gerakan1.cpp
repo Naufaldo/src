@@ -27,12 +27,12 @@ void mergedPingCallback(const hexapod_msgs::MergedPingArray::ConstPtr& msg)
 
 
 
-// float xaa[5],yaa[5],xas[5];
-// bool ff1,ff2,ff3;
+float xaa[5],yaa[5],xas[5];
+bool ff1,ff2,ff3;
 
 
 // bool pb ,f_pb;
-// int flag1=1;
+int flag1=1;
 // void pbCallback(const std_msgs::Bool& msg)
 // {
 //   pb=msg.data;
@@ -161,7 +161,7 @@ void kontrol(char arah_, int step_){
 
     twist.angular.x = 0;
     twist.angular.y = 0;
-    twist.angular.z = th * turn
+    twist.angular.z = th * turn;
 
     // head_Tws.linear.x = xb * turn ; //lifter
     // head_Tws.linear.y = yb * turn ; //gripper
@@ -171,59 +171,59 @@ void kontrol(char arah_, int step_){
     // ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",flag_[0],flag_[1],flag_[2],flag_[3],flag_[4]);
 
 
-//     bool s[5]={false,false,false,false,false};
+    bool s[5]={false,false,false,false,false};
 
-//   if(pilih==true){
-//     for (int a=0; a<5; a++){
-//       if(flag_[a]==true){
-//         if(ping[a]<=batas[a])
-//         {
-//           s[a]=true;
-//         }
-//         else{s[a]=false;}
-//       }
-//       else{
-//         if(ping[a]>=batas[a])
-//         {
-//           s[a]=true;
-//         }
-//         else{s[a]=false;}
-//       }
-//       yaa[a]=xaa[a];
-//     }
-//   }
+  if(pilih==true){
+    for (int a=0; a<5; a++){
+      if(flag_[a]==true){
+        if(ping[a]<=batas[a])
+        {
+          s[a]=true;
+        }
+        else{s[a]=false;}
+      }
+      else{
+        if(ping[a]>=batas[a])
+        {
+          s[a]=true;
+        }
+        else{s[a]=false;}
+      }
+      yaa[a]=xaa[a];
+    }
+  }
 
-//   else{
+  else{
 
-//     for (int a=0; a<5; a++){
-//       xas[a]=xaa[a]-yaa[a];
-//       if(flag_[a]==true){
-//         if(xas[a]<=batas[a])
-//         {
-//           s[a]=true;
-//         }
-//         else{s[a]=false;}
-//       }
-//       else{
-//         if(xas[a]>=batas[a])
-//         {
-//           s[a]=true;
-//         }
-//         else{s[a]=false;}
-//       }
-//     }
-//   }
+    for (int a=0; a<5; a++){
+      xas[a]=xaa[a]-yaa[a];
+      if(flag_[a]==true){
+        if(xas[a]<=batas[a])
+        {
+          s[a]=true;
+        }
+        else{s[a]=false;}
+      }
+      else{
+        if(xas[a]>=batas[a])
+        {
+          s[a]=true;
+        }
+        else{s[a]=false;}
+      }
+    }
+  }
 
 //   // ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",s[0], s[1], s[2], s[3], s[4]);
   
-//   if(s[0]==true && s[1]==true && s[2]==true && s[3]==true && s[4]==true){
-//     flag1++;
-//     ROS_INFO("clear");
-//     yaa[0]=xaa[0];
-//     yaa[1]=xaa[1];
-//     yaa[2]=xaa[2];
-//   }
-// }
+  if(s[0]==true && s[1]==true && s[2]==true && s[3]==true && s[4]==true){
+    flag1++;
+    ROS_INFO("clear");
+    yaa[0]=xaa[0];
+    yaa[1]=xaa[1];
+    yaa[2]=xaa[2];
+  }
+}
 
  
 int main(int argc, char **argv)
@@ -258,9 +258,9 @@ int main(int argc, char **argv)
     //  ROS_INFO("-------------------------");
     //  ROS_INFO("%f, %f, %f, %f, %f",xas[0],xas[1],xas[2],xas[3],xas[4]);
     // //  ROS_INFO("I heard: [%d] [%d]", ir, pb);
-    // for(int i = 0; i < 9; i++) {
-    //   ROS_INFO(": [%f]", laser[i]);
-    // }
+    for(int i = 0; i < 5; i++) {
+      ROS_INFO(": [%i]", ping[i]);
+    }
     
     //eksekusi
       kontrol(a_gerak[flag1],flag1);
