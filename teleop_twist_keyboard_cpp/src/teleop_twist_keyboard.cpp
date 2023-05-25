@@ -315,7 +315,7 @@ int main(int argc, char **argv)
 
     head_scalar_.header.stamp = current_time;
     head_scalar_.accel.angular.z = xb * turn;
-    // head_scalar_.accel.angular.y = yb * turn;
+    head_scalar_.accel.angular.y = yb * turn;
 
     // Publish it and resolve any remaining callbacks
     servo_pub_.publish(servo_position);
