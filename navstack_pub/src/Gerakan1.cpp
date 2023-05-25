@@ -81,7 +81,7 @@ std::map<char, std::vector<float>> baseBindings{
     {'l', {0, 0, 0, 0, -1}},
     {';', {0, 0, 0, 0, 0}}};
 //step
-char a_gerak[]  ={'s','D','s','w','x','a','x','a','s','d'};
+char a_gerak[]  ={'D','s','w','x','a','x','a','s','d'};
 
 int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 
