@@ -423,13 +423,13 @@ void Control::headCallback(const geometry_msgs::AccelStampedConstPtr &head_scala
 {
     ros::Time current_time = ros::Time::now();
     double time_delta = current_time.toSec() - head_scalar_msg->header.stamp.toSec();
-    if (time_delta < 1.0) // Don't move if timestamp is stale over a second
+    if (time_delta < 0.1) // Don't move if timestamp is stale over a second
     {
         head_.yaw = head_scalar_msg->accel.angular.z * HEAD_MAX_YAW;
         head_.pitch = head_scalar_msg->accel.angular.y * HEAD_MAX_PITCH;
-        sounds_.auto_level = true;
-        sounds_pub_.publish(sounds_);
-        sounds_.auto_level = false;
+        // sounds_.auto_level = true;
+        // sounds_pub_.publish(sounds_);
+        // sounds_.auto_level = false;
     }
 }
 
