@@ -96,8 +96,10 @@ private:
     void cmd_velCallback(const geometry_msgs::TwistConstPtr &cmd_vel_msg);
     ros::Subscriber body_scalar_sub_;
     void bodyCallback(const geometry_msgs::AccelStampedConstPtr &body_scalar_msg);
-    ros::Subscriber head_scalar_sub_;
-    void headCallback(const geometry_msgs::AccelStampedConstPtr &head_scalar_msg);
+    // ros::Subscriber head_scalar_sub_;
+    // void headCallback(const geometry_msgs::AccelStampedConstPtr &head_scalar_msg);
+    ros::Subscriber head_sub_;
+    void headsCallback(const geometry_msgs::TwistConstPtr &head_Tws_msg);
     ros::Subscriber state_sub_;
     void stateCallback(const std_msgs::BoolConstPtr &state_msg);
     ros::Subscriber imu_override_sub_;

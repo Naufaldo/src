@@ -136,13 +136,15 @@ int main(int argc, char **argv)
   ros::Publisher imu_override_pub_ = nh_.advertise<std_msgs::Bool>("/imu/imu_override", 100);
   ros::Publisher leg_height_pub_ = nh_.advertise<std_msgs::Bool>("/leg", 100);
   ros::Publisher body_scalar_pub_ = nh_.advertise<geometry_msgs::AccelStamped>("/body_scalar", 100);
-  ros::Publisher head_scalar_pub_ = nh_.advertise<geometry_msgs::AccelStamped>("/head_scalar", 100);
+  // ros::Publisher head_scalar_pub_ = nh_.advertise<geometry_msgs::AccelStamped>("/head_scalar", 100);
+  ros::Publisher pub = nh_.advertise<geometry_msgs::Twist>("head_Tws", 1);
 //  ros::Publisher servo_pub_ = nh_.advertise<std_msgs::UInt16>("servo_position", 10);
   ros::Publisher servo_pub_ = nh_.advertise<std_msgs::Bool>("servo_position", 10);
   // Create message
   geometry_msgs::Twist twist;
   geometry_msgs::AccelStamped body_scalar_;
-  geometry_msgs::AccelStamped head_scalar_;
+  geometry_msgs::Twist head_Tws;
+  // geometry_msgs::AccelStamped head_scalar_;
   std_msgs::Bool state_;
   std_msgs::Bool imu_override_;
   std_msgs::Bool leg_height_;
@@ -313,9 +315,12 @@ int main(int argc, char **argv)
     body_scalar_.accel.angular.y = ya * turn;
     body_scalar_.accel.angular.z = za * turn;
 
-    head_scalar_.header.stamp = current_time;
-    head_scalar_.accel.angular.z = xb * turn;
-    head_scalar_.accel.angular.y = yb * turn;
+    head_Tws.twist.angular.x = xb * turn;
+    head_tws.twist.angular.y = yb * turn;
+
+    // head_scalar_.header.stamp = current_time;
+    // head_scalar_.accel.angular.z = xb * turn;
+    // head_scalar_.accel.angular.y = yb * turn;
 
     // Publish it and resolve any remaining callbacks
     servo_pub_.publish(servo_position);
@@ -324,7 +329,8 @@ int main(int argc, char **argv)
     imu_override_pub_.publish(imu_override_);
     leg_height_pub_.publish(leg_height_);
     body_scalar_pub_.publish(body_scalar_);
-    head_scalar_pub_.publish(head_scalar_);
+    // head_scalar_pub_.publish(head_scalar_);
+    head_Tws_pub_.publish(head_Tws);
     //gripper_.data = servo_position;
     
 
