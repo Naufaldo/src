@@ -81,7 +81,7 @@ std::map<char, std::vector<float>> baseBindings{
     {'l', {0, 0, 0, 0, -1}},
     {';', {0, 0, 0, 0, 0}}};
 //step
-char a_gerak[]  ={'D','s','w','x','a','x','a','s','d'};
+char a_gerak[]  ={'s','D','s','w','x','a','x','a','s','d'};
 
 int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 
@@ -103,7 +103,7 @@ std::map<int, std::vector<int>> step{
 };
 std::map<int, std::vector<bool>> _f_{
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-7 (0)(L>=b) (1)(L<=b), LaserOrOdom(1=lase && 0=odom) //odom
-  {0, {1,1,1,1,1}},
+  {0, {0,0,0,0,0}},
   {1, {1,1,1,1,1}},
   {2, {1,1,1,1,1}},
   {3, {1,1,1,1,1}},
