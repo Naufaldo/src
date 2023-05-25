@@ -117,13 +117,12 @@ float turn(0.5);                                                  // Angular vel
 float x(0), y(0), z(0), xa(0), ya(0), za(0), xb(0), yb(0), th(0); // Forward/backward/neutral direction vars
 char key(' ');
 geometry_msgs::Twist twist;
-geometry_msgs::Twist head_Tws;
+// geometry_msgs::Twist head_Tws;
 std_msgs::Bool servo_position;
 
 bool pilih;
-void kontrol(char arah_, int step_, char lifter_ ){
+void kontrol(char arah_, int step_){
   key=arah_;
-  keys = lifter_;
   int batas[5];
   if (step.count(step_) == 1)
     {
@@ -164,8 +163,8 @@ void kontrol(char arah_, int step_, char lifter_ ){
     twist.angular.y = 0;
     twist.angular.z = th * turn
 
-    head_Tws.linear.x = xb * turn ; //lifter
-    head_Tws.linear.y = yb * turn ; //gripper
+    // head_Tws.linear.x = xb * turn ; //lifter
+    // head_Tws.linear.y = yb * turn ; //gripper
   
     ROS_INFO("%f, %f, %f, %f, %f, %f,%f, %f,", batas[0], batas[1], batas[2], batas[3], batas[4]);
     // ROS_INFO("%f, %f, %f, %f, %f, %f,%f, %f,",laser[0],laser[1],laser[2],laser[3],laser[4],laser[5],laser[6],laser[7]);
@@ -247,7 +246,7 @@ int main(int argc, char **argv)
   ros::Publisher pub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
   // ros::Publisher head_scalar_pub_ = n.advertise<geometry_msgs::AccelStamped>("/head_scalar", 100);
   // ros::Publisher pub_f_servo = n.advertise<std_msgs::String>("/f_servo", 1); 
-    ros::Publisher head_pub_ = nh_.advertise<geometry_msgs::Twist>("head_Tws", 1);
+    // ros::Publisher head_pub_ = nh_.advertise<geometry_msgs::Twist>("head_Tws", 1);
   // ros::Publisher pub_pompa = n.advertise<std_msgs::UInt16>("/pompa", 1);
   ros::Publisher servo_pub_ = nh_.advertise<std_msgs::Bool>("servo_position", 10);
 
@@ -258,7 +257,7 @@ int main(int argc, char **argv)
     //baca setpoin
      ROS_INFO("-------------------------");
      ROS_INFO("%f, %f, %f, %f, %f",xas[0],xas[1],xas[2],xas[3],xas[4]);
-     ROS_INFO("I heard: [%d] [%d]", ir, pb);
+    //  ROS_INFO("I heard: [%d] [%d]", ir, pb);
     // for(int i = 0; i < 9; i++) {
     //   ROS_INFO(": [%f]", laser[i]);
     // }
@@ -267,7 +266,7 @@ int main(int argc, char **argv)
       kontrol(a_gerak[flag1],flag1);
       
       pub.publish(twist);
-      head_scalar_pub_.publish(head_scalar_);
+      // head_scalar_pub_.publish(head_scalar_);
       servo_pub_.publish(servo_position);
       // std_msgs::String qwerty;
       // qwerty.data=b_gerak[flag1];
