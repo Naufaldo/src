@@ -166,9 +166,9 @@ void kontrol(char arah_, int step_){
     // head_Tws.linear.x = xb * turn ; //lifter
     // head_Tws.linear.y = yb * turn ; //gripper
   
-    ROS_INFO("%f, %f, %f, %f, %f, %f,%f, %f,", batas[0], batas[1], batas[2], batas[3], batas[4]);
-    // ROS_INFO("%f, %f, %f, %f, %f, %f,%f, %f,",laser[0],laser[1],laser[2],laser[3],laser[4],laser[5],laser[6],laser[7]);
-    ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",flag_[0],flag_[1],flag_[2],flag_[3],flag_[4]);
+    // ROS_INFO("%f, %f, %f, %f, %f, %f,%f, %f,", batas[0], batas[1], batas[2], batas[3], batas[4]);
+    // // ROS_INFO("%f, %f, %f, %f, %f, %f,%f, %f,",laser[0],laser[1],laser[2],laser[3],laser[4],laser[5],laser[6],laser[7]);
+    // ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",flag_[0],flag_[1],flag_[2],flag_[3],flag_[4]);
 
 
     bool s[5]={false,false,false,false,false};
@@ -214,7 +214,7 @@ void kontrol(char arah_, int step_){
     }
   }
 
-  ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",s[0], s[1], s[2], s[3], s[4]);
+  // ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",s[0], s[1], s[2], s[3], s[4]);
   
   if(s[0]==true && s[1]==true && s[2]==true && s[3]==true && s[4]==true){
     flag1++;
