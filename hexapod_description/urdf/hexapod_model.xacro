@@ -131,6 +131,7 @@
                 izz="1.0" />
         </inertial>
     </link>
+    
     <joint name="tilt_joint" type="revolute">
 		<parent link="pan_link"/>
 		<child link="tilt_link"/>
@@ -138,6 +139,7 @@
 		<origin xyz="0.0 0.0 0.020" />
 		<limit lower="-${3.14}" upper="${3.14}" effort="10000" velocity="100" />
 	</joint>
+
 	<link name="tilt_link">
         <inertial>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
@@ -147,6 +149,7 @@
                 iyy="1.0" iyz="0.0"
                 izz="1.0" />
         </inertial>
+    </link> 
 
     <!-- Leg macro -->
     <xacro:macro name="leg" params="side position x y angle axis">
