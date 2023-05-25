@@ -27,12 +27,12 @@ void mergedPingCallback(const hexapod_msgs::MergedPingArray::ConstPtr& msg)
 
 
 
-float xaa[5],yaa[5],xas[5];
-bool ff1,ff2,ff3;
+// float xaa[5],yaa[5],xas[5];
+// bool ff1,ff2,ff3;
 
 
-bool pb ,f_pb;
-int flag1=1;
+// bool pb ,f_pb;
+// int flag1=1;
 // void pbCallback(const std_msgs::Bool& msg)
 // {
 //   pb=msg.data;
@@ -171,59 +171,59 @@ void kontrol(char arah_, int step_){
     // ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",flag_[0],flag_[1],flag_[2],flag_[3],flag_[4]);
 
 
-    bool s[5]={false,false,false,false,false};
+//     bool s[5]={false,false,false,false,false};
 
-  if(pilih==true){
-    for (int a=0; a<5; a++){
-      if(flag_[a]==true){
-        if(ping[a]<=batas[a])
-        {
-          s[a]=true;
-        }
-        else{s[a]=false;}
-      }
-      else{
-        if(ping[a]>=batas[a])
-        {
-          s[a]=true;
-        }
-        else{s[a]=false;}
-      }
-      yaa[a]=xaa[a];
-    }
-  }
+//   if(pilih==true){
+//     for (int a=0; a<5; a++){
+//       if(flag_[a]==true){
+//         if(ping[a]<=batas[a])
+//         {
+//           s[a]=true;
+//         }
+//         else{s[a]=false;}
+//       }
+//       else{
+//         if(ping[a]>=batas[a])
+//         {
+//           s[a]=true;
+//         }
+//         else{s[a]=false;}
+//       }
+//       yaa[a]=xaa[a];
+//     }
+//   }
 
-  else{
+//   else{
 
-    for (int a=0; a<5; a++){
-      xas[a]=xaa[a]-yaa[a];
-      if(flag_[a]==true){
-        if(xas[a]<=batas[a])
-        {
-          s[a]=true;
-        }
-        else{s[a]=false;}
-      }
-      else{
-        if(xas[a]>=batas[a])
-        {
-          s[a]=true;
-        }
-        else{s[a]=false;}
-      }
-    }
-  }
+//     for (int a=0; a<5; a++){
+//       xas[a]=xaa[a]-yaa[a];
+//       if(flag_[a]==true){
+//         if(xas[a]<=batas[a])
+//         {
+//           s[a]=true;
+//         }
+//         else{s[a]=false;}
+//       }
+//       else{
+//         if(xas[a]>=batas[a])
+//         {
+//           s[a]=true;
+//         }
+//         else{s[a]=false;}
+//       }
+//     }
+//   }
 
-  // ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",s[0], s[1], s[2], s[3], s[4]);
+//   // ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",s[0], s[1], s[2], s[3], s[4]);
   
-  if(s[0]==true && s[1]==true && s[2]==true && s[3]==true && s[4]==true){
-    flag1++;
-    ROS_INFO("clear");
-    yaa[0]=xaa[0];
-    yaa[1]=xaa[1];
-    yaa[2]=xaa[2];
-  }
-}
+//   if(s[0]==true && s[1]==true && s[2]==true && s[3]==true && s[4]==true){
+//     flag1++;
+//     ROS_INFO("clear");
+//     yaa[0]=xaa[0];
+//     yaa[1]=xaa[1];
+//     yaa[2]=xaa[2];
+//   }
+// }
 
  
 int main(int argc, char **argv)
@@ -250,14 +250,14 @@ int main(int argc, char **argv)
   // ros::Publisher pub_pompa = n.advertise<std_msgs::UInt16>("/pompa", 1);
   // ros::Publisher servo_pub_ = nh_.advertise<std_msgs::Bool>("servo_position", 10);
 
-  flag1=1;
+  // flag1=1;
   ros::Rate r(100); 
   while (ros::ok())
   {
-    //baca setpoin
-     ROS_INFO("-------------------------");
-     ROS_INFO("%f, %f, %f, %f, %f",xas[0],xas[1],xas[2],xas[3],xas[4]);
-    //  ROS_INFO("I heard: [%d] [%d]", ir, pb);
+    // //baca setpoin
+    //  ROS_INFO("-------------------------");
+    //  ROS_INFO("%f, %f, %f, %f, %f",xas[0],xas[1],xas[2],xas[3],xas[4]);
+    // //  ROS_INFO("I heard: [%d] [%d]", ir, pb);
     // for(int i = 0; i < 9; i++) {
     //   ROS_INFO(": [%f]", laser[i]);
     // }
@@ -277,7 +277,7 @@ int main(int argc, char **argv)
       // pub_pompa.publish(asd);
 
       // ROS_INFO("step: %s", qwerty.data);
-      ROS_INFO("step: %d, %d", flag1,gerak_1_[flag1] );
+      // ROS_INFO("step: %d, %d", flag1,gerak_1_[flag1] );
 
 
     ros::spinOnce();
