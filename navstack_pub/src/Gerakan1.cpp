@@ -166,9 +166,9 @@ void kontrol(char arah_, int step_){
     // head_Tws.linear.x = xb * turn ; //lifter
     // head_Tws.linear.y = yb * turn ; //gripper
   
-    ROS_INFO("%d, %d, %d, %d, %d, %d,%d, %d,", batas[0], batas[1], batas[2], batas[3], batas[4]);
-    // // ROS_INFO("%f, %f, %f, %f, %f, %f,%f, %f,",laser[0],laser[1],laser[2],laser[3],laser[4],laser[5],laser[6],laser[7]);
-    ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",flag_[0],flag_[1],flag_[2],flag_[3],flag_[4]);
+    ROS_INFO("%d, %d, %d, %d, %d,", batas[0], batas[1], batas[2], batas[3], batas[4]);
+    ROS_INFO("%d, %d, %d, %d, %d,",ping[0],ping[1],ping[2],ping[3],ping[4]);
+    ROS_INFO("%d, %d, %d, %d, %d, ",flag_[0],flag_[1],flag_[2],flag_[3],flag_[4]);
 
 
     bool s[5]={false,false,false,false,false};
@@ -258,9 +258,9 @@ int main(int argc, char **argv)
     //  ROS_INFO("-------------------------");
     //  ROS_INFO("%f, %f, %f, %f, %f",xas[0],xas[1],xas[2],xas[3],xas[4]);
     // //  ROS_INFO("I heard: [%d] [%d]", ir, pb);
-    for(int i = 0; i < 5; i++) {
-      ROS_INFO(": [%i]", ping[i]);
-    }
+    // for(int i = 0; i < 5; i++) {
+    //   ROS_INFO(": [%i]", ping[i]);
+    // }
     
     //eksekusi
       kontrol(a_gerak[flag1],flag1);
