@@ -437,7 +437,7 @@ void Control::bodyCallback(const geometry_msgs::AccelStampedConstPtr &body_scala
 // Pan head callback - full vector
 //==============================================================================
 
-void Control::headCallback(const geometry_msgs::Twist &head_Tws_msg)
+void Control::headCallback(const geometry_msgs::TwistConstPtr &head_Tws_msg)
 {
     
         head_.yaw = head_Tws_msg->twist.angular.z * HEAD_MAX_YAW;
