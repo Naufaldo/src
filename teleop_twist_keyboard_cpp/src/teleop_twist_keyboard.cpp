@@ -48,8 +48,8 @@ std::map<char, std::vector<float>> baseBindings{
     //Head Manipulating
     {'o', {0, 0, 0, 0, 0}},
     {'p', {0, 0, 0, -2, 0}},
-    {'l', {0, 0, 0, 0, 0}},
-    {';', {0, 0, 0, 0, 1}}};
+    {'l', {0, 0, 0, 0, -1}},
+    {';', {0, 0, 0, 0, 0}}};
 
 // Reminder message
 const char *msg = R"(
@@ -316,7 +316,7 @@ int main(int argc, char **argv)
     body_scalar_.accel.angular.z = za * turn;
 
     head_Tws.linear.x = xb * turn ; //lifter
-    head_Tws.linear.y = yb * turn * -2; //gripper
+    head_Tws.linear.y = yb * turn ; //gripper
 
     // head_scalar_.header.stamp = current_time;
     // head_scalar_.accel.angular.z = xb * turn;
