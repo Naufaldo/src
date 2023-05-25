@@ -85,7 +85,7 @@ char a_gerak[]  ={'D','s','w','x','a','x','a','s','d'};
 
 int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 
-int a_lifter[] ={'p','o','l','w','o','p','o','l','p'}
+// int a_lifter[] ={'p','o','l','w','o','p','o','l','p'}
 
 std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
@@ -118,7 +118,7 @@ float x(0), y(0), z(0), xa(0), ya(0), za(0), xb(0), yb(0), th(0); // Forward/bac
 char key(' ');
 geometry_msgs::Twist twist;
 // geometry_msgs::Twist head_Tws;
-std_msgs::Bool servo_position;
+// std_msgs::Bool servo_position;
 
 bool pilih;
 void kontrol(char arah_, int step_){
@@ -248,7 +248,7 @@ int main(int argc, char **argv)
   // ros::Publisher pub_f_servo = n.advertise<std_msgs::String>("/f_servo", 1); 
     // ros::Publisher head_pub_ = nh_.advertise<geometry_msgs::Twist>("head_Tws", 1);
   // ros::Publisher pub_pompa = n.advertise<std_msgs::UInt16>("/pompa", 1);
-  ros::Publisher servo_pub_ = nh_.advertise<std_msgs::Bool>("servo_position", 10);
+  // ros::Publisher servo_pub_ = nh_.advertise<std_msgs::Bool>("servo_position", 10);
 
   flag1=1;
   ros::Rate r(100); 
@@ -267,13 +267,13 @@ int main(int argc, char **argv)
       
       pub.publish(twist);
       // head_scalar_pub_.publish(head_scalar_);
-      servo_pub_.publish(servo_position);
+      // servo_pub_.publish(servo_position);
       // std_msgs::String qwerty;
       // qwerty.data=b_gerak[flag1];
       // pub_f_servo.publish(qwerty);
 
-      std_msgs::UInt16 asd;
-      asd.data=gerak_1_[flag1];
+      // std_msgs::UInt16 asd;
+      // asd.data=gerak_1_[flag1];
       // pub_pompa.publish(asd);
 
       // ROS_INFO("step: %s", qwerty.data);
