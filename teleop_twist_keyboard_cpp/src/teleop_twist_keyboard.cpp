@@ -315,8 +315,8 @@ int main(int argc, char **argv)
     body_scalar_.accel.angular.y = ya * turn;
     body_scalar_.accel.angular.z = za * turn;
 
-    head_Tws.angular.x = xb * turn;
-    head_Tws.angular.y = yb * turn;
+    head_Tws.linear.x = xb * turn;
+    head_Tws.linear.y = yb * turn * -2;
 
     // head_scalar_.header.stamp = current_time;
     // head_scalar_.accel.angular.z = xb * turn;

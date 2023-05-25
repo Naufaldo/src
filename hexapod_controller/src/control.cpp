@@ -440,8 +440,8 @@ void Control::bodyCallback(const geometry_msgs::AccelStampedConstPtr &body_scala
 void Control::headCallback(const geometry_msgs::TwistConstPtr &head_Tws_msg)
 {
     
-        head_.yaw = head_Tws_msg->angular.x * HEAD_MAX_YAW;
-        head_.pitch = head_Tws_msg->angular.y * HEAD_MAX_PITCH;
+        head_.yaw = head_Tws_msg->linear.x * HEAD_MAX_YAW;
+        head_.pitch = head_Tws_msg->linear.y * HEAD_MAX_PITCH;
 
         
     
