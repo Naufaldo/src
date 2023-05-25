@@ -137,7 +137,7 @@ int main(int argc, char **argv)
   ros::Publisher leg_height_pub_ = nh_.advertise<std_msgs::Bool>("/leg", 100);
   ros::Publisher body_scalar_pub_ = nh_.advertise<geometry_msgs::AccelStamped>("/body_scalar", 100);
   // ros::Publisher head_scalar_pub_ = nh_.advertise<geometry_msgs::AccelStamped>("/head_scalar", 100);
-  ros::Publisher pub = nh_.advertise<geometry_msgs::Twist>("head_Tws", 1);
+  ros::Publisher head_pub_ = nh_.advertise<geometry_msgs::Twist>("head_Tws", 1);
 //  ros::Publisher servo_pub_ = nh_.advertise<std_msgs::UInt16>("servo_position", 10);
   ros::Publisher servo_pub_ = nh_.advertise<std_msgs::Bool>("servo_position", 10);
   // Create message
@@ -315,8 +315,8 @@ int main(int argc, char **argv)
     body_scalar_.accel.angular.y = ya * turn;
     body_scalar_.accel.angular.z = za * turn;
 
-    head_Tws.twist.angular.x = xb * turn;
-    head_tws.twist.angular.y = yb * turn;
+    head_Tws.angular.x = xb * turn;
+    head_tws.angular.y = yb * turn;
 
     // head_scalar_.header.stamp = current_time;
     // head_scalar_.accel.angular.z = xb * turn;
