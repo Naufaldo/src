@@ -103,10 +103,10 @@ std::map<int, std::vector<int>> step{
 };
 std::map<int, std::vector<bool>> _f_{
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-7 (0)(L>=b) (1)(L<=b), LaserOrOdom(1=lase && 0=odom) //odom
-  {0, {0,0,0,0,0}},
-  {1, {0,0,0,0,0}},
-  {2, {0,0,0,0,0}},
-  {3, {0,0,0,0,0}},
+  {0, {1,1,1,1,1}},
+  {1, {1,1,1,1,1}},
+  {2, {1,1,1,1,1}},
+  {3, {1,1,1,1,1}},
 
 };
 
@@ -166,9 +166,9 @@ void kontrol(char arah_, int step_){
     // head_Tws.linear.x = xb * turn ; //lifter
     // head_Tws.linear.y = yb * turn ; //gripper
   
-    // ROS_INFO("%f, %f, %f, %f, %f, %f,%f, %f,", batas[0], batas[1], batas[2], batas[3], batas[4]);
+    ROS_INFO("%i, %i, %i, %i, %i, %i,%i, %i,", batas[0], batas[1], batas[2], batas[3], batas[4]);
     // // ROS_INFO("%f, %f, %f, %f, %f, %f,%f, %f,",laser[0],laser[1],laser[2],laser[3],laser[4],laser[5],laser[6],laser[7]);
-    // ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",flag_[0],flag_[1],flag_[2],flag_[3],flag_[4]);
+    ROS_INFO("%i, %i, %i, %i, %i, %i, %i, %i, ",flag_[0],flag_[1],flag_[2],flag_[3],flag_[4]);
 
 
     bool s[5]={false,false,false,false,false};
