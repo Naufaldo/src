@@ -51,6 +51,7 @@ public:
     double STANDING_BODY_HEIGHT;
     geometry_msgs::Twist gait_vel_;
     geometry_msgs::Twist cmd_vel_;
+    geometry_msgs::Twist head_Tws;
     
     nav_msgs::Odometry odomNew;
     nav_msgs::Odometry odomOld;
@@ -99,7 +100,7 @@ private:
     // ros::Subscriber head_scalar_sub_;
     // void headCallback(const geometry_msgs::AccelStampedConstPtr &head_scalar_msg);
     ros::Subscriber head_sub_;
-    void headsCallback(const geometry_msgs::TwistConstPtr &head_Tws_msg);
+    void headCallback(const geometry_msgs::TwistConstPtr &head_Tws_msg);
     ros::Subscriber state_sub_;
     void stateCallback(const std_msgs::BoolConstPtr &state_msg);
     ros::Subscriber imu_override_sub_;

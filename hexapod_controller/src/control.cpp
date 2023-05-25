@@ -70,7 +70,7 @@ Control::Control(void)
     cmd_vel_sub_ = nh_.subscribe<geometry_msgs::Twist>("/cmd_vel", 1, &Control::cmd_velCallback, this);
     body_scalar_sub_ = nh_.subscribe<geometry_msgs::AccelStamped>("/body_scalar", 1, &Control::bodyCallback, this);
     // head_scalar_sub_ = nh_.subscribe<geometry_msgs::AccelStamped>("/head_scalar", 1, &Control::headCallback, this);
-    head_sub_ = nh_.subscribe<geometry_msgs::Twist>("/head_Tws", 1, &Control::headsCallback, this);
+    head_sub_ = nh_.subscribe<geometry_msgs::Twist>("/head_Tws", 1, &Control::headCallback, this);
     state_sub_ = nh_.subscribe<std_msgs::Bool>("/state", 1, &Control::stateCallback, this);
     imu_override_sub_ = nh_.subscribe<std_msgs::Bool>("/imu/imu_override", 1, &Control::imuOverrideCallback, this);
     // imu_sub_ = nh_.subscribe<sensor_msgs::Imu>("/imu/data", 1, &Control::imuCallback, this);
@@ -437,7 +437,7 @@ void Control::bodyCallback(const geometry_msgs::AccelStampedConstPtr &body_scala
 // Pan head callback - full vector
 //==============================================================================
 
-void Control::headsCallback(const geometry_msgs::Twist &head_Tws_msg)
+void Control::headCallback(const geometry_msgs::Twist &head_Tws_msg)
 {
     
         head_.yaw = head_Tws_msg->twist.angular.z * HEAD_MAX_YAW;

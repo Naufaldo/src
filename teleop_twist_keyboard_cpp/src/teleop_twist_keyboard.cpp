@@ -316,7 +316,7 @@ int main(int argc, char **argv)
     body_scalar_.accel.angular.z = za * turn;
 
     head_Tws.angular.x = xb * turn;
-    head_tws.angular.y = yb * turn;
+    head_Tws.angular.y = yb * turn;
 
     // head_scalar_.header.stamp = current_time;
     // head_scalar_.accel.angular.z = xb * turn;
@@ -330,7 +330,7 @@ int main(int argc, char **argv)
     leg_height_pub_.publish(leg_height_);
     body_scalar_pub_.publish(body_scalar_);
     // head_scalar_pub_.publish(head_scalar_);
-    head_Tws_pub_.publish(head_Tws);
+    head_pub_.publish(head_Tws);
     //gripper_.data = servo_position;
     
 
