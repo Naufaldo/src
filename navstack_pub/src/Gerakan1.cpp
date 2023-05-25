@@ -20,7 +20,7 @@ int ping[5]={0,0,0,0,0};
 void mergedPingCallback(const hexapod_msgs::MergedPingArray::ConstPtr& msg)
 {
   for (int i=0;i<5;i++){
-    ping[i]=msg->ranges[i];
+    ping[i]=msg->merged_ping_array[i];
   }
   // ROS_INFO("I heard: [%d]", ping[0]);
 }
