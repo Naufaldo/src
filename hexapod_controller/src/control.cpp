@@ -463,6 +463,8 @@ void Control::stateCallback(const std_msgs::BoolConstPtr &state_msg)
             body_.orientation.pitch = 0.0;
             body_.orientation.yaw = 0.0;
             body_.orientation.roll = 0.0;
+            head_.yaw = 0.0;
+            head_.pitch = 0.0;
             setHexActiveState(true);
             sounds_.stand = true;
             sounds_pub_.publish(sounds_);
@@ -480,6 +482,8 @@ void Control::stateCallback(const std_msgs::BoolConstPtr &state_msg)
             body_.orientation.pitch = 0.0;
             body_.orientation.yaw = 0.0;
             body_.orientation.roll = 0.0;
+            head_.yaw = 0.0;
+            head_.pitch = 0.0;
             setHexActiveState(false);
             sounds_.shut_down = true;
             sounds_pub_.publish(sounds_);
