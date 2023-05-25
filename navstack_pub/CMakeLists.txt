@@ -246,7 +246,7 @@ target_link_libraries(servo ${catkin_LIBRARIES})
 add_executable(move4 src/move4.cpp)
 target_link_libraries(move4 ${catkin_LIBRARIES})
 
-add_executable(baca src/Gerakan1.cpp)
+add_executable(Gerakan1 src/Gerakan1.cpp)
 target_link_libraries(Gerakan1 ${catkin_LIBRARIES})
 
 # add_executable(baca src/Gerakan2.cpp)
