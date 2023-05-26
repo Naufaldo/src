@@ -37,9 +37,9 @@ def merged_ping_callback(data):
         ping[i] = data.merged_ping_array[i]
     
     # Check if any value in the ping array is below its corresponding threshold
-    for i in range(5):
-        if ping[i] < thresholds[i]:
-            subprocess.call("Shell_scripts/Gerakan1.sh", shell=True)
+    # for i in range(5):
+    #     if ping[i] < thresholds[i]:
+    #         subprocess.call("Shell_scripts/Gerakan1.sh", shell=True)
 
 
 # Set up the publisher for the button press
