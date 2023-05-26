@@ -31,10 +31,10 @@ def button_callback(channel):
 # Initialize the node
 rospy.init_node('gripper_subscriber')
 
-def merged_ping_callback(data):
-    global ping
-    for i in range(5):
-        ping[i] = data.merged_ping_array[i]
+# def merged_ping_callback(data):
+#     global ping
+#     for i in range(5):
+#         ping[i] = data.merged_ping_array[i]
     
     # Check if any value in the ping array is below its corresponding threshold
     # for i in range(5):
@@ -63,7 +63,7 @@ def led_callback(msg):
 
 # Create a subscriber for the LED control
 led_subscriber = rospy.Subscriber('led_control', Int32, led_callback)
-rospy.Subscriber('merged_ping_topic', MergedPingArray, merged_ping_callback)
+# rospy.Subscriber('merged_ping_topic', MergedPingArray, merged_ping_callback)
 
 # Spin the node to receive messages
 rospy.spin()
