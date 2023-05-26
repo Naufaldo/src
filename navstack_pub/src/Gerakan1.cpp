@@ -93,6 +93,7 @@ int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
+  //
   {0, {52,320,7,18,18,-2 ,0}}, // posisi home gerak ke kanan
   {1, {24,320,38,57,57,0,0}},
   {2, {46,320,21,59,60,0,0}},
@@ -174,8 +175,8 @@ void kontrol(char arah_, int step_){
     twist.angular.y = 0;
     twist.angular.z = th * turn;
 
-    head_Tws.linear.x = xb * turn ; //lifter
-    head_Tws.linear.y = yb * turn ; //gripper
+    head_Tws.linear.x = xb * 1 ; //lifter
+    head_Tws.linear.y = yb * 1 ; //gripper
 
     state_.data = true;
     imu_override_.data = true;
