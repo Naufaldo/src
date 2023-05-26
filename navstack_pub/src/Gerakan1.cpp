@@ -22,7 +22,7 @@ void mergedPingCallback(const hexapod_msgs::MergedPingArray::ConstPtr& msg)
   for (int i=0;i<5;i++){
     ping[i]=msg->merged_ping_array[i];
   }
-  // ROS_INFO("I heard: [%d]", ping[0]);
+  ROS_INFO("I heard: [%d]", ping[0]);
 }
 
 
@@ -47,45 +47,36 @@ int flag1=1;
 // Map for movement keys
 std::map<char, std::vector<float>> moveBindings{
     //Moving and Rotating
-    {'q', {1, 0, 0, 1}},
-    {'w', {1, 0, 0, 0}},
-    {'e', {1, 0, 0, -1}},
-    {'a', {0, 0, 0, 1}},
-    {'s', {0, 0, 0, 0}},
-    {'d', {0, 0, 0, -1}},
-    {'z', {-1, 0, 0, -1}},
-    {'x', {-1, 0, 0, 0}},
-    {'c', {-1, 0, 0, 1}},
+    {'q', {1, 0, 0, 1, 0, 0}},
+    {'w', {1, 0, 0, 0, 0, 0}},
+    {'e', {1, 0, 0, -1, 0, 0}},
+    {'a', {0, 0, 0, 1, 0, 0}},
+    {'s', {0, 0, 0, 0, 0, 0}},
+    {'d', {0, 0, 0, -1, 0, 0}},
+    {'z', {-1, 0, 0, -1, 0, 0}},
+    {'x', {-1, 0, 0, 0, 0, 0}},
+    {'c', {-1, 0, 0, 1, 0, 0}},
     //Holomonic Move
-    {'Q', {1, -1, 0, 0}},
-    {'W', {1, 0, 0, 0}},
-    {'E', {1, 1, 0, 0}},
-    {'A', {0, -1, 0, 0}},
-    {'S', {0, 0, 0, 0}},
-    {'D', {0, 1, 0, 0}},
-    {'Z', {-1, -1, 0, 0}},
-    {'X', {-1, 0, 0, 0}},
-    {'C', {-1, 1, 0, 0}}};
-
-std::map<char, std::vector<float>> baseBindings{
-    //Body manipulating
-    {'u', {-1, 0, 0, 0, 0}},
-    {'i', {1, 0, 0, 0, 0}},
-    {'j', {0, -1, 0, 0, 0}},
-    {'k', {0, 1, 0, 0, 0}},
-    {'m', {0, 0, -1, 0, 0}},
-    {',', {0, 0, 1, 0, 0}},
+    {'Q', {1, -1, 0, 0, 0, 0}},
+    {'W', {1, 0, 0, 0, 0, 0}},
+    {'E', {1, 1, 0, 0, 0, 0}},
+    {'A', {0, -1, 0, 0, 0, 0}},
+    {'S', {0, 0, 0, 0, 0, 0}},
+    {'D', {0, 1, 0, 0, 0, 0}},
+    {'Z', {-1, -1, 0, 0, 0, 0}},
+    {'X', {-1, 0, 0, 0, 0, 0}},
+    {'C', {-1, 1, 0, 0, 0, 0}}
     //Head Manipulating
-     {'o', {0, 0, 0, 0, 0}},
-    {'p', {0, 0, 0, -2, 0}},
-    {'l', {0, 0, 0, 0, -1}},
-    {';', {0, 0, 0, 0, 0}}};
+     {'o', {0, 0, 0, 0, 0, 0}},
+    {'p', {0, 0, 0, 0, -2, 0}},
+    {'l', {0, 0, 0, 0, 0, -1}}};
+
+
 //step
 char a_gerak[]  ={'D','s','w','x','a','x','a','s','d'};
 
 int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 
-// int a_lifter[] ={'p','o','l','w','o','p','o','l','p'}
 
 std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
@@ -103,22 +94,21 @@ std::map<int, std::vector<int>> step{
 };
 std::map<int, std::vector<bool>> _f_{
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-7 (0)(L>=b) (1)(L<=b), LaserOrOdom(1=lase && 0=odom) //odom
-  {0, {0,0,0,0,0}},
-  {1, {0,0,0,0,0}},
-  {2, {0,0,0,0,0}},
-  {3, {0,0,0,0,0}},
+  {0, {0,0,0,0,0,1}},
+  {1, {0,0,0,0,0,1}},
+  {2, {0,0,0,0,0,1}},
+  {3, {0,0,0,0,0,1}},
 
 };
 
 
 // Init variables
-float speed(0.5);                                                 // Linear velocity (m/s)
-float turn(0.5);                                                  // Angular velocity (rad/s)
+float speed(1);                                                 // Linear velocity (m/s)
+float turn(1);                                                  // Angular velocity (rad/s)
 float x(0), y(0), z(0), xa(0), ya(0), za(0), xb(0), yb(0), th(0); // Forward/backward/neutral direction vars
 char key(' ');
 geometry_msgs::Twist twist;
-// geometry_msgs::Twist head_Tws;
-// std_msgs::Bool servo_position;
+geometry_msgs::Twist head_Tws;
 
 bool pilih;
 void kontrol(char arah_, int step_){
@@ -129,8 +119,8 @@ void kontrol(char arah_, int step_){
       for(int a=0;a<5;a++){
         batas[a]=step[step_][a];
       }
-      speed=step[step_][8];
-      turn=step[step_][9];
+      // speed=step[step_][8];
+      // turn=step[step_][9];
     }
 
   bool flag_[5];
@@ -139,7 +129,7 @@ void kontrol(char arah_, int step_){
       for(int a=0;a<5;a++){
         flag_[a]=_f_[step_][a];
       }
-    pilih=_f_[step_][8];
+    pilih=_f_[step_][6];
     }
     
 
@@ -150,6 +140,8 @@ void kontrol(char arah_, int step_){
       y = moveBindings[key][1];
       z = moveBindings[key][2];
       th = moveBindings[key][3];
+      xb = moveBindings[key][4];
+      yb = moveBindings[key][5];
       
       ROS_INFO("\rCurrent: speed %f   | turn %f | Last command: %c   ", speed, turn, key);
     }
@@ -163,8 +155,8 @@ void kontrol(char arah_, int step_){
     twist.angular.y = 0;
     twist.angular.z = th * turn;
 
-    // head_Tws.linear.x = xb * turn ; //lifter
-    // head_Tws.linear.y = yb * turn ; //gripper
+    head_Tws.linear.x = xb * turn ; //lifter
+    head_Tws.linear.y = yb * turn ; //gripper
   
     ROS_INFO("%d, %d, %d, %d, %d,", batas[0], batas[1], batas[2], batas[3], batas[4]);
     ROS_INFO("%d, %d, %d, %d, %d,",ping[0],ping[1],ping[2],ping[3],ping[4]);
@@ -214,15 +206,15 @@ void kontrol(char arah_, int step_){
     }
   }
 
-//   // ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",s[0], s[1], s[2], s[3], s[4]);
+// //   // ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",s[0], s[1], s[2], s[3], s[4]);
   
-  if(s[0]==true && s[1]==true && s[2]==true && s[3]==true && s[4]==true){
-    flag1++;
-    ROS_INFO("clear");
-    yaa[0]=xaa[0];
-    yaa[1]=xaa[1];
-    yaa[2]=xaa[2];
-  }
+//   if(s[0]==true && s[1]==true && s[2]==true && s[3]==true && s[4]==true){
+//     flag1++;
+//     ROS_INFO("clear");
+//     yaa[0]=xaa[0];
+//     yaa[1]=xaa[1];
+//     yaa[2]=xaa[2];
+//   }
 }
 
  
@@ -231,24 +223,8 @@ int main(int argc, char **argv)
    flag1=0;
   ros::init(argc, argv, "Move_Control");
   ros::NodeHandle n;
-  // ros::Subscriber sub = n.subscribe("/scan", 50, scanCallback);
-  // ros::Subscriber sub1 = n.subscribe("/odom_data_quat", 50, chatterCallback);
-
-  // ros::Subscriber _sub1 = n.subscribe("/chatter1", 1, chatter1Callback);
-  // ros::Subscriber _sub2 = n.subscribe("/chatter2", 1, chatter2Callback);
-  // ros::Subscriber _sub3 = n.subscribe("/chatter3", 1, chatter3Callback);
-
-  
-
-  // ros::Subscriber sub4 = n.subscribe("/ir", 1, irCallback);
-  // ros::Subscriber sub5 = n.subscribe("/pushed", 1, pbCallback);
-
   ros::Publisher pub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
-  // ros::Publisher head_scalar_pub_ = n.advertise<geometry_msgs::AccelStamped>("/head_scalar", 100);
-  // ros::Publisher pub_f_servo = n.advertise<std_msgs::String>("/f_servo", 1); 
-    // ros::Publisher head_pub_ = nh_.advertise<geometry_msgs::Twist>("head_Tws", 1);
-  // ros::Publisher pub_pompa = n.advertise<std_msgs::UInt16>("/pompa", 1);
-  // ros::Publisher servo_pub_ = nh_.advertise<std_msgs::Bool>("servo_position", 10);
+  ros::Publisher head_pub_ = nh_.advertise<geometry_msgs::Twist>("/head_Tws", 1);
 
   // flag1=1;
   ros::Rate r(100); 
@@ -266,9 +242,7 @@ int main(int argc, char **argv)
       kontrol(a_gerak[flag1],flag1);
       
       pub.publish(twist);
-      // head_scalar_pub_.publish(head_scalar_);
-      // servo_pub_.publish(servo_position);
-      // std_msgs::String qwerty;
+      head_pub_.publish(head_Tws);
       // qwerty.data=b_gerak[flag1];
       // pub_f_servo.publish(qwerty);
 
