@@ -4,12 +4,17 @@ import rospy
 from std_msgs.msg import Int32
 from std_msgs.msg import Bool
 import RPi.GPIO as GPIO
+import subprocess
+from hexapod_msgs.msg import MergedPingArray
 
 # Set the GPIO pins for the LEDs
 led_pin_1 = 17
 led_pin_2 = 18
 # Set the GPIO pin for the button
 button_pin = 26
+
+ping = [0, 0, 0, 0, 0]
+thresholds = [10, 15, 12, 8, 20]
 
 # Initialize the GPIO pins
 GPIO.setmode(GPIO.BCM)
@@ -25,6 +30,16 @@ def button_callback(channel):
 
 # Initialize the node
 rospy.init_node('gripper_subscriber')
+
+def merged_ping_callback(data):
+    global ping
+    for i in range(5):
+        ping[i] = data.merged_ping_array[i]
+    
+    # Check if any value in the ping array is below its corresponding threshold
+    for i in range(5):
+        if ping[i] < thresholds[i]:
+            subprocess.call("Shell_scripts/Gerakan1.sh", shell=True)
 
 
 # Set up the publisher for the button press
@@ -48,6 +63,7 @@ def led_callback(msg):
 
 # Create a subscriber for the LED control
 led_subscriber = rospy.Subscriber('led_control', Int32, led_callback)
+rospy.Subscriber('merged_ping_topic', MergedPingArray, merged_ping_callback)
 
 # Spin the node to receive messages
 rospy.spin()

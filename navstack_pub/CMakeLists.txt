@@ -250,7 +250,7 @@ target_link_libraries(move4 ${catkin_LIBRARIES})
 add_executable(Gerakan1 src/Gerakan1.cpp)
 target_link_libraries(Gerakan1 ${catkin_LIBRARIES})
 
-# add_executable(baca src/Gerakan2.cpp)
-# target_link_libraries(Gerakan2 ${catkin_LIBRARIES})
+add_executable(Gerakan2 src/Gerakan2.cpp)
+target_link_libraries(Gerakan2 ${catkin_LIBRARIES})
 
 
