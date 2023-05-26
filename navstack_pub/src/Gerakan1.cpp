@@ -109,6 +109,12 @@ float x(0), y(0), z(0), xa(0), ya(0), za(0), xb(0), yb(0), th(0); // Forward/bac
 char key(' ');
 geometry_msgs::Twist twist;
 geometry_msgs::Twist head_Tws;
+std_msgs::Bool imu_override_;
+std_msgs::Bool leg_height_;
+std_msgs::Bool state_;
+state_.data = true;
+imu_override_.data = true;
+leg_height_.data = true;
 
 bool pilih;
 void kontrol(char arah_, int step_){
@@ -225,7 +231,10 @@ int main(int argc, char **argv)
   ros::NodeHandle n;
   ros::Publisher pub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
   ros::Publisher head_pub_ = n.advertise<geometry_msgs::Twist>("/head_Tws", 1);
-
+  ros::Publisher imu_override_pub_ = n.advertise<std_msgs::Bool>("/imu/imu_override", 100);
+  ros::Publisher leg_height_pub_ = n.advertise<std_msgs::Bool>("/leg", 100);
+  ros::Publisher state_pub_ = n.advertise<std_msgs::Bool>("/state", 100);
+  
   // flag1=1;
   ros::Rate r(100); 
   while (ros::ok())
@@ -241,7 +250,10 @@ int main(int argc, char **argv)
     //eksekusi
       kontrol(a_gerak[flag1],flag1);
       
+      state_pub_.publish(state_);
       pub.publish(twist);
+      imu_override_pub_.publish(imu_override_);
+      leg_height_pub_.publish(leg_height_);
       head_pub_.publish(head_Tws);
       // qwerty.data=b_gerak[flag1];
       // pub_f_servo.publish(qwerty);
