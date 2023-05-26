@@ -80,7 +80,7 @@ int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 
 std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
-  {0, {52,320,7,18,18}},
+  {0, {52,320,7,18,18}}, // posisi home gerak ke kanan
   {1, {24,320,38,57,57}},
   {2, {46,320,21,59,60}},
   {3, {52,320,7,18,18}},
@@ -94,7 +94,7 @@ std::map<int, std::vector<int>> step{
 };
 std::map<int, std::vector<bool>> _f_{
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-7 (0)(L>=b) (1)(L<=b), LaserOrOdom(1=lase && 0=odom) //odom
-  {0, {0,0,0,0,0,1}},
+  {0, {0,0,0,0,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
   {1, {0,0,0,0,0,1}},
   {2, {0,0,0,0,0,1}},
   {3, {0,0,0,0,0,1}},
