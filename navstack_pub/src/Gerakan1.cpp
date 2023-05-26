@@ -114,7 +114,7 @@ std::map<int, std::vector<bool>> _f_{
   // ini program untuk kondisi if 1 atau 0 (komparasi)
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-7 (0)(L>=b) (1)(L<=b), LaserOrOdom(1=lase && 0=odom) //odom
   {0, {0,0,0,0,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
-  {1, {1,1,0,0,0,1}},
+  {1, {0,0,0,0,0,1}},
   {2, {0,0,0,0,0,1}},
   {3, {0,0,0,0,0,1}},
   {4, {0,0,0,0,0,1}},
