@@ -16,9 +16,6 @@ GPIO.setup(led_pin_1, GPIO.OUT)
 GPIO.setup(led_pin_2, GPIO.OUT)
 GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-# Set up PWM on the GPIO pin for the servo
-pwm = GPIO.PWM(servo_pin, 50)
-pwm.start(0)
 
 # Create a callback function to handle button press
 def button_callback(channel):
