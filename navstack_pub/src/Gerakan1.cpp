@@ -224,7 +224,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "Move_Control");
   ros::NodeHandle n;
   ros::Publisher pub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
-  ros::Publisher head_pub_ = nh_.advertise<geometry_msgs::Twist>("/head_Tws", 1);
+  ros::Publisher head_pub_ = n.advertise<geometry_msgs::Twist>("/head_Tws", 1);
 
   // flag1=1;
   ros::Rate r(100); 
