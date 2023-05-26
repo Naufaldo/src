@@ -138,8 +138,8 @@ void kontrol(char arah_, int step_){
       for(int a=0;a<5;a++){
         batas[a]=step[step_][a];
       }
-      xb=step[step_][6];
-      yb=step[step_][7];
+      xb=step[step_][5];
+      yb=step[step_][6];
     }
 
   bool flag_[5];
@@ -148,7 +148,7 @@ void kontrol(char arah_, int step_){
       for(int a=0;a<5;a++){
         flag_[a]=_f_[step_][a];
       }
-    pilih=_f_[step_][6];
+    pilih=_f_[step_][5];
     }
     
 
