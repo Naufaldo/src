@@ -112,9 +112,8 @@ geometry_msgs::Twist head_Tws;
 std_msgs::Bool imu_override_;
 std_msgs::Bool leg_height_;
 std_msgs::Bool state_;
-state_.data = true;
-imu_override_.data = true;
-leg_height_.data = true;
+
+
 
 bool pilih;
 void kontrol(char arah_, int step_){
@@ -163,6 +162,10 @@ void kontrol(char arah_, int step_){
 
     head_Tws.linear.x = xb * turn ; //lifter
     head_Tws.linear.y = yb * turn ; //gripper
+
+    state_.data = true;
+    imu_override_.data = true;
+    leg_height_.data = true;
   
     ROS_INFO("%d, %d, %d, %d, %d,", batas[0], batas[1], batas[2], batas[3], batas[4]);
     ROS_INFO("%d, %d, %d, %d, %d,",ping[0],ping[1],ping[2],ping[3],ping[4]);
