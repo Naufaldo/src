@@ -95,7 +95,7 @@ std::map<int, std::vector<int>> step{
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   //dua terakhir -2,0 = P ; 0, -1 = l ; 0,0=o
   {0, {34, 62, 5, 10, 10, -2, 0}}, // posisi home gerak ke kanan
-  {1, {260, 320, 5, 24, 25, 0, -1}}, // posisi depan K1
+  {1, {260, 320, 5, 32, 57, 0, -1}}, // posisi depan K1
   {2, {65, 320, 21, 58, 58, -2, 0}}, // posisi k1
   {3, {304, 320, 13, 59, 59, 0, 0}}, // posisi depan k1
   {4, {15, 15, 59, 29, 29, 0, 0}}, // posisi hadap jalan retak
