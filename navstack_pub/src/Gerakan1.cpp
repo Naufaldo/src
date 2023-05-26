@@ -29,47 +29,58 @@ void mergedPingCallback(const hexapod_msgs::MergedPingArray::ConstPtr& msg)
 
 float xaa[5],yaa[5],xas[5];
 bool ff1,ff2,ff3;
-
-
-// bool pb ,f_pb;
 int flag1=1;
-// void pbCallback(const std_msgs::Bool& msg)
-// {
-//   pb=msg.data;
-//   if (pb==true && f_pb == false){
-//     flag1 ++;
-//   }
-//   f_pb=pb;
-//   // ROS_INFO("I heard: [%d]", ir);
-// }
 
 
 // Map for movement keys
 std::map<char, std::vector<float>> moveBindings{
     //Moving and Rotating
-    {'q', {1, 0, 0, 1, 0, 0}},
-    {'w', {1, 0, 0, 0, 0, 0}},
-    {'e', {1, 0, 0, -1, 0, 0}},
-    {'a', {0, 0, 0, 1, 0, 0}},
-    {'s', {0, 0, 0, 0, 0, 0}},
-    {'d', {0, 0, 0, -1, 0, 0}},
-    {'z', {-1, 0, 0, -1, 0, 0}},
-    {'x', {-1, 0, 0, 0, 0, 0}},
-    {'c', {-1, 0, 0, 1, 0, 0}},
+    {'q', {1, 0, 0, 1}},
+    {'w', {1, 0, 0, 0}},
+    {'e', {1, 0, 0, -1}},
+    {'a', {0, 0, 0, 1}},
+    {'s', {0, 0, 0, 0}},
+    {'d', {0, 0, 0, -1}},
+    {'z', {-1, 0, 0, -1}},
+    {'x', {-1, 0, 0, 0}},
+    {'c', {-1, 0, 0, 1}},
     //Holomonic Move
-    {'Q', {1, -1, 0, 0, 0, 0}},
-    {'W', {1, 0, 0, 0, 0, 0}},
-    {'E', {1, 1, 0, 0, 0, 0}},
-    {'A', {0, -1, 0, 0, 0, 0}},
-    {'S', {0, 0, 0, 0, 0, 0}},
-    {'D', {0, 1, 0, 0, 0, 0}},
-    {'Z', {-1, -1, 0, 0, 0, 0}},
-    {'X', {-1, 0, 0, 0, 0, 0}},
-    {'C', {-1, 1, 0, 0, 0, 0}},
-    //Head Manipulating
-     {'o', {0, 0, 0, 0, 0, 0}},
-    {'p', {0, 0, 0, 0, -2, 0}},
-    {'l', {0, 0, 0, 0, 0, -1}}};
+    {'Q', {1, -1, 0, 0}},
+    {'W', {1, 0, 0, 0}},
+    {'E', {1, 1, 0, 0}},
+    {'A', {0, -1, 0, 0}},
+    {'S', {0, 0, 0, 0}},
+    {'D', {0, 1, 0, 0}},
+    {'Z', {-1, -1, 0, 0}},
+    {'X', {-1, 0, 0, 0}},
+    {'C', {-1, 1, 0, 0}}};
+
+// Map for movement keys
+// std::map<char, std::vector<float>> moveBindings{
+//     //Moving and Rotating
+//     {'q', {1, 0, 0, 1, 0, 0}},
+//     {'w', {1, 0, 0, 0, 0, 0}},
+//     {'e', {1, 0, 0, -1, 0, 0}},
+//     {'a', {0, 0, 0, 1, 0, 0}},
+//     {'s', {0, 0, 0, 0, 0, 0}},
+//     {'d', {0, 0, 0, -1, 0, 0}},
+//     {'z', {-1, 0, 0, -1, 0, 0}},
+//     {'x', {-1, 0, 0, 0, 0, 0}},
+//     {'c', {-1, 0, 0, 1, 0, 0}},
+//     //Holomonic Move
+//     {'Q', {1, -1, 0, 0, 0, 0}},
+//     {'W', {1, 0, 0, 0, 0, 0}},
+//     {'E', {1, 1, 0, 0, 0, 0}},
+//     {'A', {0, -1, 0, 0, 0, 0}},
+//     {'S', {0, 0, 0, 0, 0, 0}},
+//     {'D', {0, 1, 0, 0, 0, 0}},
+//     {'Z', {-1, -1, 0, 0, 0, 0}},
+//     {'X', {-1, 0, 0, 0, 0, 0}},
+//     {'C', {-1, 1, 0, 0, 0, 0}}};
+    // //Head Manipulating
+    //  {'o', {0, 0, 0, 0, 0, 0}},
+    // {'p', {0, 0, 0, 0, -2, 0}},
+    // {'l', {0, 0, 0, 0, 0, -1}}};
 
 
 //step
@@ -78,12 +89,14 @@ char a_gerak[]  ={'d','s','w','x','a','x','a','s','d'};
 int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 
 
+//program buat limit sensor dan gerakan kaki dan juga gerakan gripper
 std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
-  {0, {52,320,7,18,18}}, // posisi home gerak ke kanan
-  {1, {24,320,38,57,57}},
-  {2, {46,320,21,59,60}},
-  {3, {52,320,7,18,18}},
+  // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
+  {0, {52,320,7,18,18,-2 ,0}}, // posisi home gerak ke kanan
+  {1, {24,320,38,57,57,0,0}},
+  {2, {46,320,21,59,60,0,0}},
+  {3, {52,320,7,18,18,0,0}},
   // {4, {52,320,7,18,18},0},
   // {5, {52,320,7,18,18},0},
   // {6, {52,320,7,18,18},0},
@@ -93,6 +106,7 @@ std::map<int, std::vector<int>> step{
   
 };
 std::map<int, std::vector<bool>> _f_{
+  // ini program untuk kondisi if 1 atau 0 (komparasi)
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-7 (0)(L>=b) (1)(L<=b), LaserOrOdom(1=lase && 0=odom) //odom
   {0, {0,0,0,0,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
   {1, {0,0,0,0,0,1}},
@@ -124,8 +138,8 @@ void kontrol(char arah_, int step_){
       for(int a=0;a<5;a++){
         batas[a]=step[step_][a];
       }
-      // speed=step[step_][8];
-      // turn=step[step_][9];
+      xb=step[step_][6];
+      yb=step[step_][7];
     }
 
   bool flag_[5];
@@ -145,8 +159,8 @@ void kontrol(char arah_, int step_){
       y = moveBindings[key][1];
       z = moveBindings[key][2];
       th = moveBindings[key][3];
-      xb = moveBindings[key][4];
-      yb = moveBindings[key][5];
+      // xb = moveBindings[key][4];
+      // yb = moveBindings[key][5];
       
       ROS_INFO("\rCurrent: speed %f   | turn %f | Last command: %c   ", speed, turn, key);
     }
