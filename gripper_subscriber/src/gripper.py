@@ -2,6 +2,7 @@
 
 import rospy
 from std_msgs.msg import Int32
+from std_msgs.msg import Bool
 import RPi.GPIO as GPIO
 
 # Set the GPIO pins for the LEDs
