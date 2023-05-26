@@ -237,7 +237,8 @@ int main(int argc, char **argv)
   ros::Publisher imu_override_pub_ = n.advertise<std_msgs::Bool>("/imu/imu_override", 100);
   ros::Publisher leg_height_pub_ = n.advertise<std_msgs::Bool>("/leg", 100);
   ros::Publisher state_pub_ = n.advertise<std_msgs::Bool>("/state", 100);
-  
+  ros::Subscriber sub = n.subscribe("merged_ping_topic", 10, mergedPingCallback);
+
   // flag1=1;
   ros::Rate r(100); 
   while (ros::ok())
