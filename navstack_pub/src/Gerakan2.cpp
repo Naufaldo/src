@@ -79,16 +79,16 @@ std::map<char, std::vector<float>> moveBindings{
 //step
 char a_gerak[]  ={'a','w','x','a','x','a','s','d'};
 
-int gerak_1_[]={1,1,1,0,0,0,0,0,0};
+int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 
 
 //program buat limit sensor dan gerakan kaki dan juga gerakan gripper
 std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
-  {0, {10,10,7,52,320,-2 ,0}},
-  {1, {14,14,10,14,14,-2 ,0}}, // posisi home gerak ke kanan
-  {2, {120,320,52,57,25,0,0}},
+  {0, {10,10,7,0,320,-2 ,0}},
+  {1, {122,122,5,10,10,-2 ,0}}, // posisi home gerak ke kanan
+  {2, {120,320,45,10,10,0,0}},
   {3, {46,320,21,59,60,0,0}},
   {4, {52,320,7,18,18,0,0}},
   // {4, {52,320,7,18,18},0},
@@ -101,10 +101,10 @@ std::map<int, std::vector<int>> step{
 };
 std::map<int, std::vector<bool>> _f_{
   // ini program untuk kondisi if 1 atau 0 (komparasi)
-  // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-7 (0)(L>=b) (1)(L<=b), LaserOrOdom(1=lase && 0=odom) //odom
-  {0, {0,0,0,0,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
-  {1, {0,0,0,0,0,1}},
-  {2, {1,1,0,1,0,1}},
+  // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-7 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=lase && 0=odom) //odom
+  {0, {0,0,0,1,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
+  {1, {1,1,0,0,0,1}},
+  {2, {1,1,0,0,0,1}},
   {3, {0,0,0,0,0,1}},
 
 };
@@ -254,8 +254,8 @@ int main(int argc, char **argv)
   while (ros::ok())
   {
     // //baca setpoin
-     ROS_INFO("-------------------------");
-     ROS_INFO("%f, %f, %f, %f, %f",xas[0],xas[1],xas[2],xas[3],xas[4]);
+     //ROS_INFO("-------------------------");
+     //ROS_INFO("%f, %f, %f, %f, %f",xas[0],xas[1],xas[2],xas[3],xas[4]);
     // //  ROS_INFO("I heard: [%d] [%d]", ir, pb);
     // for(int i = 0; i < 5; i++) {
     //   ROS_INFO(": [%i]", ping[i]);
@@ -277,7 +277,7 @@ int main(int argc, char **argv)
       // pub_pompa.publish(asd);
 
       // ROS_INFO("step: %s", qwerty.data);
-      // ROS_INFO("step: %d, %d", flag1,gerak_1_[flag1] );
+      ROS_INFO("step: %d, %d", flag1,gerak_1_[flag1] );
 
 
     ros::spinOnce();
