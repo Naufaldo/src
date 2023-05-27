@@ -122,6 +122,7 @@ geometry_msgs::Twist head_Tws;
 std_msgs::Bool imu_override_;
 std_msgs::Bool leg_height_;
 std_msgs::Bool state_;
+std_msgs::int32 Led_;
 
 
 
@@ -175,6 +176,7 @@ void kontrol(char arah_, int step_){
     head_Tws.linear.y = yb * turn ; //gripper
 
     state_.data = true;
+    Led_.data=2;
     
   
     ROS_INFO("%d, %d, %d, %d, %d,", batas[0], batas[1], batas[2], batas[3], batas[4]);
@@ -249,6 +251,7 @@ int main(int argc, char **argv)
   ros::Publisher imu_override_pub_ = n.advertise<std_msgs::Bool>("/imu/imu_override", 100);
   ros::Publisher leg_height_pub_ = n.advertise<std_msgs::Bool>("/leg", 100);
   ros::Publisher state_pub_ = n.advertise<std_msgs::Bool>("/state", 100);
+  ros::Publisher Led = n.advertise<std_msgs::Int32>("/led_control", 10);
   ros::Subscriber sub = n.subscribe("merged_ping_topic", 10, mergedPingCallback);
 
   ros::Subscriber _sub1 = n.subscribe("/chatter1", 1, chatter1Callback);
@@ -275,6 +278,7 @@ int main(int argc, char **argv)
       imu_override_pub_.publish(imu_override_);
       leg_height_pub_.publish(leg_height_);
       head_pub_.publish(head_Tws);
+      Led.publish(led_);
       // qwerty.data=b_gerak[flag1];
       // pub_f_servo.publish(qwerty);
 

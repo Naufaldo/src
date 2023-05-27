@@ -1,12 +1,10 @@
-import time
+#!/usr/bin/env python3
+
 import rospy
 from std_msgs.msg import Int32
 from hexapod_msgs.msg import MergedPingArray
-import board
-import busio
-import adafruit_vl53l0x
 
-ping_data = [None, None, None, None, None, None]
+ping_data = [None, None, None, None, None]
 pub = None
 
 def ping_1_callback(data):
@@ -29,9 +27,8 @@ def ping_5_callback(data):
     global ping_data
     ping_data[4] = data.data
 
-def publish_merged_ping_data(distance):
+def publish_merged_ping_data():
     global ping_data, pub
-    ping_data[5] = distance
     merged_ping_array_msg = MergedPingArray()
     merged_ping_array_msg.merged_ping_array = ping_data
 
@@ -51,20 +48,8 @@ def merged_topics():
 
     rate = rospy.Rate(10)  # Publish rate of 10 Hz
 
-    # Initialize I2C bus and sensor
-    i2c = busio.I2C(board.SCL, board.SDA)
-    vl53 = adafruit_vl53l0x.VL53L0X(i2c)
-    vl53.measurement_timing_budget = 200000  # Set measurement timing budget
-
     while not rospy.is_shutdown():
-        # Process the VL53L0X sensor data here
-        distance = vl53.range
-        if distance > 0:
-            publish_merged_ping_data(distance)
-
-        time.sleep(0.1)
-
-        publish_merged_ping_data(0)  # Placeholder for VL53L0X data when not available
+        publish_merged_ping_data()
         rate.sleep()
 
 if __name__ == '__main__':
