@@ -179,15 +179,15 @@ void kontrol(char arah_, int step_){
     Led_.data=2;
     
   
-    ROS_INFO("%d, %d, %d, %d, %d,", batas[0], batas[1], batas[2], batas[3], batas[4]);
-    ROS_INFO("%d, %d, %d, %d, %d,",ping[0],ping[1],ping[2],ping[3],ping[4]);
-    ROS_INFO("%d, %d, %d, %d, %d, ",flag_[0],flag_[1],flag_[2],flag_[3],flag_[4]);
+    ROS_INFO("%d, %d, %d, %d, %d,", batas[0], batas[1], batas[2], batas[3], batas[4],batas[5]);
+    ROS_INFO("%d, %d, %d, %d, %d,",ping[0],ping[1],ping[2],ping[3],ping[4],ping[5]);
+    ROS_INFO("%d, %d, %d, %d, %d, ",flag_[0],flag_[1],flag_[2],flag_[3],flag_[4],flag_[5]);
 
 
-    bool s[5]={false,false,false,false,false};
+    bool s[6]={false,false,false,false,false};
 
   if(pilih==true){
-    for (int a=0; a<5; a++){
+    for (int a=0; a<6; a++){
       if(flag_[a]==true){
         if(ping[a]<=batas[a])
         {
@@ -208,7 +208,7 @@ void kontrol(char arah_, int step_){
 
   else{
 
-    for (int a=0; a<5; a++){
+    for (int a=0; a<6; a++){
       xas[a]=xaa[a]-yaa[a];
       if(flag_[a]==true){
         if(xas[a]<=batas[a])
@@ -229,7 +229,7 @@ void kontrol(char arah_, int step_){
 
 //  ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",s[0], s[1], s[2], s[3], s[4]);
   
-  if(s[0]==true && s[1]==true && s[2]==true && s[3]==true && s[4]==true){
+  if(s[0]==true && s[1]==true && s[2]==true && s[3]==true && s[4]==true && s[5]==true){
     flag1++;
     ROS_INFO("clear");
     yaa[0]=xaa[0];
