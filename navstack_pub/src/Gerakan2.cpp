@@ -77,7 +77,7 @@ std::map<char, std::vector<float>> moveBindings{
     {'C', {-1, 1, 0, 0}}};
 
 //step
-char a_gerak[]  ={'a','w','x','a','x','a','s','d'};
+char a_gerak[]  ={'a','w','a','x','a','s','d'};
 
 int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 
@@ -87,8 +87,8 @@ std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   {0, {10,10,7,0,320,-2 ,0}},
-  {1, {320,320,45,320,320,-2 ,0}}, // posisi home gerak ke kanan
-  {2, {120,320,45,80,8,0,0}},
+  {1, {320,320,20,320,320,0 ,0}}, // posisi home gerak ke kanan
+  {2, {50,50,10,320,320,0,0}},
   {3, {46,320,21,59,60,0,0}},
   {4, {52,320,7,18,18,0,0}},
   // {4, {52,320,7,18,18},0},
@@ -105,7 +105,7 @@ std::map<int, std::vector<bool>> _f_{
   //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
   {0, {0,0,0,0,1,1,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
   {1, {1,1,0,1,1,1,0,0}},
-  {2, {1,1,0,0,0,1,0,0}},
+  {2, {1,1,1,0,0,1,0,0}},
   {3, {0,0,0,0,0,1,0,1}},
 
 };
