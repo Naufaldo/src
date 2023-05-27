@@ -1,88 +1,107 @@
-#!/usr/bin/python3
+# SPDX-FileCopyrightText: 2021 Smankusors for Adafruit Industries
+# SPDX-License-Identifier: MIT
 
-# MIT License
-# 
-# Copyright (c) 2017 John Bryan Moore
-# 
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
+"""
+Example of how to use the adafruit_vl53l0x library to change the assigned address of
+multiple VL53L0X sensors on the same I2C bus. This example only focuses on 2 VL53L0X
+sensors, but can be modified for more. BE AWARE: a multitude of sensors may require
+more current than the on-board 3V regulator can output (typical current consumption during
+active range readings is about 19 mA per sensor).
 
+This example like vl53l0x_multiple_sensors, but this with sensors in continuous mode.
+So you don't need to wait the sensor to do range measurement and return the distance
+for you.
+
+For example, you have 2 VL53L0X sensors, with timing budget of 200ms, on single mode.
+When you want to get distance from sensor #1, sensor #2 will idle because waiting
+for sensor #1 completes the range measurement. You could do multithreading so you
+can ask both the sensor at the same time, but it's quite expensive.
+
+When you use continuous mode, the sensor will always do range measurement after it
+completes. So when you want to get the distance from both of the device, you don't
+need to wait 400ms, just 200ms for both of the sensors.
+"""
 import time
-import VL53L0X
-import RPi.GPIO as GPIO
+import board
+from digitalio import DigitalInOut
+from adafruit_vl53l0x import VL53L0X
 
-# GPIO for Sensor 1 shutdown pin
-sensor1_shutdown = 12
-# GPIO for Sensor 2 shutdown pin
-sensor2_shutdown = 16
+# declare the singleton variable for the default I2C bus
+i2c = board.I2C()  # uses board.SCL and board.SDA
+# i2c = board.STEMMA_I2C()  # For using the built-in STEMMA QT connector on a microcontroller
 
-GPIO.setwarnings(False)
+# declare the digital output pins connected to the "SHDN" pin on each VL53L0X sensor
+xshut = [
+    DigitalInOut(board.D17),
+    DigitalInOut(board.D18),
+    # add more VL53L0X sensors by defining their SHDN pins here
+]
 
-# Setup GPIO for shutdown pins on each VL53L0X
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(sensor1_shutdown, GPIO.OUT)
-GPIO.setup(sensor2_shutdown, GPIO.OUT)
+for power_pin in xshut:
+    # make sure these pins are a digital output, not a digital input
+    power_pin.switch_to_output(value=False)
+    # These pins are active when Low, meaning:
+    #   if the output signal is LOW, then the VL53L0X sensor is off.
+    #   if the output signal is HIGH, then the VL53L0X sensor is on.
+# all VL53L0X sensors are now off
 
-# Set all shutdown pins low to turn off each VL53L0X
-GPIO.output(sensor1_shutdown, GPIO.LOW)
-GPIO.output(sensor2_shutdown, GPIO.LOW)
+# initialize a list to be used for the array of VL53L0X sensors
+vl53 = []
 
-# Keep all low for 500 ms or so to make sure they reset
-time.sleep(0.50)
+# now change the addresses of the VL53L0X sensors
+for i, power_pin in enumerate(xshut):
+    # turn on the VL53L0X to allow hardware check
+    power_pin.value = True
+    # instantiate the VL53L0X sensor on the I2C bus & insert it into the "vl53" list
+    vl53.insert(i, VL53L0X(i2c))  # also performs VL53L0X hardware check
 
-# Create one object per VL53L0X passing the address to give to
-# each.
-tof = VL53L0X.VL53L0X(address=0x2B)
-tof1 = VL53L0X.VL53L0X(address=0x2D)
+    # start continous mode
+    vl53[i].start_continous()
 
-# Set shutdown pin high for the first VL53L0X then 
-# call to start ranging 
-GPIO.output(sensor1_shutdown, GPIO.HIGH)
-time.sleep(0.50)
-tof.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
+    # you will see the benefit of continous mode if you set the measurement timing
+    # budget very high.
+    # vl53[i].measurement_timing_budget = 2000000
 
-# Set shutdown pin high for the second VL53L0X then 
-# call to start ranging 
-GPIO.output(sensor2_shutdown, GPIO.HIGH)
-time.sleep(0.50)
-tof1.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
+    # no need to change the address of the last VL53L0X sensor
+    if i < len(xshut) - 1:
+        # default address is 0x29. Change that to something else
+        vl53[i].set_address(i + 0x30)  # address assigned should NOT be already in use
+# there is a helpful list of pre-designated I2C addresses for various I2C devices at
+# https://learn.adafruit.com/i2c-addresses/the-list
+# According to this list 0x30-0x34 are available, although the list may be incomplete.
+# In the python REPR, you can scan for all I2C devices that are attached and detirmine
+# their addresses using:
+#   >>> import board
+#   >>> i2c = board.I2C()  # uses board.SCL and board.SDA
+#   >>> if i2c.try_lock():
+#   >>>     [hex(x) for x in i2c.scan()]
+#   >>>     i2c.unlock()
 
-timing = tof.get_timing()
-if (timing < 20000):
-    timing = 20000
-print ("Timing %d ms" % (timing/1000))
 
-for count in range(1,101):
-    distance = tof.get_distance()
-    if (distance > 0):
-        print ("sensor %d - %d mm, %d cm, iteration %d" % (tof.my_object_number, distance, (distance/10), count))
-    else:
-        print ("%d - Error" % tof.my_object_number)
+def detect_range(count=5):
+    """take count=5 samples"""
+    while count:
+        for index, sensor in enumerate(vl53):
+            print("Sensor {} Range: {}mm".format(index + 1, sensor.range))
+        time.sleep(1.0)
+        count -= 1
 
-    distance = tof1.get_distance()
-    if (distance > 0):
-        print ("sensor %d - %d mm, %d cm, iteration %d" % (tof1.my_object_number, distance, (distance/10), count))
-    else:
-        print ("%d - Error" % tof.my_object_number)
 
-    time.sleep(timing/1000000.00)
+def stop_continuous():
+    """this is not required, if you use XSHUT to reset the sensor.
+    unless if you want to save some energy
+    """
+    for sensor in vl53:
+        sensor.stop_continuous()
 
-tof1.stop_ranging()
-GPIO.output(sensor2_shutdown, GPIO.LOW)
-tof.stop_ranging()
-GPIO.output(sensor1_shutdown, GPIO.LOW)
+
+if __name__ == "__main__":
+    detect_range()
+    stop_continuous()
+else:
+    print(
+        "Multiple VL53L0X sensors' addresses are assigned properly\n"
+        "execute detect_range() to read each sensors range readings.\n"
+        "When you are done with readings, execute stop_continuous()\n"
+        "to stop the continuous mode."
+    )
