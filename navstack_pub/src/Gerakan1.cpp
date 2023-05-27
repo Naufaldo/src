@@ -94,8 +94,8 @@ std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   //dua terakhir -2,0 = P ; 0, -1 = l ; 0,0=o
-  {0, {34, 62, 5, 10, 10, -2, 0}}, // posisi home gerak ke kanan
-  {1, {260, 320, 5, 32, 57, 0, -1}}, // posisi depan K1
+  {0, {350, 350, 5, 32, 32, -2, 0}}, // posisi home gerak ke kanan
+  {1, {350, 350, 5, 32, 57, 0, -1}}, // posisi depan K1
   {2, {65, 320, 21, 58, 58, -2, 0}}, // posisi k1
   {3, {304, 320, 13, 59, 59, 0, 0}}, // posisi depan k1
   {4, {15, 15, 59, 29, 29, 0, 0}}, // posisi hadap jalan retak
@@ -113,8 +113,8 @@ std::map<int, std::vector<int>> step{
 std::map<int, std::vector<bool>> _f_{
   // ini program untuk kondisi if 1 atau 0 (komparasi)
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-7 (0)(L>=b) (1)(L<=b), LaserOrOdom(1=lase && 0=odom) //odom
-  {0, {0,0,0,0,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
-  {1, {1,1,1,1,1,1}},
+  {0, {1,1,0,0,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
+  {1, {1,1,0,0,0,1}},
   {2, {0,0,0,0,0,1}},
   {3, {0,0,0,0,0,1}},
   {4, {0,0,0,0,0,1}},
