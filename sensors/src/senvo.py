@@ -46,7 +46,7 @@ def merged_topics():
 
     pub = rospy.Publisher('merged_ping_topic', MergedPingArray, queue_size=10)
 
-    rate = rospy.Rate(100)  # Publish rate of 10 Hz
+    rate = rospy.Rate(10)  # Publish rate of 10 Hz
 
     while not rospy.is_shutdown():
         publish_merged_ping_data()
