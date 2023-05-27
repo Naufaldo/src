@@ -78,7 +78,7 @@ std::map<char, std::vector<float>> moveBindings{
     {'C', {-1, 1, 0, 0}}};
 
 //step
-char a_gerak[]  ={'a','w','a','x','a','s','d'};
+char a_gerak[]  ={'a','w','a','w','a','s','d'};
 
 int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 
@@ -88,10 +88,10 @@ std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
-  {0, {10,10,7,0,320,160,-2 ,0}},
-  {1, {12,12,10,0,0,0,-2 ,0}}, // posisi home gerak ke kanan
-  {2, {320,320,50,23,23,0,-2,0}},
-  {3, {0,0,10,53,53,20,0,0}},
+  {0, {10,10,7,0,320,0,-2 ,0}},
+  {1, {18,18,5,10,10,250,-2 ,0}}, // posisi home gerak ke kanan
+  {2, {10,10,40,20,20,0,-2,0}},
+  {3, {0,0,10,53,53,200,0,-1}},
   // {4, {52,320,7,18,18},0},
   // {5, {52,320,7,18,18},0},
   // {6, {52,320,7,18,18},0},
@@ -105,8 +105,8 @@ std::map<int, std::vector<bool>> _f_{
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-4 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=lase && 0=odom) //odom ,imu over , leg height
   //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
   {0, {0,0,0,0,1,0,1,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
-  {1, {1,1,1,0,0,0,1,0,0}},
-  {2, {1,1,0,0,0,0,1,0,0}},
+  {1, {0,0,0,0,0,0,1,0,0}},
+  {2, {0,0,0,0,0,0,1,0,0}},
   {3, {0,0,0,0,0,0,1,0,1}},
 
 };
@@ -179,9 +179,9 @@ void kontrol(char arah_, int step_){
     Led_.data=2;
     
   
-    ROS_INFO("%d, %d, %d, %d, %d,", batas[0], batas[1], batas[2], batas[3], batas[4],batas[5]);
-    ROS_INFO("%d, %d, %d, %d, %d,",ping[0],ping[1],ping[2],ping[3],ping[4],ping[5]);
-    ROS_INFO("%d, %d, %d, %d, %d, ",flag_[0],flag_[1],flag_[2],flag_[3],flag_[4],flag_[5]);
+    ROS_INFO("%d, %d, %d, %d, %d,%d,", batas[0], batas[1], batas[2], batas[3], batas[4],batas[5]);
+    ROS_INFO("%d, %d, %d, %d, %d,%d,",ping[0],ping[1],ping[2],ping[3],ping[4],ping[5]);
+    ROS_INFO("%d, %d, %d, %d, %d, %d,",flag_[0],flag_[1],flag_[2],flag_[3],flag_[4],flag_[5]);
 
 
     bool s[6]={false,false,false,false,false};
