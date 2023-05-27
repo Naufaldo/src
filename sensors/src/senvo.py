@@ -65,8 +65,6 @@ def merged_topics():
             publish_merged_ping_data(distance)
 
         time.sleep(0.1)
-
-        publish_merged_ping_data(0)  # Placeholder for VL53L0X data when not available
         rate.sleep()
 
 if __name__ == '__main__':
