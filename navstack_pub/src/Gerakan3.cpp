@@ -88,7 +88,7 @@ std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
-  {0, {10,10,7,0,660,0,-2 ,0}},
+  {0, {10,10,7,0,0,0,-2 ,0}},
   {1, {18,18,5,10,10,250,-2 ,0}}, // posisi home gerak ke kanan
   {2, {10,10,40,20,20,0,-2,0}},
   {3, {0,0,10,53,53,200,0,-1}},
@@ -104,7 +104,7 @@ std::map<int, std::vector<bool>> _f_{
   // ini program untuk kondisi if 1 atau 0 (komparasi)
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-4 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=lase && 0=odom) //odom ,imu over , leg height
   //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
-  {0, {0,0,0,0,1,0,1,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
+  {0, {0,0,0,0,0,0,1,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
   {1, {0,0,0,0,0,0,1,0,0}},
   {2, {0,0,0,0,0,0,1,0,0}},
   {3, {0,0,0,0,0,0,1,0,1}},
