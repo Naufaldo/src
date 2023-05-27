@@ -193,7 +193,7 @@ void kontrol(char arah_, int step_){
     head_Tws.linear.y = yb * 1 ; //gripper
 
     state_.data = true;
-    imu_override_.data = true;
+    imu_override_.data = false;
     leg_height_.data = true;
   
     ROS_INFO("%d, %d, %d, %d, %d,", batas[0], batas[1], batas[2], batas[3], batas[4]);
