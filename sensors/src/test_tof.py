@@ -36,7 +36,7 @@ for i, power_pin in enumerate(xshut):
 
     # you will see the benefit of continous mode if you set the measurement timing
     # budget very high.
-    # vl53[i].measurement_timing_budget = 2000000
+    vl53[i].measurement_timing_budget = 2000000
 
     # no need to change the address of the last VL53L0X sensor
     if i < len(xshut) - 1:
