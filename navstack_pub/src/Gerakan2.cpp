@@ -86,7 +86,7 @@ int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
-  {0, {-2,18,7,52,320,-2 ,0}},
+  //{0, {-2,18,7,52,320,-2 ,0}},
   {1, {14,14,10,14,14,-2 ,0}}, // posisi home gerak ke kanan
   {2, {120,320,52,57,25,0,0}},
   {3, {46,320,21,59,60,0,0}},
