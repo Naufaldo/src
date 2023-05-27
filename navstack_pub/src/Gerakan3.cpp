@@ -88,7 +88,7 @@ std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
-  {0, {10,10,7,0,320,0,-2 ,0}},
+  {0, {10,10,7,0,660,0,-2 ,0}},
   {1, {18,18,5,10,10,250,-2 ,0}}, // posisi home gerak ke kanan
   {2, {10,10,40,20,20,0,-2,0}},
   {3, {0,0,10,53,53,200,0,-1}},
