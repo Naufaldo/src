@@ -29,6 +29,27 @@ void mergedPingCallback(const hexapod_msgs::MergedPingArray::ConstPtr& msg)
 
 float xaa[5],yaa[5],xas[5];
 bool ff1,ff2,ff3;
+void chatter1Callback(const std_msgs::Float32& msg)
+{
+  xaa[0]=msg.data;
+  // ROS_INFO("I heard: [%f]", xaa[0]);
+  if(ff1==false){ yaa[0]=xaa[0]; ff1=true;}
+}
+
+void chatter2Callback(const std_msgs::Float32& msg)
+{
+  xaa[1]=msg.data;
+  // ROS_INFO("I heard: [%f]", xaa[1]);
+  if(ff2==false){ yaa[1]=xaa[1];ff2=true;}
+}
+
+void chatter3Callback(const std_msgs::Float32& msg)
+{
+  xaa[2]=msg.data;
+  // ROS_INFO("I heard: [%f]", xaa[2]);
+  if(ff3==false){ yaa[2]=xaa[2];ff3=true;}
+}
+
 int flag1=1;
 
 
@@ -54,34 +75,6 @@ std::map<char, std::vector<float>> moveBindings{
     {'Z', {-1, -1, 0, 0}},
     {'X', {-1, 0, 0, 0}},
     {'C', {-1, 1, 0, 0}}};
-
-// Map for movement keys
-// std::map<char, std::vector<float>> moveBindings{
-//     //Moving and Rotating
-//     {'q', {1, 0, 0, 1, 0, 0}},
-//     {'w', {1, 0, 0, 0, 0, 0}},
-//     {'e', {1, 0, 0, -1, 0, 0}},
-//     {'a', {0, 0, 0, 1, 0, 0}},
-//     {'s', {0, 0, 0, 0, 0, 0}},
-//     {'d', {0, 0, 0, -1, 0, 0}},
-//     {'z', {-1, 0, 0, -1, 0, 0}},
-//     {'x', {-1, 0, 0, 0, 0, 0}},
-//     {'c', {-1, 0, 0, 1, 0, 0}},
-//     //Holomonic Move
-//     {'Q', {1, -1, 0, 0, 0, 0}},
-//     {'W', {1, 0, 0, 0, 0, 0}},
-//     {'E', {1, 1, 0, 0, 0, 0}},
-//     {'A', {0, -1, 0, 0, 0, 0}},
-//     {'S', {0, 0, 0, 0, 0, 0}},
-//     {'D', {0, 1, 0, 0, 0, 0}},
-//     {'Z', {-1, -1, 0, 0, 0, 0}},
-//     {'X', {-1, 0, 0, 0, 0, 0}},
-//     {'C', {-1, 1, 0, 0, 0, 0}}};
-    // //Head Manipulating
-    //  {'o', {0, 0, 0, 0, 0, 0}},
-    // {'p', {0, 0, 0, 0, -2, 0}},
-    // {'l', {0, 0, 0, 0, 0, -1}}};
-
 
 //step
 char a_gerak[]  ={'a','w','x','a','x','a','s','d'};
@@ -252,13 +245,17 @@ int main(int argc, char **argv)
   ros::Publisher state_pub_ = n.advertise<std_msgs::Bool>("/state", 100);
   ros::Subscriber sub = n.subscribe("merged_ping_topic", 10, mergedPingCallback);
 
+  ros::Subscriber _sub1 = n.subscribe("/chatter1", 1, chatter1Callback);
+  ros::Subscriber _sub2 = n.subscribe("/chatter2", 1, chatter2Callback);
+  ros::Subscriber _sub3 = n.subscribe("/chatter3", 1, chatter3Callback);
+
   // flag1=1;
   ros::Rate r(100); 
   while (ros::ok())
   {
     // //baca setpoin
-    //  ROS_INFO("-------------------------");
-    //  ROS_INFO("%f, %f, %f, %f, %f",xas[0],xas[1],xas[2],xas[3],xas[4]);
+     ROS_INFO("-------------------------");
+     ROS_INFO("%f, %f, %f, %f, %f",xas[0],xas[1],xas[2],xas[3],xas[4]);
     // //  ROS_INFO("I heard: [%d] [%d]", ir, pb);
     // for(int i = 0; i < 5; i++) {
     //   ROS_INFO(": [%i]", ping[i]);
