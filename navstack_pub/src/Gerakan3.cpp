@@ -20,7 +20,7 @@ int ping[5]={0,0,0,0,0};
 // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri
 void mergedPingCallback(const hexapod_msgs::MergedPingArray::ConstPtr& msg)
 {
-  for (int i=0;i<5;i++){
+  for (int i=0;i<6;i++){
     ping[i]=msg->merged_ping_array[i];
   }
   ROS_INFO("I heard: [%d]", ping[0]);
@@ -78,7 +78,7 @@ std::map<char, std::vector<float>> moveBindings{
     {'C', {-1, 1, 0, 0}}};
 
 //step
-char a_gerak[]  ={'a','D','w','x','a','s','d'};
+char a_gerak[]  ={'a','w','a','x','a','s','d'};
 
 int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 
@@ -88,11 +88,10 @@ std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
-  {0, {10,10,7,0,320,-2 ,0}},
-  {1, {12,12,10,0,0,-2 ,0}}, // posisi home gerak ke kanan
-  {2, {320,320,18,18,18,-2,0}},
-  {3, {46,320,21,59,60,0,0}},
-  {4, {52,320,7,18,18,0,0}},
+  {0, {10,10,7,0,320,160,-2 ,0}},
+  {1, {12,12,10,0,0,0,-2 ,0}}, // posisi home gerak ke kanan
+  {2, {320,320,50,23,23,0,-2,0}},
+  {3, {0,0,10,53,53,20,0,0}},
   // {4, {52,320,7,18,18},0},
   // {5, {52,320,7,18,18},0},
   // {6, {52,320,7,18,18},0},
@@ -105,10 +104,10 @@ std::map<int, std::vector<bool>> _f_{
   // ini program untuk kondisi if 1 atau 0 (komparasi)
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-4 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=lase && 0=odom) //odom ,imu over , leg height
   //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
-  {0, {0,0,0,0,1,1,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
-  {1, {1,1,1,0,0,1,0,0}},
-  {2, {1,1,0,0,0,1,0,0}},
-  {3, {0,0,0,0,0,1,0,1}},
+  {0, {0,0,0,0,1,0,1,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
+  {1, {1,1,1,0,0,0,1,0,0}},
+  {2, {1,1,0,0,0,0,1,0,0}},
+  {3, {0,0,0,0,0,0,1,0,1}},
 
 };
 
@@ -130,25 +129,25 @@ std_msgs::Int32 Led_;
 bool pilih;
 void kontrol(char arah_, int step_){
   key=arah_;
-  int batas[5];
+  int batas[6];
   if (step.count(step_) == 1)
     {
-      for(int a=0;a<5;a++){
+      for(int a=0;a<6;a++){
         batas[a]=step[step_][a];
       }
-      xb=step[step_][5];
-      yb=step[step_][6];
+      xb=step[step_][6];
+      yb=step[step_][7];
     }
 
-  bool flag_[5];
+  bool flag_[6];
   if (_f_.count(step_) == 1)
     {
-      for(int a=0;a<5;a++){
+      for(int a=0;a<6;a++){
         flag_[a]=_f_[step_][a];
       }
     pilih=_f_[step_][5];
-    imu_override_.data = _f_[step_][6];
-    leg_height_.data = _f_[step_][7];
+    imu_override_.data = _f_[step_][7];
+    leg_height_.data = _f_[step_][8];
     }
     
 
