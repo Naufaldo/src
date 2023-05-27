@@ -88,7 +88,7 @@ std::map<int, std::vector<int>> step{
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   {0, {10,10,7,0,320,-2 ,0}},
   {1, {320,320,20,320,320,0 ,0}}, // posisi home gerak ke kanan
-  {2, {50,50,10,320,320,0,0}},
+  {2, {320,320,10,50,50,0,0}},
   {3, {46,320,21,59,60,0,0}},
   {4, {52,320,7,18,18,0,0}},
   // {4, {52,320,7,18,18},0},
