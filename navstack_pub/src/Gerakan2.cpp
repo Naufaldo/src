@@ -241,6 +241,8 @@ int main(int argc, char **argv)
    flag1=0;
   ros::init(argc, argv, "Move_Control");
   ros::NodeHandle n;
+  ros::param::get("TELEOP_SPEED", speed);
+  ros::param::get("TELEOP_SPEED", turn);
   ros::Publisher pub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
   ros::Publisher head_pub_ = n.advertise<geometry_msgs::Twist>("/head_Tws", 1);
   ros::Publisher imu_override_pub_ = n.advertise<std_msgs::Bool>("/imu/imu_override", 100);
