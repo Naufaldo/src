@@ -101,11 +101,12 @@ std::map<int, std::vector<int>> step{
 };
 std::map<int, std::vector<bool>> _f_{
   // ini program untuk kondisi if 1 atau 0 (komparasi)
-  // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-7 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=lase && 0=odom) //odom
-  {0, {0,0,0,0,1,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
-  {1, {1,1,0,0,0,1}},
-  {2, {1,1,0,0,0,1}},
-  {3, {0,0,0,0,0,1}},
+  // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-4 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=lase && 0=odom) //odom ,imu over , leg height
+  //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
+  {0, {0,0,0,0,1,1,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
+  {1, {1,1,0,0,0,1,0,0}},
+  {2, {1,1,0,0,0,1,0,0}},
+  {3, {0,0,0,0,0,1,0,1}},
 
 };
 
@@ -143,6 +144,8 @@ void kontrol(char arah_, int step_){
         flag_[a]=_f_[step_][a];
       }
     pilih=_f_[step_][5];
+    imu_override_.data = _f_[step_][6];
+    leg_height_.data = _f_[step_][7];
     }
     
 
@@ -153,6 +156,7 @@ void kontrol(char arah_, int step_){
       y = moveBindings[key][1];
       z = moveBindings[key][2];
       th = moveBindings[key][3];
+      imu_override_.data = false;
            
       ROS_INFO("\rCurrent: speed %f   | turn %f | Last command: %c   ", speed, turn, key);
     }
@@ -170,8 +174,7 @@ void kontrol(char arah_, int step_){
     head_Tws.linear.y = yb * turn ; //gripper
 
     state_.data = true;
-    imu_override_.data = false;
-    leg_height_.data = true;
+    
   
     ROS_INFO("%d, %d, %d, %d, %d,", batas[0], batas[1], batas[2], batas[3], batas[4]);
     ROS_INFO("%d, %d, %d, %d, %d,",ping[0],ping[1],ping[2],ping[3],ping[4]);
