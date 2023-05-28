@@ -88,7 +88,7 @@ std::map<int, std::vector<int>> step{
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Gripper, Gripper}}
-  {0, {0, 255, 0, 500, -2 ,0}},
+  {0, {0, 255, 0, 550, -2 ,0}},
   {1, {0, 110, 240, 0, 0, -1}},
   {2, {0, 140, 0, 0, -2, 0}},
   {3, {0, 280, 105, 0, -2, 0}},
@@ -137,7 +137,7 @@ std::map<int, std::vector<bool>> _f_{
   //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
   {0, {0,1,0,0,1,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
   {1, {0,1,0,0,1,0,1}},
-  {2, {0,0,0,0,1,0,1}},
+  {2, {0,1,0,0,1,0,1}},
   {3, {0,0,1,0,1,0,1}},
   {4, {1,0,0,0,1,0,1}},
   {5, {0,0,0,0,1,0,1}},
