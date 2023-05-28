@@ -7,9 +7,9 @@ sensor1_shutdown = 12
 # GPIO for Sensor 2 shutdown pin
 sensor2_shutdown = 16
 # GPIO for Sensor 3 shutdown pin
-sensor3_shutdown = 18
+sensor3_shutdown = 20
 # GPIO for Sensor 4 shutdown pin
-sensor4_shutdown = 22
+sensor4_shutdown = 21
 
 GPIO.setwarnings(False)
 
