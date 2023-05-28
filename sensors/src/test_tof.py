@@ -14,6 +14,7 @@ xshut = [
     DigitalInOut(board.D16),
     DigitalInOut(board.D6),
     DigitalInOut(board.D13),
+    DigitalInOut(board.D20),
 ]
 
 for power_pin in xshut:
