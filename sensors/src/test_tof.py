@@ -10,8 +10,8 @@ i2c = board.I2C()  # uses board.SCL and board.SDA
 
 # declare the digital output pins connected to the "SHDN" pin on each VL53L0X sensor
 xshut = [
-    DigitalInOut(board.D12),
-    DigitalInOut(board.D16),
+    # DigitalInOut(board.D12),
+    # DigitalInOut(board.D16),
     DigitalInOut(board.D6),
     DigitalInOut(board.D13),
 ]
@@ -36,7 +36,7 @@ for i, power_pin in enumerate(xshut):
     # no need to change the address of the last VL53L0X sensor
     if i < len(xshut) - 1:
         # default address is 0x29. Change that to something else
-        vl53[i].set_address(i + 0x31)  # address assigned should NOT be already in use
+        vl53[i].set_address(i + 0x32)  # address assigned should NOT be already in use
 # there is a helpful list of pre-designated I2C addresses for various I2C devices at
 # https://learn.adafruit.com/i2c-addresses/the-list
 # According to this list 0x30-0x34 are available, although the list may be incomplete.
