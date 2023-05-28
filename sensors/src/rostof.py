@@ -76,19 +76,19 @@ try:
 
         distance = tof.get_distance()
         if distance > 0:
-            distances.append(distance / 10)
+            distances.append(distance)
 
         distance = tof1.get_distance()
         if distance > 0:
-            distances.append(distance / 10)
+            distances.append(distance)
 
         distance = tof2.get_distance()
         if distance > 0:
-            distances.append(distance / 10)
+            distances.append(distance)
 
         distance = tof3.get_distance()
         if distance > 0:
-            distances.append(distance / 10)
+            distances.append(distance)
 
         # Publish the distances as Float32MultiArray
         msg = Int32MultiArray(data=distances)
