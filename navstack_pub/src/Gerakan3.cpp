@@ -2,7 +2,7 @@
 #include "std_msgs/String.h"
 
 #include <nav_msgs/Odometry.h>
-#include <hexapod_msgs/MergedPingArray.h>
+#include <std_msgs/Int32MultiArray.h>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/AccelStamped.h>
 #include <std_msgs/Bool.h>
@@ -16,12 +16,12 @@
 #include <termios.h>
 #include <map>
 
-int ping[5]={0,0,0,0,0};
+int ping[4]={0,0,0,0};
 // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri
-void mergedPingCallback(const hexapod_msgs::MergedPingArray::ConstPtr& msg)
+void tofdistancesCallback(const std_msgs::Int32MultiArray::ConstPtr& msg)
 {
-  for (int i=0;i<6;i++){
-    ping[i]=msg->merged_ping_array[i];
+  for (int i=0;i<4;i++){
+    ping[i]=msg->Int32[i];
   }
   ROS_INFO("I heard: [%d]", ping[0]);
 }
@@ -129,20 +129,20 @@ std_msgs::Int32 Led_;
 bool pilih;
 void kontrol(char arah_, int step_){
   key=arah_;
-  int batas[6];
+  int batas[4];
   if (step.count(step_) == 1)
     {
-      for(int a=0;a<6;a++){
+      for(int a=0;a<4;a++){
         batas[a]=step[step_][a];
       }
       xb=step[step_][6];
       yb=step[step_][7];
     }
 
-  bool flag_[6];
+  bool flag_[4];
   if (_f_.count(step_) == 1)
     {
-      for(int a=0;a<6;a++){
+      for(int a=0;a<4;a++){
         flag_[a]=_f_[step_][a];
       }
     pilih=_f_[step_][5];
@@ -180,14 +180,14 @@ void kontrol(char arah_, int step_){
     
   
     ROS_INFO("%d, %d, %d, %d, %d,%d,", batas[0], batas[1], batas[2], batas[3], batas[4],batas[5]);
-    ROS_INFO("%d, %d, %d, %d, %d,%d,",ping[0],ping[1],ping[2],ping[3],ping[4],ping[5]);
-    ROS_INFO("%d, %d, %d, %d, %d, %d,",flag_[0],flag_[1],flag_[2],flag_[3],flag_[4],flag_[5]);
+    ROS_INFO("%d, %d, %d, %d, %d,%d,",ping[0],ping[1],ping[2],ping[3]);
+    ROS_INFO("%d, %d, %d, %d, %d, %d,",flag_[0],flag_[1],flag_[2],flag_[3]);
 
 
-    bool s[6]={false,false,false,false,false};
+    bool s[4]={false,false,false,false};
 
   if(pilih==true){
-    for (int a=0; a<6; a++){
+    for (int a=0; a<4; a++){
       if(flag_[a]==true){
         if(ping[a]<=batas[a])
         {
@@ -208,7 +208,7 @@ void kontrol(char arah_, int step_){
 
   else{
 
-    for (int a=0; a<6; a++){
+    for (int a=0; a<4; a++){
       xas[a]=xaa[a]-yaa[a];
       if(flag_[a]==true){
         if(xas[a]<=batas[a])
@@ -229,7 +229,7 @@ void kontrol(char arah_, int step_){
 
 //  ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",s[0], s[1], s[2], s[3], s[4]);
   
-  if(s[0]==true && s[1]==true && s[2]==true && s[3]==true && s[4]==true && s[5]==true){
+  if(s[0]==true && s[1]==true && s[2]==true && s[3]==true ){
     flag1++;
     ROS_INFO("clear");
     yaa[0]=xaa[0];
@@ -252,7 +252,7 @@ int main(int argc, char **argv)
   ros::Publisher leg_height_pub_ = n.advertise<std_msgs::Bool>("/leg", 100);
   ros::Publisher state_pub_ = n.advertise<std_msgs::Bool>("/state", 100);
   ros::Publisher Led = n.advertise<std_msgs::Int32>("/led_control", 10);
-  ros::Subscriber sub = n.subscribe("merged_ping_topic", 10, mergedPingCallback);
+  ros::Subscriber sub = n.subscribe("tof_distances", 10, tofdistancesCallback);
 
   ros::Subscriber _sub1 = n.subscribe("/chatter1", 1, chatter1Callback);
   ros::Subscriber _sub2 = n.subscribe("/chatter2", 1, chatter2Callback);
