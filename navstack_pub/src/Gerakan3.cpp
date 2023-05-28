@@ -291,7 +291,7 @@ void kontrol(char arah_, int step_){
       }
     }
   }
-//  ROS_INFO("%d, %d, %d, %d ",s[0], s[1], s[2], s[3], s[4]);
+//  //ROS_INFO("%d, %d, %d, %d ",s[0], s[1], s[2], s[3], s[4]);
   
   if(s[0]==true && s[1]==true && s[2]==true && s[3]==true ){
     flag1++;
