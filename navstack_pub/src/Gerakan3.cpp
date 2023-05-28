@@ -21,7 +21,7 @@ int ping[4]={0,0,0,0};
 void tofdistancesCallback(const std_msgs::Int32MultiArray::ConstPtr& msg)
 {
   for (int i=0;i<4;i++){
-    ping[i]=msg->Int32[i];
+    ping[i]=msg->Int32MultiArray[i];
   }
   ROS_INFO("I heard: [%d]", ping[0]);
 }
