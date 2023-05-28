@@ -84,7 +84,7 @@ int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 
 
 //program buat limit sensor dan gerakan kaki dan juga gerakan gripper
-std::map<int, std::vector<int>> step_{
+std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
@@ -127,7 +127,7 @@ std_msgs::Int32 Led_;
 
 
 bool pilih;
-void kontrol(char arah_, int step_0){
+void kontrol(char arah_, int step_){
   key=arah_;
   int batas[4];
   if (step.count(step_) == 1)
