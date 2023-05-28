@@ -87,7 +87,7 @@ std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
-  ///{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Gripper, Gripper}}
+  //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Gripper, Gripper}}
   {0, {0,0,0,345,-2 ,0}},
   {1, (0,110,243,0,0,-1)},
   {2, {0,144,0,0,-2,0}},
@@ -127,7 +127,7 @@ std::map<int, std::vector<int>> step{
   {36, {660,0,0,190,-2,0}},
   {37, {0,210,315,0,-2,0}},
   {38, {0,0,0,0,-2,0}},
-  {39, {185,180,325,770,-2,0}},
+  {39, {185,180,325,770,-2,0}}
 };
 
 std::map<int, std::vector<bool>> _f_{
@@ -173,7 +173,7 @@ std::map<int, std::vector<bool>> _f_{
   {36, {0,0,0,1,1,0,1}},
   {37, {0,1,0,0,1,0,1}},
   {38, {0,0,0,0,1,0,1}},
-  {39, {1,1,0,0,1,0,1}},
+  {39, {1,1,0,0,1,0,1}}
 };
 
 // Init variables
