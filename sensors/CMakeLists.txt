@@ -166,7 +166,7 @@ include_directories(
 
 
 
-catkin_install_python(PROGRAMS scripts/talker.py scripts/listener.py scripts/listener2.py
+catkin_install_python(PROGRAMS scripts/talker.py scripts/listener.py scripts/listener2.py src/python/rostof.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
