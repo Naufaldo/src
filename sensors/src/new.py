@@ -56,6 +56,7 @@ def publish_range():
 
     while not rospy.is_shutdown():
         ranges = Int32MultiArray(data=[sensor.range for sensor in vl53])
+        print(ranges)
         range_publisher.publish(ranges)
         rate.sleep()
 
