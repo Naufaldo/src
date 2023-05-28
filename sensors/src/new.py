@@ -16,7 +16,7 @@ xshut = [
     DigitalInOut(board.D12),
     DigitalInOut(board.D16),
     # DigitalInOut(board.D20),
-    DigitalInOut(board.D21),
+    # DigitalInOut(board.D21),
     # add more VL53L0X sensors by defining their SHDN pins here
 ]
 
