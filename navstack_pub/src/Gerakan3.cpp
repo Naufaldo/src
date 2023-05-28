@@ -127,7 +127,7 @@ std_msgs::Int32 Led_;
 
 
 bool pilih;
-void kontrol(char arah_, int step_){
+void kontrol(char arah_, int step_0){
   key=arah_;
   int batas[4];
   if (step.count(step_) == 1)
@@ -179,7 +179,7 @@ void kontrol(char arah_, int step_){
     Led_.data=2;
     
   
-    ROS_INFO("%d, %d, %d, %d ", batas[0], batas[1], batas[2], batas[3],);
+    ROS_INFO("%d, %d, %d, %d ", batas[0], batas[1], batas[2], batas[3]);
     ROS_INFO("%d, %d, %d, %d",ping[0],ping[1],ping[2],ping[3]);
     ROS_INFO("%d, %d, %d, %d",flag_[0],flag_[1],flag_[2],flag_[3]);
 
