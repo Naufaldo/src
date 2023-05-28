@@ -1,103 +1,72 @@
+# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
+# SPDX-License-Identifier: MIT
+
+"""
+Example of how to use the adafruit_vl53l0x library to change the assigned address of
+multiple VL53L0X sensors on the same I2C bus. This example only focuses on 2 VL53L0X
+sensors, but can be modified for more. BE AWARE: a multitude of sensors may require
+more current than the on-board 3V regulator can output (typical current consumption during
+active range readings is about 19 mA per sensor).
+"""
 import time
-import VL53L0X
-import RPi.GPIO as GPIO
+import board
+from digitalio import DigitalInOut
+from adafruit_vl53l0x import VL53L0X
 
-# GPIO for Sensor 1 shutdown pin
-sensor1_shutdown = 12
-# GPIO for Sensor 2 shutdown pin
-sensor2_shutdown = 16
-# GPIO for Sensor 3 shutdown pin
-sensor3_shutdown = 20
-# GPIO for Sensor 4 shutdown pin
-sensor4_shutdown = 21
+# declare the singleton variable for the default I2C bus
+i2c = board.I2C()  # uses board.SCL and board.SDA
+# i2c = board.STEMMA_I2C()  # For using the built-in STEMMA QT connector on a microcontroller
 
-GPIO.setwarnings(False)
+# declare the digital output pins connected to the "SHDN" pin on each VL53L0X sensor
+xshut = [
+    DigitalInOut(board.D12),
+    DigitalInOut(board.D16),
+    # add more VL53L0X sensors by defining their SHDN pins here
+]
 
-# Setup GPIO for shutdown pins on each VL53L0X
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(sensor1_shutdown, GPIO.OUT)
-GPIO.setup(sensor2_shutdown, GPIO.OUT)
-GPIO.setup(sensor3_shutdown, GPIO.OUT)
-GPIO.setup(sensor4_shutdown, GPIO.OUT)
+for power_pin in xshut:
+    # make sure these pins are a digital output, not a digital input
+    power_pin.switch_to_output(value=False)
+    # These pins are active when Low, meaning:
+    #   if the output signal is LOW, then the VL53L0X sensor is off.
+    #   if the output signal is HIGH, then the VL53L0X sensor is on.
+# all VL53L0X sensors are now off
 
-# Set all shutdown pins low to turn off each VL53L0X
-GPIO.output(sensor1_shutdown, GPIO.LOW)
-GPIO.output(sensor2_shutdown, GPIO.LOW)
-GPIO.output(sensor3_shutdown, GPIO.LOW)
-GPIO.output(sensor4_shutdown, GPIO.LOW)
+# initialize a list to be used for the array of VL53L0X sensors
+vl53 = []
 
-# Keep all low for 500 ms or so to make sure they reset
-time.sleep(0.50)
+# now change the addresses of the VL53L0X sensors
+for i, power_pin in enumerate(xshut):
+    # turn on the VL53L0X to allow hardware check
+    power_pin.value = True
+    # instantiate the VL53L0X sensor on the I2C bus & insert it into the "vl53" list
+    vl53.insert(i, VL53L0X(i2c))  # also performs VL53L0X hardware check
+    # no need to change the address of the last VL53L0X sensor
+    if i < len(xshut) - 1:
+        # default address is 0x29. Change that to something else
+        vl53[i].set_address(i + 0x30)  # address assigned should NOT be already in use
+# there is a helpful list of pre-designated I2C addresses for various I2C devices at
+# https://learn.adafruit.com/i2c-addresses/the-list
+# According to this list 0x30-0x34 are available, although the list may be incomplete.
+# In the python REPR, you can scan for all I2C devices that are attached and detirmine
+# their addresses using:
+#   >>> import board
+#   >>> i2c = board.I2C()
+#   >>> if i2c.try_lock():
+#   >>>     [hex(x) for x in i2c.scan()]
+#   >>>     i2c.unlock()
 
-# Create one object per VL53L0X passing the address to give to each
-tof = VL53L0X.VL53L0X(address=0x2B)
-tof1 = VL53L0X.VL53L0X(address=0x2D)
-tof2 = VL53L0X.VL53L0X(address=0x2F)
-tof3 = VL53L0X.VL53L0X(address=0x2E)
 
-# Set shutdown pin high for the first VL53L0X, then call to start ranging
-GPIO.output(sensor1_shutdown, GPIO.HIGH)
-time.sleep(0.50)
-tof.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
+def detect_range(count=5):
+    """take count=5 samples"""
+    while count:
+        for index, sensor in enumerate(vl53):
+            print("Sensor {} Range: {}mm".format(index + 1, sensor.range))
+        time.sleep(1.0)
+        count -= 1
 
-# Set shutdown pin high for the second VL53L0X, then call to start ranging
-GPIO.output(sensor2_shutdown, GPIO.HIGH)
-time.sleep(0.50)
-tof1.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
 
-# Set shutdown pin high for the third VL53L0X, then call to start ranging
-GPIO.output(sensor3_shutdown, GPIO.HIGH)
-time.sleep(0.50)
-tof2.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
-
-# Set shutdown pin high for the fourth VL53L0X, then call to start ranging
-GPIO.output(sensor4_shutdown, GPIO.HIGH)
-time.sleep(0.50)
-tof3.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
-
-timing = tof.get_timing()
-if timing < 20000:
-    timing = 20000
-print("Timing %d ms" % (timing / 1000))
-
-try:
-    while True:
-        distance = tof.get_distance()
-        if distance > 0:
-            print("sensor %d - %d mm, %d cm" % (tof.my_object_number, distance, (distance / 10)))
-        else:
-            print("%d - Error" % tof.my_object_number)
-
-        distance = tof1.get_distance()
-        if distance > 0:
-            print("sensor %d - %d mm, %d cm" % (tof1.my_object_number, distance, (distance / 10)))
-        else:
-            print("%d - Error" % tof1.my_object_number)
-
-        distance = tof2.get_distance()
-        if distance > 0:
-            print("sensor %d - %d mm, %d cm" % (tof2.my_object_number, distance, (distance / 10)))
-        else:
-            print("%d - Error" % tof2.my_object_number)
-
-        distance = tof3.get_distance()
-        if distance > 0:
-            print("sensor %d - %d mm, %d cm" % (tof3.my_object_number, distance, (distance / 10)))
-        else:
-            print("%d - Error" % tof3.my_object_number)
-
-        time.sleep(timing / 1000000.00)
-
-except KeyboardInterrupt:
-    # Stop ranging and set shutdown pins low when program is interrupted
-    tof.stop_ranging()
-    GPIO.output(sensor1_shutdown, GPIO.LOW)
-
-    tof1.stop_ranging()
-    GPIO.output(sensor2_shutdown, GPIO.LOW)
-
-    tof2.stop_ranging()
-    GPIO.output(sensor3_shutdown, GPIO.LOW)
-
-    tof3.stop_ranging()
-    GPIO.output(sensor4_shutdown, GPIO.LOW)
+print(
+    "Multiple VL53L0X sensors' addresses are assigned properly\n"
+    "execute detect_range() to read each sensors range readings"
+)
