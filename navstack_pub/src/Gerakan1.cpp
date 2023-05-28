@@ -2,26 +2,25 @@
 #include "std_msgs/String.h"
 
 #include <nav_msgs/Odometry.h>
-#include <std_msgs/Int32MultiArray.h>
+#include <hexapod_msgs/MergedPingArray.h>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/AccelStamped.h>
 #include <std_msgs/Bool.h>
 #include <std_msgs/UInt16.h>
 #include <std_msgs/Float32.h>
 #include <std_msgs/String.h>
-#include <std_msgs/Int32.h>
 #include <sensor_msgs/Imu.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <termios.h>
 #include <map>
 
-int ping[4]={0,0,0,0};
+int ping[5]={0,0,0,0,0};
 // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri
-void tofdistancesCallback(const std_msgs::Int32MultiArray::ConstPtr& msg)
+void mergedPingCallback(const hexapod_msgs::MergedPingArray::ConstPtr& msg)
 {
-  for (int i=0;i<4;i++){
-    ping[i]=msg->data[i];
+  for (int i=0;i<5;i++){
+    ping[i]=msg->merged_ping_array[i];
   }
   ROS_INFO("I heard: [%d]", ping[0]);
 }
@@ -30,27 +29,6 @@ void tofdistancesCallback(const std_msgs::Int32MultiArray::ConstPtr& msg)
 
 float xaa[5],yaa[5],xas[5];
 bool ff1,ff2,ff3;
-void chatter1Callback(const std_msgs::Float32& msg)
-{
-  xaa[0]=msg.data;
-  // ROS_INFO("I heard: [%f]", xaa[0]);
-  if(ff1==false){ yaa[0]=xaa[0]; ff1=true;}
-}
-
-void chatter2Callback(const std_msgs::Float32& msg)
-{
-  xaa[1]=msg.data;
-  // ROS_INFO("I heard: [%f]", xaa[1]);
-  if(ff2==false){ yaa[1]=xaa[1];ff2=true;}
-}
-
-void chatter3Callback(const std_msgs::Float32& msg)
-{
-  xaa[2]=msg.data;
-  // ROS_INFO("I heard: [%f]", xaa[2]);
-  if(ff3==false){ yaa[2]=xaa[2];ff3=true;}
-}
-
 int flag1=1;
 
 
@@ -77,108 +55,81 @@ std::map<char, std::vector<float>> moveBindings{
     {'X', {-1, 0, 0, 0}},
     {'C', {-1, 1, 0, 0}}};
 
-//step
-char a_gerak[]  ={'D', 'w', 's', 'x', 'D','d', 's', 'a', 'w', 'a', 'w', 's', 'd', 'w', 's', 'a', 'w', 'a','w','d','w', 'x', 'A', 'a','d', 'D','x','w','x', 'A','w','A','a','w','d','w','c','A','w','s'};
+// Map for movement keys
+// std::map<char, std::vector<float>> moveBindings{
+//     //Moving and Rotating
+//     {'q', {1, 0, 0, 1, 0, 0}},
+//     {'w', {1, 0, 0, 0, 0, 0}},
+//     {'e', {1, 0, 0, -1, 0, 0}},
+//     {'a', {0, 0, 0, 1, 0, 0}},
+//     {'s', {0, 0, 0, 0, 0, 0}},
+//     {'d', {0, 0, 0, -1, 0, 0}},
+//     {'z', {-1, 0, 0, -1, 0, 0}},
+//     {'x', {-1, 0, 0, 0, 0, 0}},
+//     {'c', {-1, 0, 0, 1, 0, 0}},
+//     //Holomonic Move
+//     {'Q', {1, -1, 0, 0, 0, 0}},
+//     {'W', {1, 0, 0, 0, 0, 0}},
+//     {'E', {1, 1, 0, 0, 0, 0}},
+//     {'A', {0, -1, 0, 0, 0, 0}},
+//     {'S', {0, 0, 0, 0, 0, 0}},
+//     {'D', {0, 1, 0, 0, 0, 0}},
+//     {'Z', {-1, -1, 0, 0, 0, 0}},
+//     {'X', {-1, 0, 0, 0, 0, 0}},
+//     {'C', {-1, 1, 0, 0, 0, 0}}};
+    // //Head Manipulating
+    //  {'o', {0, 0, 0, 0, 0, 0}},
+    // {'p', {0, 0, 0, 0, -2, 0}},
+    // {'l', {0, 0, 0, 0, 0, -1}}};
 
-int gerak_1_[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+
+//step
+char a_gerak[]  ={'D','w','s','x','d','w','d','a','w','a','w','s','d','w','s','a'};
+
+int gerak_1_[]={0,0,0,0,0,0,0,0,0};
+
 
 //program buat limit sensor dan gerakan kaki dan juga gerakan gripper
 std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
-  // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
-  //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Gripper, Gripper}}
-  {0, {0,0,0,345,-2 ,0}},
-  {1, (0,110,243,0,0,-1)},
-  {2, {0,144,0,0,-2,0}},
-  {3, {0,280,105,0,-2,0}},
-  {4, {160,850,0,0,-2,0}},
-  {5, {180,260,240,190,-2,0}},
-  {6, {0,120,0,0,0,-1}},
-  {7, {0,840,145,0,-2,0}},
-  {8, {0,0,383,0,-2,0}},
-  {9, {320,118,250,430,0,-1}},
-  {10, {0,180,0,0,-2,0}},
-  {11, {242,473,423,178,-2,0}},
-  {12, {0,248,0,0,-2,0}},
-  {13, {0,125,0,0,0,-1}},
-  {14, {360,629,195,260,-2,0}},
-  {15, {205,285,370,450,-2,0}},
-  {16, {234,0,275,0,-2,0}},
-  {17, {0,397,368,0,-2,0}},
-  {18, {0,295,166,0,-2,0}},
-  {19, {0,115,190,0,0,-1}},
-  {20, {0,255,168,0,0,-1}},
-  {21, {160,0,0,425,-2,0}},
-  {22, {450,260,352,385,-2,0}},
-  {23, {630, 270,230,300,0,-1}},
-  {24, {340, 90, 0, 710,-2,0}},
-  {25, {0,0,160,0,-2,0}},
-  {26, {0,0,170,0,0,-1}},
-  {27, {0,0,150,0,-2,0}},
-  {28, {290,0,0,150,-2,0}},
-  {29, {0,0,307,0,-2,0}},
-  {30, {0,0,770,390,-2,0}},
-  {31, {220,470,0,750,-2,0}},
-  {32, {0,230,0,0,-2,0}},
-  {33, {235,260,0,0,0,-1}},
-  {34, {0,220,0,0,0,-1}},
-  {35, {180,280,0,550,-2,0}},
-  {36, {660,0,0,190,-2,0}},
-  {37, {0,210,315,0,-2,0}},
-  {38, {0,0,0,0,-2,0}},
-  {39, {185,180,325,770,-2,0}},
-
-  {100, {0,0,0,0,0,0}}
+  //dua terakhir -2,0 = P ; 0, -1 = l ; 0,0=o
+  {0, {320, 320, 320, 18, 18, -2, 0}}, // posisi home gerak ke kanan
+  {1, {260, 320, 5, 32, 57, 0, -1}}, // posisi depan K1
+  {2, {65, 320, 21, 58, 58, -2, 0}}, // posisi k1
+  {3, {304, 320, 13, 59, 59, 0, 0}}, // posisi depan k1
+  {4, {15, 15, 59, 29, 29, 0, 0}}, // posisi hadap jalan retak
+  {5, {15, 16, 28, 20, 28, 0, 0}}, // posisi sz 1
+  {6, {31, 320, 176, 17, 30, 0, -1}}, // posisi meletakan sz 1
+  {7, {16, 17, 15, 37, 43, -2, 0}}, // menghadap kelereng
+  {8, {16, 18, 45, 17, 26, 0, -1}}, // posisi menghadap k2
+  {9, {50, 51, 15, 20, 55, 0, 0}}, // posisi depan k2
+  {10, {28, 55, 23, 18, 54, -2, 0}}, // posisi angkat k2
+  {11, {20, 320, 58, 28, 34, 0, 0}}, // menghadap sz 2
+  {12, {14, 121, 42, 31, 43, 0, -1}}, // menaruh k2
+  {13, {19, 20, 23, 85, 40, -2, 0}}, // keluar kelereng
+  
 };
-
 std::map<int, std::vector<bool>> _f_{
   // ini program untuk kondisi if 1 atau 0 (komparasi)
-  // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-4 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=lase && 0=odom) //odom ,imu over , leg height
-  //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
-  {0, {0,0,0,0,1,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
-  {1, {0,1,1,0,1,0,1}},
-  {2, {0,0,0,0,1,0,1}},
-  {3, {0,0,1,0,1,0,1}},
-  {4, {0,0,0,0,1,0,1}},
-  {5, {0,0,0,0,1,0,1}},
-  {6, {0,1,0,0,1,0,1}},
-  {7, {0,0,0,0,1,0,1}},
-  {8, {0,0,0,0,1,0,1}},
-  {9, {0,1,1,0,1,0,1}},
-  {10, {0,0,0,0,1,0,1}},
-  {11, {1,0,0,1,1,0,1}},
-  {12, {0,1,0,0,1,0,1}},
-  {13, {0,1,0,0,1,0,1}},
-  {14, {1,0,1,1,1,0,1}},
-  {15, {1,1,0,0,1,0,1}},
-  {16, {0,0,1,0,1,0,1}},
-  {17, {0,1,0,1,1,0,1}},
-  {18, {0,1,1,0,1,0,1}},
-  {19, {0,1,0,0,1,0,1}},
-  {20, {0,0,1,0,1,0,1}},
-  {21, {0,0,0,1,1,0,1}},
-  {22, {0,1,0,1,1,0,1}},
-  {23, {0,0,0,0,1,0,1}},
-  {24, {1,1,0,0,1,0,1}},
-  {25, {0,0,1,0,1,0,1}},
-  {26, {0,0,0,0,1,0,1}},
-  {27, {0,0,1,0,1,0,1}},
-  {28, {0,0,0,1,1,0,1}},
-  {29, {0,0,0,0,1,0,1}},
-  {30, {0,0,0,1,1,0,1}},
-  {31, {1,0,0,0,1,0,1}},
-  {32, {0,1,0,0,1,0,1}},
-  {33, {0,1,0,0,1,0,1}},
-  {34, {0,1,0,0,1,0,1}},
-  {35, {1,0,0,0,1,0,1}},
-  {36, {0,0,0,1,1,0,1}},
-  {37, {0,1,0,0,1,0,1}},
-  {38, {0,0,0,0,1,0,1}},
-  {39, {1,1,0,0,1,0,1}},
+  // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-7 (0)(L>=b) (1)(L<=b), LaserOrOdom(1=lase && 0=odom) //odom
+  {0, {1,1,1,0,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
+  {1, {0,0,0,0,0,1}},
+  {2, {0,0,0,0,0,1}},
+  {3, {0,0,0,0,0,1}},
+  {4, {0,0,0,0,0,1}},
+  {5, {0,0,0,0,0,1}},
+  {6, {0,0,0,0,0,1}},
+  {7, {0,0,0,0,0,1}},
+  {8, {0,0,0,0,0,1}},
+  {9, {0,0,0,0,0,1}},
+  {10, {0,0,0,0,0,1}},
+  {11, {0,0,0,0,0,1}},
+  {12, {0,0,0,0,0,1}},
+  {13, {0,0,0,0,0,1}},
 
-  {0, {0,0,0,0,1,0,1}}
 };
+
 
 // Init variables
 float speed(1);                                                 // Linear velocity (m/s)
@@ -190,32 +141,29 @@ geometry_msgs::Twist head_Tws;
 std_msgs::Bool imu_override_;
 std_msgs::Bool leg_height_;
 std_msgs::Bool state_;
-std_msgs::Int32 Led_;
 
 
 
 bool pilih;
 void kontrol(char arah_, int step_){
   key=arah_;
-  int batas[4];
+  int batas[5];
   if (step.count(step_) == 1)
     {
-      for(int a=0;a<4;a++){
+      for(int a=0;a<5;a++){
         batas[a]=step[step_][a];
       }
-      xb=step[step_][4];
-      yb=step[step_][5];
+      xb=step[step_][5];
+      yb=step[step_][6];
     }
 
-  bool flag_[4];
+  bool flag_[5];
   if (_f_.count(step_) == 1)
     {
-      for(int a=0;a<4;a++){
+      for(int a=0;a<5;a++){
         flag_[a]=_f_[step_][a];
       }
-    pilih=_f_[step_][4];
-    imu_override_.data = _f_[step_][5];
-    leg_height_.data = _f_[step_][6];
+    pilih=_f_[step_][5];
     }
     
 
@@ -226,8 +174,9 @@ void kontrol(char arah_, int step_){
       y = moveBindings[key][1];
       z = moveBindings[key][2];
       th = moveBindings[key][3];
-      imu_override_.data = false;
-           
+      // xb = moveBindings[key][4];
+      // yb = moveBindings[key][5];
+      
       ROS_INFO("\rCurrent: speed %f   | turn %f | Last command: %c   ", speed, turn, key);
     }
 
@@ -240,22 +189,22 @@ void kontrol(char arah_, int step_){
     twist.angular.y = 0;
     twist.angular.z = th * turn;
 
-    head_Tws.linear.x = xb * 0.7 ; //lifter
-    head_Tws.linear.y = yb * turn ; //gripper
+    head_Tws.linear.x = xb * 1 ; //lifter
+    head_Tws.linear.y = yb * 1 ; //gripper
 
     state_.data = true;
-    Led_.data=2;
-    
+    imu_override_.data = false;
+    leg_height_.data = true;
   
-    ROS_INFO("%d, %d, %d, %d ", batas[0], batas[1], batas[2], batas[3]);
-    ROS_INFO("%d, %d, %d, %d",ping[0],ping[1],ping[2],ping[3]);
-    ROS_INFO("%d, %d, %d, %d",flag_[0],flag_[1],flag_[2],flag_[3]);
+    ROS_INFO("%d, %d, %d, %d, %d,", batas[0], batas[1], batas[2], batas[3], batas[4]);
+    ROS_INFO("%d, %d, %d, %d, %d,",ping[0],ping[1],ping[2],ping[3],ping[4]);
+    ROS_INFO("%d, %d, %d, %d, %d, ",flag_[0],flag_[1],flag_[2],flag_[3],flag_[4]);
 
 
-    bool s[4]={false,false,false,false};
+    bool s[5]={false,false,false,false,false};
 
   if(pilih==true){
-    for (int a=0; a<4; a++){
+    for (int a=0; a<5; a++){
       if(flag_[a]==true){
         if(ping[a]<=batas[a])
         {
@@ -276,7 +225,7 @@ void kontrol(char arah_, int step_){
 
   else{
 
-    for (int a=0; a<4; a++){
+    for (int a=0; a<5; a++){
       xas[a]=xaa[a]-yaa[a];
       if(flag_[a]==true){
         if(xas[a]<=batas[a])
@@ -294,15 +243,16 @@ void kontrol(char arah_, int step_){
       }
     }
   }
-//  //ROS_INFO("%d, %d, %d, %d ",s[0], s[1], s[2], s[3], s[4]);
+
+// //   // ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",s[0], s[1], s[2], s[3], s[4]);
   
-  if(s[0]==true && s[1]==true && s[2]==true && s[3]==true ){
-    flag1++;
-    ROS_INFO("clear");
-    yaa[0]=xaa[0];
-    yaa[1]=xaa[1];
-    yaa[2]=xaa[2];
-  }
+//   if(s[0]==true && s[1]==true && s[2]==true && s[3]==true && s[4]==true){
+//     flag1++;
+//     ROS_INFO("clear");
+//     yaa[0]=xaa[0];
+//     yaa[1]=xaa[1];
+//     yaa[2]=xaa[2];
+//   }
 }
 
  
@@ -311,27 +261,20 @@ int main(int argc, char **argv)
    flag1=0;
   ros::init(argc, argv, "Move_Control");
   ros::NodeHandle n;
-  ros::param::get("TELEOP_SPEED", speed);
-  ros::param::get("TELEOP_SPEED", turn);
   ros::Publisher pub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
   ros::Publisher head_pub_ = n.advertise<geometry_msgs::Twist>("/head_Tws", 1);
   ros::Publisher imu_override_pub_ = n.advertise<std_msgs::Bool>("/imu/imu_override", 100);
   ros::Publisher leg_height_pub_ = n.advertise<std_msgs::Bool>("/leg", 100);
   ros::Publisher state_pub_ = n.advertise<std_msgs::Bool>("/state", 100);
-  ros::Publisher Led = n.advertise<std_msgs::Int32>("/led_control", 10);
-  ros::Subscriber sub = n.subscribe("tof_distances", 10, tofdistancesCallback);
-
-  ros::Subscriber _sub1 = n.subscribe("/chatter1", 1, chatter1Callback);
-  ros::Subscriber _sub2 = n.subscribe("/chatter2", 1, chatter2Callback);
-  ros::Subscriber _sub3 = n.subscribe("/chatter3", 1, chatter3Callback);
+  ros::Subscriber sub = n.subscribe("merged_ping_topic", 10, mergedPingCallback);
 
   // flag1=1;
   ros::Rate r(100); 
   while (ros::ok())
   {
     // //baca setpoin
-     //ROS_INFO("-------------------------");
-     //ROS_INFO("%f, %f, %f, %f, %f",xas[0],xas[1],xas[2],xas[3],xas[4]);
+    //  ROS_INFO("-------------------------");
+    //  ROS_INFO("%f, %f, %f, %f, %f",xas[0],xas[1],xas[2],xas[3],xas[4]);
     // //  ROS_INFO("I heard: [%d] [%d]", ir, pb);
     // for(int i = 0; i < 5; i++) {
     //   ROS_INFO(": [%i]", ping[i]);
@@ -345,7 +288,6 @@ int main(int argc, char **argv)
       imu_override_pub_.publish(imu_override_);
       leg_height_pub_.publish(leg_height_);
       head_pub_.publish(head_Tws);
-      Led.publish(Led_);
       // qwerty.data=b_gerak[flag1];
       // pub_f_servo.publish(qwerty);
 
@@ -354,7 +296,7 @@ int main(int argc, char **argv)
       // pub_pompa.publish(asd);
 
       // ROS_INFO("step: %s", qwerty.data);
-      ROS_INFO("step: %d, %d", flag1,gerak_1_[flag1] );
+      // ROS_INFO("step: %d, %d", flag1,gerak_1_[flag1] );
 
 
     ros::spinOnce();
