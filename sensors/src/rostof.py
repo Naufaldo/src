@@ -6,7 +6,7 @@ sys.path.append('/home/pi/VL53L0X_rasp_python/python')
 import VL53L0X
 import RPi.GPIO as GPIO
 import rospy
-from std_msgs.msg import Float32MultiArray
+from std_msgs.msg import Int32MultiArray
 
 # GPIO for Sensor 1 shutdown pin
 sensor1_shutdown = 12
@@ -67,7 +67,7 @@ if timing < 20000:
 print("Timing %d ms" % (timing / 1000))
 
 rospy.init_node('tof_publisher', anonymous=True)
-pub = rospy.Publisher('tof_distances', Float32MultiArray, queue_size=10)
+pub = rospy.Publisher('tof_distances', Int32MultiArray, queue_size=10)
 
 try:
     while not rospy.is_shutdown():
@@ -91,7 +91,7 @@ try:
             distances.append(distance / 10)
 
         # Publish the distances as Float32MultiArray
-        msg = Float32MultiArray(data=distances)
+        msg = Int32MultiArray(data=distances)
         pub.publish(msg)
 
         time.sleep(timing / 1000000.00)
