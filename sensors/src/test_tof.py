@@ -21,8 +21,8 @@ i2c = board.I2C()  # uses board.SCL and board.SDA
 xshut = [
     DigitalInOut(board.D12),
     DigitalInOut(board.D16),
-    DigitalInOut(board.D20),
-    DigitalInOut(board.D21),
+    DigitalInOut(board.D6),
+    DigitalInOut(board.D13),
     # add more VL53L0X sensors by defining their SHDN pins here
 ]
 
