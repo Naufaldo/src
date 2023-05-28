@@ -179,9 +179,9 @@ void kontrol(char arah_, int step_){
     Led_.data=2;
     
   
-    ROS_INFO("%d, %d, %d, %d, ", batas[0], batas[1], batas[2], batas[3],);
-    ROS_INFO("%d, %d, %d, %d,",ping[0],ping[1],ping[2],ping[3]);
-    ROS_INFO("%d, %d, %d, %d, ",flag_[0],flag_[1],flag_[2],flag_[3]);
+    ROS_INFO("%d, %d, %d, %d ", batas[0], batas[1], batas[2], batas[3],);
+    ROS_INFO("%d, %d, %d, %d",ping[0],ping[1],ping[2],ping[3]);
+    ROS_INFO("%d, %d, %d, %d",flag_[0],flag_[1],flag_[2],flag_[3]);
 
 
     bool s[4]={false,false,false,false};
@@ -226,8 +226,7 @@ void kontrol(char arah_, int step_){
       }
     }
   }
-
-//  ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",s[0], s[1], s[2], s[3], s[4]);
+ ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d ",s[0], s[1], s[2], s[3], s[4]);
   
   if(s[0]==true && s[1]==true && s[2]==true && s[3]==true ){
     flag1++;
