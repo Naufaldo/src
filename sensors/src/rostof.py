@@ -2,7 +2,7 @@
 
 import time
 import sys
-sys.path.append('/home/pi/VL53L0X_rasp_python/')
+sys.path.append('/home/pi/VL53L0X_rasp_python/python')
 import VL53L0X
 import RPi.GPIO as GPIO
 import rospy
