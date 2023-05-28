@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import time
-import VL53L0X
+from python.VL53L0X import VL53L0X
 import RPi.GPIO as GPIO
 import rospy
 from std_msgs.msg import Float32MultiArray
