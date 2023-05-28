@@ -179,7 +179,7 @@ void kontrol(char arah_, int step_){
     Led_.data=2;
     
   
-    ROS_INFO("%d, %d, %d, %d, ", batas[0], batas[1], batas[2], batas[3], batas[4],batas[5]);
+    ROS_INFO("%d, %d, %d, %d, ", batas[0], batas[1], batas[2], batas[3],);
     ROS_INFO("%d, %d, %d, %d,",ping[0],ping[1],ping[2],ping[3]);
     ROS_INFO("%d, %d, %d, %d, ",flag_[0],flag_[1],flag_[2],flag_[3]);
 
