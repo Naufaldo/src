@@ -1,13 +1,4 @@
-# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
-# SPDX-License-Identifier: MIT
 
-"""
-Example of how to use the adafruit_vl53l0x library to change the assigned address of
-multiple VL53L0X sensors on the same I2C bus. This example only focuses on 2 VL53L0X
-sensors, but can be modified for more. BE AWARE: a multitude of sensors may require
-more current than the on-board 3V regulator can output (typical current consumption during
-active range readings is about 19 mA per sensor).
-"""
 import time
 import board
 from digitalio import DigitalInOut
@@ -45,7 +36,7 @@ for i, power_pin in enumerate(xshut):
     # no need to change the address of the last VL53L0X sensor
     if i < len(xshut) - 1:
         # default address is 0x29. Change that to something else
-        vl53[i].set_address(i + 0x31)  # address assigned should NOT be already in use
+        vl53[i].set_address(i + 0x30)  # address assigned should NOT be already in use
 # there is a helpful list of pre-designated I2C addresses for various I2C devices at
 # https://learn.adafruit.com/i2c-addresses/the-list
 # According to this list 0x30-0x34 are available, although the list may be incomplete.
