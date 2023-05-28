@@ -82,8 +82,6 @@ char a_gerak[]  ={'D', 'w', 's', 'x', 'D','d', 's', 'a', 'w', 'a', 'w', 's', 'd'
 
 int gerak_1_[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-//test
-
 //program buat limit sensor dan gerakan kaki dan juga gerakan gripper
 std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
@@ -131,6 +129,7 @@ std::map<int, std::vector<int>> step{
   {38, {0,0,0,0,-2,0}},
   {39, {185,180,325,770,-2,0}},
 };
+
 std::map<int, std::vector<bool>> _f_{
   // ini program untuk kondisi if 1 atau 0 (komparasi)
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-4 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=lase && 0=odom) //odom ,imu over , leg height
@@ -175,7 +174,7 @@ std::map<int, std::vector<bool>> _f_{
   {36, {0,0,0,1,1,0,1}},
   {37, {0,1,0,0,1,0,1}},
   {38, {0,0,0,0,1,0,1}},
-  {39, {1,1,0,0,1,0,1}}
+  {39, {1,1,0,0,1,0,1}},
 };
 
 // Init variables
