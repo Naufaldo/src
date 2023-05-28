@@ -32,11 +32,11 @@ for i, power_pin in enumerate(xshut):
     vl53.insert(i, VL53L0X(i2c))  # also performs VL53L0X hardware check
 
     # start continous mode
-    vl53[i].start_continous()
+    # vl53[i].start_continous()
 
     # you will see the benefit of continous mode if you set the measurement timing
     # budget very high.
-    vl53[i].measurement_timing_budget = 2000000
+    # vl53[i].measurement_timing_budget = 2000000
 
     # no need to change the address of the last VL53L0X sensor
     if i < len(xshut) - 1:
