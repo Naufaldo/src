@@ -77,7 +77,7 @@ std::map<char, std::vector<float>> moveBindings{
     {'C', {-1, 1, 0, 0}}};
 
 //step
-char a_gerak[]  ={'a','D','w','a','w','x','D','a'};
+char a_gerak[]  ={'a','D','w','x','a','s','d'};
 
 int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 
@@ -86,17 +86,6 @@ int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
-<<<<<<< HEAD
-  {0, {10,10,7,0,320,-2 ,0}}, // home hadap kanan, putar kiri
-  {1, {16,16,0,0,0,-2 ,0}}, // home hadap lurus, gerak samping kanan
-  {2, {320,320,50,20,20,-2,0}}, // jalan lurus ke k1
-  {3, {320,320,12,30,30,-2,0}}, // putar kiri hadap k1
-  {4, {320,320,20,320,320,0,-1}}, // lurus ke k1
-  {5, {320,320,15,320,320,-2,0}}, // mundur
-  {6, {40,40,0,0,0,-2,0}}, // jalan nyamping ke sz 2
-  {7, {30,0,0,0,30,-2,0}}, //putar kanan
-  {8, {20,20,320,320,320,0,-1}}, //putar kiri hade[ kelereng
-=======
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
   {0, {10,10,7,0,320,-2 ,0}},
   {1, {12,12,10,0,0,-2 ,0}}, // posisi home gerak ke kanan
@@ -109,7 +98,6 @@ std::map<int, std::vector<int>> step{
   // {7, {52,320,7,18,18},0},
   
 
->>>>>>> 62bcb247f3d097aea0e85d6774c98ec70d9cccf1
   
 };
 std::map<int, std::vector<bool>> _f_{
@@ -117,14 +105,9 @@ std::map<int, std::vector<bool>> _f_{
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-4 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=lase && 0=odom) //odom ,imu over , leg height
   //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
   {0, {0,0,0,0,1,1,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
-  {1, {1,1,0,0,0,1,0,0}},
+  {1, {1,1,1,0,0,1,0,0}},
   {2, {1,1,0,0,0,1,0,0}},
-  {3, {1,1,1,1,1,1,0,1}},
-  {4, {1,1,0,1,1,1,0,0}},
-  {5, {1,1,1,1,1,1,0,0}},
-  {6, {1,1,0,0,0,1,0,1}},
-  {7, {1,0,0,0,1,1,0,1}},
-  {8, {1,1,1,1,1,1,0,1}},
+  {3, {0,0,0,0,0,1,0,1}},
 
 };
 
@@ -242,7 +225,7 @@ void kontrol(char arah_, int step_){
     }
   }
 
- ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",s[0], s[1], s[2], s[3], s[4]);
+//  ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",s[0], s[1], s[2], s[3], s[4]);
   
   if(s[0]==true && s[1]==true && s[2]==true && s[3]==true && s[4]==true){
     flag1++;
