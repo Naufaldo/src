@@ -82,6 +82,8 @@ char a_gerak[]  ={'D', 'w', 's', 'x', 'D','d', 's', 'a', 'w', 'a', 'w', 's', 'd'
 
 int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 
+//test
+
 //program buat limit sensor dan gerakan kaki dan juga gerakan gripper
 std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
