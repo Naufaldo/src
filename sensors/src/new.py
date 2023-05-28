@@ -1,94 +1,76 @@
 #!/usr/bin/env python3
 
-import rospy
-from std_msgs.msg import Bool, Float32MultiArray
-import RPi.GPIO as GPIO
 import time
+import rospy
+from std_msgs.msg import Int32MultiArray
 
-# Assign GPIO Pins for each sensor
-GPIO_SIG = [17, 18, 19, 20, 21]  # Modify these pins based on your wiring
-#kanan depan , kanan belakang, tengah belakang, kiri belakang, kiri depan
+import board
+from digitalio import DigitalInOut
+from adafruit_vl53l0x import VL53L0X
 
-# Set the GPIO pin for the servo motor
-servo_pin = 6
+# declare the singleton variable for the default I2C bus
+i2c = board.I2C()  # uses board.SCL and board.SDA
 
-# Initialize the GPIO pins
-GPIO.setmode(GPIO.BCM)
+# declare the digital output pins connected to the "SHDN" pin on each VL53L0X sensor
+xshut = [
+    DigitalInOut(board.D12),
+    DigitalInOut(board.D16),
+    DigitalInOut(board.D13),
+    DigitalInOut(board.D19),
+    # add more VL53L0X sensors by defining their SHDN pins here
+]
+
+for power_pin in xshut:
+    # make sure these pins are a digital output, not a digital input
+    power_pin.switch_to_output(value=False)
+    # These pins are active when Low, meaning:
+
+# initialize a list to be used for the array of VL53L0X sensors
+vl53 = []
+
+# now change the addresses of the VL53L0X sensors
+for i, power_pin in enumerate(xshut):
+    # turn on the VL53L0X to allow hardware check
+    power_pin.value = True
+    # instantiate the VL53L0X sensor on the I2C bus & insert it into the "vl53" list
+    vl53.insert(i, VL53L0X(i2c))  # also performs VL53L0X hardware check
+
+    # start continuous mode
+    vl53[i].start_continuous()
+
+    # you will see the benefit of continuous mode if you set the measurement timing
+    # budget very high.
+    # vl53[i].measurement_timing_budget = 2000000
+
+    # no need to change the address of the last VL53L0X sensor
+    if i < len(xshut) - 1:
+        # default address is 0x29. Change that to something else
+        vl53[i].set_address(i + 0x30)  # address assigned should NOT be already in use
 
 
-# Create a publisher for the sensor data
-sensor_publisher = rospy.Publisher('sensor_data', Float32MultiArray, queue_size=10)
+def publish_range():
+    """Publish the sensor range readings as a ROS topic"""
+    rospy.init_node('vl53l0x_publisher', anonymous=True)
+    range_publisher = rospy.Publisher('sensor_ranges', Int32MultiArray, queue_size=10)
+    rate = rospy.Rate(1)  # publish at 1 Hz
 
-# Create a callback function to handle incoming servo position messages
-def servo_callback(msg):
-    GPIO.setup(servo_pin, GPIO.OUT)
-    GPIO.setwarnings(False)
-    # Set up PWM on the GPIO pin for the servo
-    pwm = GPIO.PWM(servo_pin, 50)
-    pwm.start(0)
-    # If the message value is True, set the servo to 180 degrees
-    if msg.data:
-        pwm.ChangeDutyCycle(8)
-    # If the message value is False, set the servo to 90 degrees
-    else:
-        pwm.ChangeDutyCycle(4)
+    while not rospy.is_shutdown():
+        ranges = Int32MultiArray(data=[sensor.range for sensor in vl53])
+        print(ranges)
+        range_publisher.publish(ranges)
+        rate.sleep()
 
-# Function to measure distance for each sensor
-def measure_distance(pin):
-    GPIO.setup(pin, GPIO.OUT)
-    GPIO.setwarnings(False)
-    GPIO.output(pin, 0)
 
-    time.sleep(0.000002)
+def stop_continuous():
+    """This is not required if you use XSHUT to reset the sensor unless you want to save some energy"""
+    for sensor in vl53:
+        sensor.stop_continuous()
 
-    # Send trigger signal
-    GPIO.output(pin, 1)
 
-    time.sleep(0.000005)
-
-    GPIO.output(pin, 0)
-
-    GPIO.setup(pin, GPIO.IN)
-    GPIO.setwarnings(False)
-    while GPIO.input(pin) == 0:
-        starttime = time.time()
-
-    while GPIO.input(pin) == 1:
-        endtime = time.time()
-
-    duration = endtime - starttime
-    # Distance is defined as time/2 (there and back) * speed of sound 34000 cm/s
-    distance = (duration * 34000) / 2
-    GPIO.cleanup()
-
-    return distance
-
-# Function to publish sensor data
-def publish_sensor_data():
-    sensor_data = []
-    for pin in GPIO_SIG:
-        distance = measure_distance(pin)
-        sensor_data.append(distance)
-
-    # Create a Float32MultiArray message
-    sensor_msg = Float32MultiArray(data=sensor_data)
-
-    # Publish the sensor data
-    sensor_publisher.publish(sensor_msg)
-
-# Initialize the node
-rospy.init_node('sensor_and_gripper')
-
-# Create a subscriber for the servo position control with topic name '/servo_position' and message type Bool
-servo_subscriber = rospy.Subscriber('servo_position', Bool, servo_callback)
-
-# Set the publishing rate for the sensor data
-rate = rospy.Rate(1)  # 1 Hz
-
-# Publish the sensor data at the specified rate
-while not rospy.is_shutdown():
-    publish_sensor_data()
-    rate.sleep()
-
-# Clean up the GPIO pins
-GPIO.cleanup()
+if __name__ == "__main__":
+    try:
+        publish_range()
+    except rospy.ROSInterruptException:
+        pass
+    finally:
+        stop_continuous()

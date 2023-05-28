@@ -2,25 +2,26 @@
 #include "std_msgs/String.h"
 
 #include <nav_msgs/Odometry.h>
-#include <hexapod_msgs/MergedPingArray.h>
+#include <std_msgs/Int32MultiArray.h>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/AccelStamped.h>
 #include <std_msgs/Bool.h>
 #include <std_msgs/UInt16.h>
 #include <std_msgs/Float32.h>
 #include <std_msgs/String.h>
+#include <std_msgs/Int32.h>
 #include <sensor_msgs/Imu.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <termios.h>
 #include <map>
 
-int ping[5]={0,0,0,0,0};
+int ping[4]={0,0,0,0};
 // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri
-void mergedPingCallback(const hexapod_msgs::MergedPingArray::ConstPtr& msg)
+void tofdistancesCallback(const std_msgs::Int32MultiArray::ConstPtr& msg)
 {
-  for (int i=0;i<5;i++){
-    ping[i]=msg->merged_ping_array[i];
+  for (int i=0;i<4;i++){
+    ping[i]=msg->data[i];
   }
   ROS_INFO("I heard: [%d]", ping[0]);
 }
@@ -77,7 +78,7 @@ std::map<char, std::vector<float>> moveBindings{
     {'C', {-1, 1, 0, 0}}};
 
 //step
-char a_gerak[]  ={'a','D','w','x','a','s','d'};
+char a_gerak[]  ={'a','w','a','w','a','s','d'};
 
 int gerak_1_[]={0,0,0,0,0,0,0,0,0};
 
@@ -87,15 +88,10 @@ std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
-  {0, {10,10,7,0,320,-2 ,0}},
-  {1, {12,12,10,0,0,-2 ,0}}, // posisi home gerak ke kanan
-  {2, {320,320,18,18,18,-2,0}},
-  {3, {46,320,21,59,60,0,0}},
-  {4, {52,320,7,18,18,0,0}},
-  // {4, {52,320,7,18,18},0},
-  // {5, {52,320,7,18,18},0},
-  // {6, {52,320,7,18,18},0},
-  // {7, {52,320,7,18,18},0},
+  {0, {10,10,7,0,-2 ,0}},
+  {1, {18,18,5,10,-2 ,0}}, // posisi home gerak ke kanan
+  {2, {10,10,40,20,-2,0}},
+
   
 
   
@@ -104,10 +100,8 @@ std::map<int, std::vector<bool>> _f_{
   // ini program untuk kondisi if 1 atau 0 (komparasi)
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-4 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=lase && 0=odom) //odom ,imu over , leg height
   //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
-  {0, {0,0,0,0,1,1,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
-  {1, {1,1,1,0,0,1,0,0}},
-  {2, {1,1,0,0,0,1,0,0}},
-  {3, {0,0,0,0,0,1,0,1}},
+  {0, {0,0,0,0,1,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
+
 
 };
 
@@ -122,31 +116,32 @@ geometry_msgs::Twist head_Tws;
 std_msgs::Bool imu_override_;
 std_msgs::Bool leg_height_;
 std_msgs::Bool state_;
+std_msgs::Int32 Led_;
 
 
 
 bool pilih;
 void kontrol(char arah_, int step_){
   key=arah_;
-  int batas[5];
+  int batas[4];
   if (step.count(step_) == 1)
     {
-      for(int a=0;a<5;a++){
+      for(int a=0;a<4;a++){
         batas[a]=step[step_][a];
       }
-      xb=step[step_][5];
-      yb=step[step_][6];
+      xb=step[step_][6];
+      yb=step[step_][7];
     }
 
-  bool flag_[5];
+  bool flag_[4];
   if (_f_.count(step_) == 1)
     {
-      for(int a=0;a<5;a++){
+      for(int a=0;a<4;a++){
         flag_[a]=_f_[step_][a];
       }
     pilih=_f_[step_][5];
-    imu_override_.data = _f_[step_][6];
-    leg_height_.data = _f_[step_][7];
+    imu_override_.data = _f_[step_][7];
+    leg_height_.data = _f_[step_][8];
     }
     
 
@@ -175,17 +170,18 @@ void kontrol(char arah_, int step_){
     head_Tws.linear.y = yb * turn ; //gripper
 
     state_.data = true;
+    Led_.data=2;
     
   
-    ROS_INFO("%d, %d, %d, %d, %d,", batas[0], batas[1], batas[2], batas[3], batas[4]);
-    ROS_INFO("%d, %d, %d, %d, %d,",ping[0],ping[1],ping[2],ping[3],ping[4]);
-    ROS_INFO("%d, %d, %d, %d, %d, ",flag_[0],flag_[1],flag_[2],flag_[3],flag_[4]);
+    ROS_INFO("%d, %d, %d, %d ", batas[0], batas[1], batas[2], batas[3]);
+    ROS_INFO("%d, %d, %d, %d",ping[0],ping[1],ping[2],ping[3]);
+    ROS_INFO("%d, %d, %d, %d",flag_[0],flag_[1],flag_[2],flag_[3]);
 
 
-    bool s[5]={false,false,false,false,false};
+    bool s[4]={false,false,false,false};
 
   if(pilih==true){
-    for (int a=0; a<5; a++){
+    for (int a=0; a<4; a++){
       if(flag_[a]==true){
         if(ping[a]<=batas[a])
         {
@@ -206,7 +202,7 @@ void kontrol(char arah_, int step_){
 
   else{
 
-    for (int a=0; a<5; a++){
+    for (int a=0; a<4; a++){
       xas[a]=xaa[a]-yaa[a];
       if(flag_[a]==true){
         if(xas[a]<=batas[a])
@@ -224,10 +220,9 @@ void kontrol(char arah_, int step_){
       }
     }
   }
-
-//  ROS_INFO("%d, %d, %d, %d, %d, %d, %d, %d, ",s[0], s[1], s[2], s[3], s[4]);
+//  ROS_INFO("%d, %d, %d, %d ",s[0], s[1], s[2], s[3], s[4]);
   
-  if(s[0]==true && s[1]==true && s[2]==true && s[3]==true && s[4]==true){
+  if(s[0]==true && s[1]==true && s[2]==true && s[3]==true ){
     flag1++;
     ROS_INFO("clear");
     yaa[0]=xaa[0];
@@ -249,7 +244,8 @@ int main(int argc, char **argv)
   ros::Publisher imu_override_pub_ = n.advertise<std_msgs::Bool>("/imu/imu_override", 100);
   ros::Publisher leg_height_pub_ = n.advertise<std_msgs::Bool>("/leg", 100);
   ros::Publisher state_pub_ = n.advertise<std_msgs::Bool>("/state", 100);
-  ros::Subscriber sub = n.subscribe("merged_ping_topic", 10, mergedPingCallback);
+  ros::Publisher Led = n.advertise<std_msgs::Int32>("/led_control", 10);
+  ros::Subscriber sub = n.subscribe("tof_distances", 10, tofdistancesCallback);
 
   ros::Subscriber _sub1 = n.subscribe("/chatter1", 1, chatter1Callback);
   ros::Subscriber _sub2 = n.subscribe("/chatter2", 1, chatter2Callback);
@@ -275,6 +271,7 @@ int main(int argc, char **argv)
       imu_override_pub_.publish(imu_override_);
       leg_height_pub_.publish(leg_height_);
       head_pub_.publish(head_Tws);
+      Led.publish(Led_);
       // qwerty.data=b_gerak[flag1];
       // pub_f_servo.publish(qwerty);
 
