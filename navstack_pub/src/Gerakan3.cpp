@@ -80,7 +80,7 @@ std::map<char, std::vector<float>> moveBindings{
 //step
 char a_gerak[]  ={'D', 'w', 's', 'x', 'D','d', 's', 'a', 'w', 'a', 'w', 's', 'd', 'w', 's', 'a', 'w', 'a','w','d','w', 'x', 'A', 'a','d', 'D','x','w','x', 'A','w','A','a','w','d','w','c','A','w','s','d'};
 
-int gerak_1_[]={0,0,0,0,0,0,0,0,0};
+int gerak_1_[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
 //program buat limit sensor dan gerakan kaki dan juga gerakan gripper
 std::map<int, std::vector<int>> step{
