@@ -190,7 +190,7 @@ void kontrol(char arah_, int step_){
     twist.angular.z = th * turn;
 
     head_Tws.linear.x = xb * 1 ; //lifter
-    head_Tws.linear.y = yb * 1 ; //gripper
+    head_Tws.linear.y = yb * 0.6 ; //gripper
 
     state_.data = true;
     imu_override_.data = false;
