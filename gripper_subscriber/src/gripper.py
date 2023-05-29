@@ -26,6 +26,7 @@ GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 # Create a callback function to handle button press
 def button_callback(channel):
     # Publish a message to the 'button_pressed' topic
+    subprocess.call("/home/pi/Ancabots/src/Shell_script/Gerakan2.sh", shell=True)
     pub.publish(Bool(True))
 
 # Initialize the node
