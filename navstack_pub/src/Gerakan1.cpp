@@ -88,7 +88,7 @@ std::map<int, std::vector<int>> step{
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Gripper, Gripper}}
-  {0, {200, 800, 100, 150,-2, 0, 2, 2 }},
+  {0, {0, 800, 200, 0,-2, 0, 2, 2 }},
   {1, {0, 0, 600, 0, -2 ,0,2,2}},
   {2, {0, 0, 180, 625, -2, 0,1,1}},
   {3, {0,120,0,0,0,-1,1,1}},
@@ -138,7 +138,7 @@ std::map<int, std::vector<bool>> _f_{
 
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-4 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=lase && 0=odom) //odom ,imu over , leg height
   //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
-  {0, {1,0,0,1,1,0,1}},
+  {0, {0,0,1,0,1,0,1}},
   {1, {0,0,0,0,1,0,1}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
   {2, {0,1,0,0,1,0,1}},
   {3, {0,1,0,0,1,0,1}},
