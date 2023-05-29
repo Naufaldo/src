@@ -97,7 +97,7 @@ std::map<int, std::vector<int>> step{
   {6, {0, 120, 0, 0, 0, -1}},
   {7, {0, 840, 145, 0, -2, 0}},
   {8, {0, 0, 383, 0, -2, 0}},
-  {9, {0,118,250,0,0,-1}},
+  {9, {0,0,340,0,0,-1}},
   {10, {0,180,0,0,-2,0}},
   {11, {242,473,423,178,-2,0}},
   {12, {0,248,0,0,-2,0}},
@@ -133,6 +133,7 @@ std::map<int, std::vector<int>> step{
 
 std::map<int, std::vector<bool>> _f_{
   // ini program untuk kondisi if 1 atau 0 (komparasi)
+
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-4 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=lase && 0=odom) //odom ,imu over , leg height
   //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
   {0, {0,0,0,0,1,0,0}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
@@ -144,7 +145,7 @@ std::map<int, std::vector<bool>> _f_{
   {6, {0,1,0,0,1,0,1}},
   {7, {0,0,0,0,1,0,1}},
   {8, {0,0,0,0,1,0,1}},
-  {9, {0,1,1,0,1,0,1}},
+  {9, {0,0,1,0,1,0,1}},
   {10, {0,0,0,0,1,0,1}},
   {11, {1,0,0,1,1,0,1}},
   {12, {0,1,0,0,1,0,1}},
