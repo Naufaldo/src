@@ -88,10 +88,10 @@ std::map<int, std::vector<int>> step{
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Gripper, Gripper}}
-  {0, {0, 250, 0, 550, -2 ,0,1,1}},
-  {1, {0, 110, 220, 0, 0, -1,1,1}},
-  {2, {0, 250, 0, 0, -2, 0,2,2}},
-  {3, {0, 0, 100, 0, -2, 0,2,2}},
+  {0, {0, 200, 0, 550, -2 ,0,2,2}},
+  {1, {0, 145, 220, 0, 0, -1,1,1}},
+  {2, {0, 250, 0, 0, -2, 0,1,1}},
+  {3, {0, 0, 100, 0, -2, 0,1,1}},
   {4, {350, 800, 0, 300, -2, 0,2,2}},
   {5, {180, 300, 0, 0, -2, 0,2,1}},
   {6, {0, 120, 0, 0, 0, -1,2,2}},
