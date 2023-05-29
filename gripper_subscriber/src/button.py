@@ -12,8 +12,8 @@ led_pin_2 = 18
 # Set the GPIO pin for the button
 button_pin = 26
 
-ping = [0, 0, 0, 0, 0]
-thresholds = [10, 15, 12, 8, 20]
+ping = [0, 0, 0, 0]
+thresholds = [10, 15, 12, 8]
 
 # Initialize the GPIO pins
 GPIO.setmode(GPIO.BCM)
@@ -28,9 +28,9 @@ def merged_ping_callback(data):
 # Create a callback function to handle button press
 def button_callback(channel):
     # Publish a message to the 'button_pressed' topic
-    if ping[0] < 200:
+    if ping[0] < 200 && ping[3] < 200 :
         subprocess.call("/home/pi/Ancabots/src/Shell_script/Gerakan1.sh", shell=True)
-    else if ping[3] < 200 :
+    else if ping[3] < 200  :
         subprocess.call("/home/pi/Ancabots/src/Shell_script/Gerakan2.sh", shell=True)
     else :
     pub.publish(Bool(True))
