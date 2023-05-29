@@ -28,9 +28,9 @@ def merged_ping_callback(data):
 # Create a callback function to handle button press
 def button_callback(channel):
     # Publish a message to the 'button_pressed' topic
-    if ping[3] > 500:
+    if ping[3] > 500 and ping[0] < 200:
         subprocess.call("/home/pi/Ancabots/src/Shell_script/Gerakan1.sh", shell=True)
-    elif ping[0] > 300:
+    elif ping[0] > 500 and ping[3] < 200:
         subprocess.call("/home/pi/Ancabots/src/Shell_script/Gerakan2.sh", shell=True)
     else:
         pub.publish(Bool(True))
