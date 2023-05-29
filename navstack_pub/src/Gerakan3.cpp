@@ -137,7 +137,7 @@ std::map<int, std::vector<bool>> _f_{
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-4 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=lase && 0=odom) //odom ,imu over , leg height
   //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
   {0, {0,0,0,0,1,0,0}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
-  {1, {0,1,0,0,1,0,0}},
+  {1, {0,1,0,0,1,0,1}},
   {2, {0,1,0,0,1,0,0}},
   {3, {0,0,1,0,1,0,0}},
   {4, {1,0,0,0,1,0,1}},
