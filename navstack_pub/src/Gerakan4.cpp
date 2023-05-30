@@ -187,46 +187,31 @@ void avoidance(){
     //gerakan ke kiri
     twist.linear.x = 0;
     twist.linear.y = -1;
-    twist.linear.z = 0;
-    twist.angular.x = 0;
-    twist.angular.y = 0;
-    twist.angular.z = 0;
+ 
   }
   if(ping[1] <= 70 && xb == -2){
     //gerakan mundur
     twist.linear.x = 1;
     twist.linear.y = 0;
-    twist.linear.z = 0;
-    twist.angular.x = 0;
-    twist.angular.y = 0;
-    twist.angular.z = 0;
+
   }
   if(ping[1] <= 100 && xb == 1 && yb != -1){
     //gerakan mundur
     twist.linear.x = 1;
     twist.linear.y = 0;
-    twist.linear.z = 0;
-    twist.angular.x = 0;
-    twist.angular.y = 0;
-    twist.angular.z = 0;
+
   }
     if(ping[2] <= 40){
     //gerakan maju
     twist.linear.x = -1;
     twist.linear.y = 0;
-    twist.linear.z = 0;
-    twist.angular.x = 0;
-    twist.angular.y = 0;
-    twist.angular.z = 0;
+
   }
   if(ping[3] <= 40){
     //gerakan ke kanan
     twist.linear.x = 0;
     twist.linear.y = 1;
-    twist.linear.z = 0;
-    twist.angular.x = 0;
-    twist.angular.y = 0;
-    twist.angular.z = 0;
+
   }
   } else {
     isAvoidanceActive = false;
