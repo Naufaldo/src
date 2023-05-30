@@ -9,7 +9,7 @@ import rospy
 from std_msgs.msg import Int32MultiArray
 
 # GPIO for Sensor 1 shutdown pin
-sensor1_shutdown = 12
+sensor1_shutdown = 5
 # GPIO for Sensor 2 shutdown pin
 sensor2_shutdown = 16
 # GPIO for Sensor 3 shutdown pin
