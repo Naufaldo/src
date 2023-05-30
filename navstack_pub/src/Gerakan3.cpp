@@ -106,7 +106,7 @@ std::map<int, std::vector<int>> step{
   // {13, {0,250,0,0,-2,0,1,1}}, //ke sz2 //w
   // {14, {0,180,0,0,0,-1,1,1}}, //sz2 //s
   // {15, {0,510,320,0,-2,0,1,1}}, //keluar sz2 //a
-  {13, {0,0,450,0,-2,0,1,1}}, //menuju jalan retak
+  {13, {0,0,800,0,-2,0,1,1}}, //menuju jalan retak
   {14, {450,0,0,0,-2,0,1,1}}, //menuju jalan retak
   {15, {0,300,600,0,-2,0,1,1}}, //melewati jalan retak dan batu
   {16, {0,300,0,400,-2,0,1,1}}, //posisi siap naik tangga
