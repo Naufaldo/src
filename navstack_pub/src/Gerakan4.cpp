@@ -199,7 +199,7 @@ void avoidance(){
   }
   if(ping[1] <= 70 && xb == -2){
     //gerakan mundur
-    twist.linear.x = 1;
+    twist.linear.x = -1;
     twist.linear.y = 0;
     twist.linear.z = 0;
     twist.angular.x = 0;
@@ -207,9 +207,9 @@ void avoidance(){
     twist.angular.z = 0;
 
   }
-  if(ping[1] <= 100 && xb == 1 && yb != -1){
+  if(ping[1] <= 90 && xb == 0 && yb == 0){
     //gerakan mundur
-    twist.linear.x = 1;
+    twist.linear.x = -1;
     twist.linear.y = 0;
     twist.linear.z = 0;
     twist.angular.x = 0;
@@ -219,7 +219,7 @@ void avoidance(){
   }
     if(ping[2] <= 40){
     //gerakan maju
-    twist.linear.x = -1;
+    twist.linear.x = 1;
     twist.linear.y = 0;
     twist.linear.z = 0;
     twist.angular.x = 0;
