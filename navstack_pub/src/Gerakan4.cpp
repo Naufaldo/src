@@ -183,78 +183,78 @@ std_msgs::Bool leg_height_;
 std_msgs::Bool state_;
 std_msgs::Int32 Led_;
 
-// void avoidance(){
+void avoidance(){
   
-//   if (ping[0] <= 40 || ping[1] <= 40 || ping[2] <= 40 || ping[3] <= 40) {
-//     isAvoidanceActive = true;
-//     if(ping[0] <= 40){
-//     //gerakan ke kiri
-//     twist.linear.x = 0;
-//     twist.linear.y = -1;
-//     twist.linear.z = 0;
-//     twist.angular.x = 0;
-//     twist.angular.y = 0;
-//     twist.angular.z = 0;
+  if (ping[0] <= 40 || ping[1] <= 40 || ping[2] <= 40 || ping[3] <= 40) {
+    isAvoidanceActive = true;
+    if(ping[0] <= 40){
+    //gerakan ke kiri
+    twist.linear.x = 0;
+    twist.linear.y = -1;
+    twist.linear.z = 0;
+    twist.angular.x = 0;
+    twist.angular.y = 0;
+    twist.angular.z = 0;
  
-//   }
-//   if(ping[1] <= 70 && xb == -2){
-//     //gerakan mundur
-//     twist.linear.x = 1;
-//     twist.linear.y = 0;
-//     twist.linear.z = 0;
-//     twist.angular.x = 0;
-//     twist.angular.y = 0;
-//     twist.angular.z = 0;
+  }
+  if(ping[1] <= 70 && xb == -2){
+    //gerakan mundur
+    twist.linear.x = 1;
+    twist.linear.y = 0;
+    twist.linear.z = 0;
+    twist.angular.x = 0;
+    twist.angular.y = 0;
+    twist.angular.z = 0;
 
-//   }
-//   if(ping[1] <= 100 && xb == 1 && yb != -1){
-//     //gerakan mundur
-//     twist.linear.x = 1;
-//     twist.linear.y = 0;
-//     twist.linear.z = 0;
-//     twist.angular.x = 0;
-//     twist.angular.y = 0;
-//     twist.angular.z = 0;
+  }
+  if(ping[1] <= 100 && xb == 1 && yb != -1){
+    //gerakan mundur
+    twist.linear.x = 1;
+    twist.linear.y = 0;
+    twist.linear.z = 0;
+    twist.angular.x = 0;
+    twist.angular.y = 0;
+    twist.angular.z = 0;
 
-//   }
-//     if(ping[2] <= 40){
-//     //gerakan maju
-//     twist.linear.x = -1;
-//     twist.linear.y = 0;
-//     twist.linear.z = 0;
-//     twist.angular.x = 0;
-//     twist.angular.y = 0;
-//     twist.angular.z = 0;
+  }
+    if(ping[2] <= 40){
+    //gerakan maju
+    twist.linear.x = -1;
+    twist.linear.y = 0;
+    twist.linear.z = 0;
+    twist.angular.x = 0;
+    twist.angular.y = 0;
+    twist.angular.z = 0;
 
-//   }
-//   if(ping[3] <= 40){
-//     //gerakan ke kanan
-//     twist.linear.x = 0;
-//     twist.linear.y = 1;
-//     twist.linear.z = 0;
-//     twist.angular.x = 0;
-//     twist.angular.y = 0;
-//     twist.angular.z = 0;
+  }
+  if(ping[3] <= 40){
+    //gerakan ke kanan
+    twist.linear.x = 0;
+    twist.linear.y = 1;
+    twist.linear.z = 0;
+    twist.angular.x = 0;
+    twist.angular.y = 0;
+    twist.angular.z = 0;
 
-//   }
-//   } else {
-//     isAvoidanceActive = false;
-//   }
-// }
+  }
+  } else {
+    isAvoidanceActive = false;
+  }
+}
 
 bool pilih;
 void kontrol(char arah_, int step_){
-  // if (isAvoidanceActive) {
-  //   return;
-  // }
+  if (isAvoidanceActive) {
+    return;
+  }
   key=arah_;
   int batas[4];
-  if (step.count(step_) == 1 && step_ >= currentStep)
+  if (step.count(step_) == 1)
     {
       for(int a=0;a<4;a++){
         batas[a]=step[step_][a];
       }
-      currentStep = step_;
+      // currentStep = step_;
       xb=step[step_][4];
       yb=step[step_][5];
       speed=step[step_][6];
@@ -392,7 +392,7 @@ int main(int argc, char **argv)
     // }
     
     //eksekusi
-      // avoidance();
+      avoidance();
       kontrol(a_gerak[flag1],flag1);
       
       state_pub_.publish(state_);
