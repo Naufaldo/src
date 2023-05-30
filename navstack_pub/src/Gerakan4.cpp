@@ -178,21 +178,21 @@ std_msgs::Int32 Led_;
 
 void avoidance(){
   
-  if (ping[0] <= 20 || ping[1] <= 20 || ping[2] <= 20 || ping[3] <= 20) {
+  if (ping[0] <= 40 || ping[1] <= 40 || ping[2] <= 40 || ping[3] <= 40) {
     isAvoidanceActive = true;
-    if(ping[0] <= 20){
+    if(ping[0] <= 40){
     //gerakan ke kiri
     twist.linear.y = -1;
   }
-  if(ping[1] <= 20){
+  if(ping[1] <= 40){
     //gerakan mundur
     twist.linear.x = -1;
   }
-  if(ping[2] <= 20){
+  if(ping[2] <= 40){
     //gerakan ke depan
     twist.linear.x = 1;
   }
-  if(ping[3] <= 20){
+  if(ping[3] <= 40){
     //gerakan ke kanan
     twist.linear.y = 1;
   }
