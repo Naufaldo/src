@@ -168,6 +168,7 @@ float turn(1);                                                  // Angular veloc
 float x(0), y(0), z(0), xa(0), ya(0), za(0), xb(0), yb(0), th(0); // Forward/backward/neutral direction vars
 char key(' ');
 int offset(1);
+bool isAvoidanceActive = false;
 geometry_msgs::Twist twist;
 geometry_msgs::Twist head_Tws;
 std_msgs::Bool imu_override_;
@@ -175,10 +176,36 @@ std_msgs::Bool leg_height_;
 std_msgs::Bool state_;
 std_msgs::Int32 Led_;
 
-
+void avoidance(){
+  
+  if (ping[0] <= 100 || ping[1] <= 100 || ping[2] <= 100 || ping[3] <= 100) {
+    isAvoidanceActive = true;
+    if(ping[0] <= 100){
+    //gerakan ke kiri
+    twist.linear.y = -1;
+  }
+  if(ping[1] <= 100){
+    //gerakan mundur
+    twist.linear.x = -1;
+  }
+  if(ping[2] <= 100){
+    //gerakan ke depan
+    twist.linear.x = 1;
+  }
+  if(ping[3] <= 100){
+    //gerakan ke kanan
+    twist.linear.y = 1;
+  }
+  } else {
+    isAvoidanceActive = false;
+  }
+}
 
 bool pilih;
 void kontrol(char arah_, int step_){
+  if (isAvoidanceActive) {
+    return;
+  }
   key=arah_;
   int batas[4];
   if (step.count(step_) == 1)
@@ -323,6 +350,7 @@ int main(int argc, char **argv)
     // }
     
     //eksekusi
+      avoidance();
       kontrol(a_gerak[flag1],flag1);
       
       state_pub_.publish(state_);
