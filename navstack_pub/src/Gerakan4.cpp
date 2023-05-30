@@ -180,19 +180,19 @@ void avoidance(){
   
   if (ping[0] <= 100 || ping[1] <= 100 || ping[2] <= 100 || ping[3] <= 100) {
     isAvoidanceActive = true;
-    if(ping[0] <= 100){
+    if(ping[0] <= 30){
     //gerakan ke kiri
     twist.linear.y = -1;
   }
-  if(ping[1] <= 100){
+  if(ping[1] <= 30){
     //gerakan mundur
     twist.linear.x = -1;
   }
-  if(ping[2] <= 100){
+  if(ping[2] <= 30){
     //gerakan ke depan
     twist.linear.x = 1;
   }
-  if(ping[3] <= 100){
+  if(ping[3] <= 30){
     //gerakan ke kanan
     twist.linear.y = 1;
   }
@@ -268,21 +268,21 @@ void kontrol(char arah_, int step_){
 
   if(pilih==true){
     for (int a=0; a<4; a++){
-      if(flag_[a]==true){
-        if(ping[a]<=(batas[a]+offset)||(batas[a]-offset))
-        {
-          s[a]=true;
+    for (int a = 0; a < 4; a++) {
+        if (flag_[a] == true) {
+            if (ping[a] <= (batas[a] + offset) || ping[a] <= (batas[a] - offset)) {
+                s[a] = true;
+            } else {
+                s[a] = false;
+            }
+        } else {
+            if (ping[a] >= (batas[a] + offset) || ping[a] >= (batas[a] - offset)) {
+                s[a] = true;
+            } else {
+                s[a] = false;
+            }
         }
-        else{s[a]=false;}
-      }
-      else{
-        if(ping[a]>=(batas[a]+offset)||(batas[a]-offset))
-        {
-          s[a]=true;
-        }
-        else{s[a]=false;}
-      }
-      yaa[a]=xaa[a];
+        yaa[a] = xaa[a];
     }
   }
 
