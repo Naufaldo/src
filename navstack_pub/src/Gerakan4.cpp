@@ -76,7 +76,7 @@ std::map<char, std::vector<float>> moveBindings{
     {'Z', {-1, -1, 0, 0}},
     {'X', {-1, 0, 0, 0}},
     {'C', {-1, 1, 0, 0}}};
-    
+
 //step
 char a_gerak[]  ={'D','w','s','x','D','d','s','a','w','a','w','s','D','w','A','w','d','w','A','a','D','w','s','x','A','w','d','w','s'}; 
 
@@ -94,22 +94,22 @@ std::map<int, std::vector<int>> step{
   {3, {0, 0, 100, 0, -2, 0,2,1}}, //dari k1
   {4, {200, 600, 0, 0, -2, 0,1,1}}, //ke jalan retak, miring, batu
   {5, {150, 300, 300, 0, -2, 0,1,1}}, //ke sz1
-  {6, {0, 120, 0, 0, 0, -1,1,1}}, //sz1
+  {6, {0, 135, 0, 0, 0, -1,1,1}}, //sz1
   {7, {200, 600, 0, 0, -2, 0,1,1}}, //arah kelereng
-  {8, {0, 500, 460, 350, -2, 0,1,1}}, //ke k2
+  {8, {0, 500, 430, 350, -2, 0,1,1}}, //ke k2
   {9, {440,200,0,500,-2,0,1,1}}, //hadap k2
   {10, {0,50,0, 0,0,-1,1,1}}, //ke k2
   {11, {0, 50, 0, 0, 0, -1, 1, 1 }}, //k2
-  {12, {150,0,0,0,-2,0,1,1}},
+  {12, {120,0,0,0,-2,0,1,1}},
   // d','w','s','a
   // {12, {400,430,260,0,-2,0,1,1}}, //arah sz2 //d
   // {13, {0,250,0,0,-2,0,1,1}}, //ke sz2 //w
   // {14, {0,180,0,0,0,-1,1,1}}, //sz2 //s
   // {15, {0,510,320,0,-2,0,1,1}}, //keluar sz2 //a
-  {13, {0,0,700,0,-2,0,1,1}}, //menuju jalan retak
+  {13, {0,0,600,0,-2,0,1,1}}, //menuju jalan retak
   {14, {425,0,0,0,-2,0,1,1}}, //menuju jalan retak
   {15, {0,150,0,0,-2,0,1,1}}, //melewati jalan retak dan batu
-  {16, {0,300,160,200,-2,0,1,1}}, //posisi siap naik tangga
+  {16, {0,300,160,300,-2,0,1,1}}, //posisi siap naik tangga
   {17, {0,190,0,0,-2,0,1,1}}, //posisi siap naik tangga
   {18, {0,0,600,400,-2,0,1,1}}, //naik tangga
   {19, {0,500,0,800,-2,0,1,1}}, //hadap k5
@@ -130,7 +130,7 @@ std::map<int, std::vector<bool>> _f_{
 
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-4 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=laser && 0=odom) //odom ,imu over , leg height
   //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
-  {0, {0,0,0,0,1,0,0}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
+    {0, {0,0,0,0,1,0,0}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
   {1, {0,1,0,0,1,0,1}},
   {2, {0,1,0,0,1,0,0}},
   {3, {0,0,1,0,1,0,0}},
@@ -164,6 +164,7 @@ std::map<int, std::vector<bool>> _f_{
   {27, {0,1,0,0,1,0,1}},
   {28, {1,1,1,1,1,0,1}},
 
+
   // {0, {0,0,0,0,1,0,1}}
 };
 
@@ -172,7 +173,7 @@ float speed(1);                                                 // Linear veloci
 float turn(1);                                                  // Angular velocity (rad/s)
 float x(0), y(0), z(0), xa(0), ya(0), za(0), xb(0), yb(0), th(0); // Forward/backward/neutral direction vars
 char key(' ');
-int offset(10);
+int offset(15);
 bool isAvoidanceActive = false;
 int currentStep = 0;
 geometry_msgs::Twist twist;
