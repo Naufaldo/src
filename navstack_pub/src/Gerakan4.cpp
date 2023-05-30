@@ -78,7 +78,7 @@ std::map<char, std::vector<float>> moveBindings{
     {'C', {-1, 1, 0, 0}}};
 
 //step
-char a_gerak[]  ={'D','w','s','x','D','d','s','a','w','a','w','s','d','w','s','a','w','A','w','d','w','A','a','D','w','s','x','A','w','d','w'}; 
+char a_gerak[]  ={'D','w','s','x','D','d','s','a','w','a','w','s','d','w','s','a','w','A','w','d','w','A','a','D','w','s','x','A','w','d','w','s'}; 
 
 int gerak_1_[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
@@ -88,37 +88,38 @@ std::map<int, std::vector<int>> step{
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Gripper, Gripper}}
-  {0, {0, 300, 0, 550, -2 ,0,2,2}}, //keluar home
+  {0, {0, 300, 0, 550, -2 ,0,1,1}}, //keluar home
   {1, {0, 130, 220, 0, 0, -1,1,1}}, //ke k1
   {2, {0, 250, 0, 0, 0, 0,1,1}}, //k1
   {3, {0, 0, 100, 0, -2, 0,1,1}}, //dari k1
   {4, {200, 600, 0, 0, -2, 0,1,1}}, //ke jalan retak, miring, batu
-  {5, {150, 300, 300, 0, -2, 0,2,2}}, //ke sz1
-  {6, {0, 120, 0, 0, 0, -1,2,2}}, //sz1
-  {7, {200, 600, 0, 0, -2, 0,2,2}}, //arah kelereng
+  {5, {150, 300, 300, 0, -2, 0,1,1}}, //ke sz1
+  {6, {0, 120, 0, 0, 0, -1,1,1}}, //sz1
+  {7, {200, 600, 0, 0, -2, 0,1,1}}, //arah kelereng
   {8, {0, 500, 460, 350, -2, 0,1,1}}, //ke k2
   {9, {440,200,0,500,-2,0,1,1}}, //hadap k2
-  {10, {0,100,0, 0,0,-1,2,2}}, //ke k2
-  {11, {0, 100, 0, 0, 0, -1, 2, 2 }}, //k2
-  {12, {190,430,260,0,-2,0,2,2}}, //arah sz2
-  {13, {0,250,0,0,-2,0,2,2}}, //ke sz2
-  {14, {0,180,0,0,0,-1,2,2}}, //sz2
-  {15, {0,510,320,0,-2,0,2,2}}, //keluar sz2
-  {16, {0,0,450,0,-2,0,2,2}}, //menuju jalan retak
-  {17, {450,0,0,0,-2,0,2,2}}, //menuju jalan retak
-  {18, {0,300,600,0,-2,0,2,2}}, //melewati jalan retak dan batu
-  {19, {0,300,0,400,-2,0,2,2}}, //posisi siap naik tangga
-  {20, {0,200,0,0,-2,0,2,2}}, //posisi siap naik tangga
-  {21, {0,0,600,400,-2,0,2,2}}, //naik tangga
-  {22, {0,500,0,800,-2,0,2,2}}, //hadap k5
-  {23, {300,300,0,0,0,-1,2,2}}, //hadap k5
-  {24, {0,120,0,0,0,0,2,2}}, //di k5
-  {25, {0,250,0,0,-2,0,2,2}}, //di k5
-  {26, {0,400,0,0,-2,0,2,2}}, //dari k5
-  {27, {0,0,0,350,-2,0,2,2}}, //ke sz5
-  {28, {0,250,0,0,-2,0,2,2}}, //sz5
-  {29, {400,0,0,600,0,-1,2,2}}, //arah finish
-  {30, {0,400, 0, 0, -2, 0, 2, 2}}, //finish
+  {10, {0,50,0, 0,0,-1,1,1}}, //ke k2
+  {11, {0, 50, 0, 0, 0, -1, 1, 1 }}, //k2
+  {12, {190,430,260,0,-2,0,1,1}}, //arah sz2
+  {13, {0,250,0,0,-2,0,1,1}}, //ke sz2
+  {14, {0,180,0,0,0,-1,1,1}}, //sz2
+  {15, {0,510,320,0,-2,0,1,1}}, //keluar sz2
+  {16, {0,0,450,0,-2,0,1,1}}, //menuju jalan retak
+  {17, {450,0,0,0,-2,0,1,1}}, //menuju jalan retak
+  {18, {0,300,600,0,-2,0,1,1}}, //melewati jalan retak dan batu
+  {19, {0,300,0,400,-2,0,1,1}}, //posisi siap naik tangga
+  {20, {0,200,0,0,-2,0,1,1}}, //posisi siap naik tangga
+  {21, {0,0,600,400,-2,0,1,1}}, //naik tangga
+  {22, {0,500,0,800,-2,0,1,1}}, //hadap k5
+  {23, {300,300,0,0,0,-1,1,1}}, //hadap k5
+  {24, {0,120,0,0,0,0,1,1}}, //di k5
+  {25, {0,250,0,0,-2,0,1,1}}, //di k5
+  {26, {0,400,0,0,-2,0,1,1}}, //dari k5
+  {27, {0,0,0,350,-2,0,1,1}}, //ke sz5
+  {28, {0,250,0,0,-2,0,1,1}}, //sz5
+  {29, {400,0,0,600,0,-1,1,1}}, //arah finish
+  {30, {0,400, 0, 0, -2, 0, 1, 1}}, //finish
+  {31, {0,0,0,0,-2,0,1,1}},
   
 };
 
@@ -158,6 +159,7 @@ std::map<int, std::vector<bool>> _f_{
   {28, {0,1,0,0,1,0,1}},
   {29, {1,0,0,0,1,0,1}},
   {30, {0,1,0,0,1,0,1}},
+  {31, {1,1,1,1,1,0,1}},
   
   // {0, {0,0,0,0,1,0,1}}
 };
@@ -167,8 +169,9 @@ float speed(1);                                                 // Linear veloci
 float turn(1);                                                  // Angular velocity (rad/s)
 float x(0), y(0), z(0), xa(0), ya(0), za(0), xb(0), yb(0), th(0); // Forward/backward/neutral direction vars
 char key(' ');
-int offset(1);
+int offset(10);
 bool isAvoidanceActive = false;
+int currentStep = 0;
 geometry_msgs::Twist twist;
 geometry_msgs::Twist head_Tws;
 std_msgs::Bool imu_override_;
@@ -178,21 +181,21 @@ std_msgs::Int32 Led_;
 
 void avoidance(){
   
-  if (ping[0] <= 100 || ping[1] <= 100 || ping[2] <= 100 || ping[3] <= 100) {
+  if (ping[0] <= 40 || ping[1] <= 40 || ping[2] <= 40 || ping[3] <= 40) {
     isAvoidanceActive = true;
-    if(ping[0] <= 30){
+    if(ping[0] <= 40){
     //gerakan ke kiri
     twist.linear.y = -1;
   }
-  if(ping[1] <= 30){
+  if(ping[1] <= 40){
     //gerakan mundur
     twist.linear.x = -1;
   }
-  if(ping[2] <= 30){
+  if(ping[2] <= 40){
     //gerakan ke depan
     twist.linear.x = 1;
   }
-  if(ping[3] <= 30){
+  if(ping[3] <= 40){
     //gerakan ke kanan
     twist.linear.y = 1;
   }
@@ -208,11 +211,12 @@ void kontrol(char arah_, int step_){
   }
   key=arah_;
   int batas[4];
-  if (step.count(step_) == 1)
+  if (step.count(step_) == 1 && step_ >= currentStep)
     {
       for(int a=0;a<4;a++){
         batas[a]=step[step_][a];
       }
+      currentStep = step_;
       xb=step[step_][4];
       yb=step[step_][5];
       speed=step[step_][6];
@@ -315,7 +319,7 @@ void kontrol(char arah_, int step_){
     yaa[1]=xaa[1];
     yaa[2]=xaa[2];
   }
-
+}
 
  
 int main(int argc, char **argv)
@@ -374,5 +378,4 @@ int main(int argc, char **argv)
     r.sleep();
   }
   return 0;
-}
 }
