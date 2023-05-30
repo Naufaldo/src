@@ -190,7 +190,7 @@ void avoidance(){
     if(ping[0] <= 40){
     //gerakan ke kiri
     twist.linear.x = 0;
-    twist.linear.y = -1;
+    twist.linear.y = -0.5;
     twist.linear.z = 0;
     twist.angular.x = 0;
     twist.angular.y = 0;
@@ -199,7 +199,7 @@ void avoidance(){
   }
   if(ping[1] <= 70 && xb == -2){
     //gerakan mundur
-    twist.linear.x = -1;
+    twist.linear.x = -0.5;
     twist.linear.y = 0;
     twist.linear.z = 0;
     twist.angular.x = 0;
@@ -209,7 +209,7 @@ void avoidance(){
   }
   if(ping[1] <= 90 && xb == 0 && yb == 0){
     //gerakan mundur
-    twist.linear.x = -1;
+    twist.linear.x = -0.5;
     twist.linear.y = 0;
     twist.linear.z = 0;
     twist.angular.x = 0;
@@ -219,7 +219,7 @@ void avoidance(){
   }
     if(ping[2] <= 40){
     //gerakan maju
-    twist.linear.x = 1;
+    twist.linear.x = 0.5;
     twist.linear.y = 0;
     twist.linear.z = 0;
     twist.angular.x = 0;
@@ -230,7 +230,7 @@ void avoidance(){
   if(ping[3] <= 40){
     //gerakan ke kanan
     twist.linear.x = 0;
-    twist.linear.y = 1;
+    twist.linear.y = 0.5;
     twist.linear.z = 0;
     twist.angular.x = 0;
     twist.angular.y = 0;
@@ -247,7 +247,7 @@ void kontrol(char arah_, int step_){
   if (isAvoidanceActive) {
     return;
   }
-  key=arah_;
+  ksey=arah_;
   int batas[4];
   if (step.count(step_) == 1)
     {
