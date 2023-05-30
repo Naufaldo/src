@@ -89,7 +89,7 @@ std::map<int, std::vector<int>> step{
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Gripper, Gripper}}
   {0, {0, 300, 0, 550, -2 ,0,1,2}}, //keluar home
-  {1, {0, 120, 220, 0, 0, -1,1,1}}, //ke k1
+  {1, {0, 120, 110, 0, 0, -1,1,1}}, //ke k1
   {2, {0, 250, 0, 0, 0, 0,1,1}}, //k1
   {3, {0, 0, 100, 0, -2, 0,2,1}}, //dari k1
   {4, {200, 600, 0, 0, -2, 0,1,1}}, //ke jalan retak, miring, batu
@@ -247,7 +247,7 @@ void kontrol(char arah_, int step_){
   if (isAvoidanceActive) {
     return;
   }
-  ksey=arah_;
+  key=arah_;
   int batas[4];
   if (step.count(step_) == 1)
     {
