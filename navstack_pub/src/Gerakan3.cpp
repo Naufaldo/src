@@ -88,7 +88,7 @@ std::map<int, std::vector<int>> step{
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Gripper, Gripper}}
-  {0, {0, 300, 0, 530, -2 ,0,1,2}}, //keluar home
+  {0, {0, 300, 0, 550, -2 ,0,1,2}}, //keluar home
   {1, {0, 120, 220, 0, 0, -1,1,1}}, //ke k1
   {2, {0, 250, 0, 0, 0, 0,1,1}}, //k1
   {3, {0, 0, 100, 0, -2, 0,2,1}}, //dari k1
@@ -172,7 +172,7 @@ float speed(1);                                                 // Linear veloci
 float turn(1);                                                  // Angular velocity (rad/s)
 float x(0), y(0), z(0), xa(0), ya(0), za(0), xb(0), yb(0), th(0); // Forward/backward/neutral direction vars
 char key(' ');
-int offset(0);
+int offset(10);
 geometry_msgs::Twist twist;
 geometry_msgs::Twist head_Tws;
 std_msgs::Bool imu_override_;
