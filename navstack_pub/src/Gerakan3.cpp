@@ -96,7 +96,7 @@ std::map<int, std::vector<int>> step{
   {5, {150, 300, 300, 0, -2, 0,1,1}}, //ke sz1
   {6, {0, 120, 0, 0, 0, -1,1,1}}, //sz1
   {7, {200, 600, 0, 0, -2, 0,1,1}}, //arah kelereng
-  {8, {0, 500, 460, 350, -2, 0,1,1}}, //ke k2
+  {8, {0, 500, 430, 350, -2, 0,1,1}}, //ke k2
   {9, {440,200,0,500,-2,0,1,1}}, //hadap k2
   {10, {0,50,0, 0,0,-1,1,1}}, //ke k2
   {11, {0, 50, 0, 0, 0, -1, 1, 1 }}, //k2
@@ -109,7 +109,7 @@ std::map<int, std::vector<int>> step{
   {13, {0,0,600,0,-2,0,1,1}}, //menuju jalan retak
   {14, {425,0,0,0,-2,0,1,1}}, //menuju jalan retak
   {15, {0,150,0,0,-2,0,1,1}}, //melewati jalan retak dan batu
-  {16, {0,300,160,200,-2,0,1,1}}, //posisi siap naik tangga
+  {16, {0,300,160,300,-2,0,1,1}}, //posisi siap naik tangga
   {17, {0,190,0,0,-2,0,1,1}}, //posisi siap naik tangga
   {18, {0,0,600,400,-2,0,1,1}}, //naik tangga
   {19, {0,500,0,800,-2,0,1,1}}, //hadap k5
@@ -172,7 +172,7 @@ float speed(1);                                                 // Linear veloci
 float turn(1);                                                  // Angular velocity (rad/s)
 float x(0), y(0), z(0), xa(0), ya(0), za(0), xb(0), yb(0), th(0); // Forward/backward/neutral direction vars
 char key(' ');
-int offset(15);
+int offset(7);
 geometry_msgs::Twist twist;
 geometry_msgs::Twist head_Tws;
 std_msgs::Bool imu_override_;
