@@ -187,7 +187,7 @@ void avoidance(){
     //gerakan ke kiri
     twist.linear.y = -1;
   }
-  if(ping[1] <= 40 && xb == 0){
+  if(ping[1] <= 70 && xb == -2){
     //gerakan mundur
     twist.linear.x = 1;
   }
