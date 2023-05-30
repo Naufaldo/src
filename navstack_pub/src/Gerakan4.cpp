@@ -171,6 +171,7 @@ float x(0), y(0), z(0), xa(0), ya(0), za(0), xb(0), yb(0), th(0); // Forward/bac
 char key(' ');
 int offset(10);
 bool isAvoidanceActive = false;
+int currentStep = 0;
 geometry_msgs::Twist twist;
 geometry_msgs::Twist head_Tws;
 std_msgs::Bool imu_override_;
@@ -210,11 +211,12 @@ void kontrol(char arah_, int step_){
   }
   key=arah_;
   int batas[4];
-  if (step.count(step_) == 1)
+  if (step.count(step_) == 1 && step_ >= currentStep)
     {
       for(int a=0;a<4;a++){
         batas[a]=step[step_][a];
       }
+      currentStep = step_;
       xb=step[step_][4];
       yb=step[step_][5];
       speed=step[step_][6];
