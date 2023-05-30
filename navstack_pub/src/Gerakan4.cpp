@@ -285,7 +285,7 @@ void kontrol(char arah_, int step_){
       yaa[a]=xaa[a];
     }
   }
-
+}
   else{
 
     for (int a=0; a<4; a++){
@@ -315,7 +315,7 @@ void kontrol(char arah_, int step_){
     yaa[1]=xaa[1];
     yaa[2]=xaa[2];
   }
-}
+
 
  
 int main(int argc, char **argv)

@@ -78,7 +78,7 @@ std::map<char, std::vector<float>> moveBindings{
     {'C', {-1, 1, 0, 0}}};
 
 //step
-char a_gerak[]  ={'D','w','s','x','D','d','s','a','w','a','w','s','d','w','s','a','w','A','w','d','w','A','a','D','w','s','x','A','w','d','w'}; 
+char a_gerak[]  ={'D','w','s','x','D','d','s','a','w','a','w','s','d','w','s','a','w','A','w','d','w','A','a','D','w','s','x','A','w','d','w','s'}; 
 
 int gerak_1_[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
@@ -98,8 +98,8 @@ std::map<int, std::vector<int>> step{
   {7, {200, 600, 0, 0, -2, 0,1,1}}, //arah kelereng
   {8, {0, 500, 460, 350, -2, 0,1,1}}, //ke k2
   {9, {440,200,0,500,-2,0,1,1}}, //hadap k2
-  {10, {0,100,0, 0,0,-1,1,1}}, //ke k2
-  {11, {0, 100, 0, 0, 0, -1, 1, 1 }}, //k2
+  {10, {0,50,0, 0,0,-1,1,1}}, //ke k2
+  {11, {0, 50, 0, 0, 0, -1, 1, 1 }}, //k2
   {12, {190,430,260,0,-2,0,1,1}}, //arah sz2
   {13, {0,250,0,0,-2,0,1,1}}, //ke sz2
   {14, {0,180,0,0,0,-1,1,1}}, //sz2
@@ -119,6 +119,7 @@ std::map<int, std::vector<int>> step{
   {28, {0,250,0,0,-2,0,1,1}}, //sz5
   {29, {400,0,0,600,0,-1,1,1}}, //arah finish
   {30, {0,400, 0, 0, -2, 0, 1, 1}}, //finish
+  {31, {0,0,0,0,-2,0,1,1}},
   
 };
 
@@ -158,7 +159,8 @@ std::map<int, std::vector<bool>> _f_{
   {28, {0,1,0,0,1,0,1}},
   {29, {1,0,0,0,1,0,1}},
   {30, {0,1,0,0,1,0,1}},
-  
+  {31, {1,1,1,1,1,0,1}},
+
   // {0, {0,0,0,0,1,0,1}}
 };
 
@@ -167,7 +169,7 @@ float speed(1);                                                 // Linear veloci
 float turn(1);                                                  // Angular velocity (rad/s)
 float x(0), y(0), z(0), xa(0), ya(0), za(0), xb(0), yb(0), th(0); // Forward/backward/neutral direction vars
 char key(' ');
-int offset(20);
+int offset(50);
 geometry_msgs::Twist twist;
 geometry_msgs::Twist head_Tws;
 std_msgs::Bool imu_override_;
