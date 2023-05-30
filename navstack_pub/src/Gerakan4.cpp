@@ -109,7 +109,7 @@ std::map<int, std::vector<int>> step{
   {13, {0,0,600,0,-2,0,1,1}}, //menuju jalan retak
   {14, {425,0,0,0,-2,0,1,1}}, //menuju jalan retak
   {15, {0,150,0,0,-2,0,1,1}}, //melewati jalan retak dan batu
-  {16, {0,300,160,300,-2,0,1,1}}, //posisi siap naik tangga
+  {16, {0,250,160,90,-2,0,1,1}}, //posisi siap naik tangga
   {17, {0,190,0,0,-2,0,1,1}}, //posisi siap naik tangga
   {18, {0,0,600,400,-2,0,1,1}}, //naik tangga
   {19, {0,500,0,800,-2,0,1,1}}, //hadap k5
@@ -185,9 +185,9 @@ std_msgs::Int32 Led_;
 
 void avoidance(){
   
-  if (ping[0] <= 40 || ping[1] <= 40 || ping[2] <= 40 || ping[3] <= 40) {
+  if (ping[0] <= 50 || ping[1] <= 120 || ping[2] <= 50 || ping[3] <= 50) {
     isAvoidanceActive = true;
-    if(ping[0] <= 40){
+    if(ping[0] <= 50){
     //gerakan ke kiri
     twist.linear.x = 0;
     twist.linear.y = -0.5;
@@ -207,7 +207,7 @@ void avoidance(){
     twist.angular.z = 0;
 
   }
-  if(ping[1] <= 90 && xb == 0 && yb == 0){
+  if(ping[1] <= 120 && xb == 0 && yb == 0){
     //gerakan mundur
     twist.linear.x = -0.5;
     twist.linear.y = 0;
@@ -217,7 +217,7 @@ void avoidance(){
     twist.angular.z = 0;
 
   }
-    if(ping[2] <= 40){
+    if(ping[2] <= 50){
     //gerakan maju
     twist.linear.x = 0.5;
     twist.linear.y = 0;
@@ -227,7 +227,7 @@ void avoidance(){
     twist.angular.z = 0;
 
   }
-  if(ping[3] <= 40){
+  if(ping[3] <= 50){
     //gerakan ke kanan
     twist.linear.x = 0;
     twist.linear.y = 0.5;
