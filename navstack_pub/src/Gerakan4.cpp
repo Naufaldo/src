@@ -316,6 +316,7 @@ void kontrol(char arah_, int step_){
     yaa[2]=xaa[2];
   }
 }
+}
 
  
 int main(int argc, char **argv)
