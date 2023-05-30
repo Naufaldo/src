@@ -88,10 +88,10 @@ std::map<int, std::vector<int>> step{
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Gripper, Gripper}}
-  {0, {0, 300, 0, 550, -2 ,0,1,1}}, //keluar home
+  {0, {0, 300, 0, 550, -2 ,0,1,2}}, //keluar home
   {1, {0, 130, 220, 0, 0, -1,1,1}}, //ke k1
   {2, {0, 250, 0, 0, 0, 0,1,1}}, //k1
-  {3, {0, 0, 100, 0, -2, 0,1,1}}, //dari k1
+  {3, {0, 0, 100, 0, -2, 0,2,1}}, //dari k1
   {4, {200, 600, 0, 0, -2, 0,1,1}}, //ke jalan retak, miring, batu
   {5, {150, 300, 300, 0, -2, 0,1,1}}, //ke sz1
   {6, {0, 120, 0, 0, 0, -1,1,1}}, //sz1
@@ -141,9 +141,9 @@ std::map<int, std::vector<bool>> _f_{
   {10, {0,1,0,0,1,0,1}},
   {11, {0,0,0,0,1,0,1}},
   {12, {0,0,0,0,1,0,1}},
-  {13, {0,1,0,0,1,0,1}},
-  {14, {0,1,0,0,1,0,1}},
-  {15, {0,1,0,0,1,0,1}},
+  {13, {0,1,0,0,1,0,0}},
+  {14, {0,1,0,0,1,0,0}},
+  {15, {0,1,0,0,1,0,0}},
   {16, {0,0,0,0,1,0,1}},
   {17, {0,0,0,0,1,0,0}},
   {18, {0,1,0,0,1,0,1}},
