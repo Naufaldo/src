@@ -320,7 +320,7 @@ void kontrol(char arah_, int step_){
  
 int main(int argc, char **argv)
 {
-   flag1=0;
+  flag1=0;
   ros::init(argc, argv, "Move_Control");
   ros::NodeHandle n;
   ros::param::get("TELEOP_SPEED", speed);
@@ -374,4 +374,5 @@ int main(int argc, char **argv)
     r.sleep();
   }
   return 0;
+}
 }

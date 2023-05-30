@@ -319,10 +319,10 @@ int main(int argc, char **argv)
     // ROS_INFO("-------------------------");
      //ROS_INFO("%f, %f, %f, %f, %f",xas[0],xas[1],xas[2],xas[3],xas[4]);
     // //  ROS_INFO("I heard: [%d] [%d]", ir, pb);
+    
     // for(int i = 0; i < 5; i++) {
     //   ROS_INFO(": [%i]", ping[i]);
     // }
-    
     //eksekusi
       kontrol(a_gerak[flag1],flag1);
       
