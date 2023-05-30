@@ -185,7 +185,7 @@ std_msgs::Int32 Led_;
 
 void avoidance(){
   
-  if (ping[0] <= 50 || ping[1] <= 120 || ping[2] <= 50 || ping[3] <= 50) {
+  if (ping[0] <= 50 || ping[1] <= 120 || ping[2] <= 40 || ping[3] <= 50) {
     isAvoidanceActive = true;
     if(ping[0] <= 50){
     //gerakan ke kiri
@@ -217,7 +217,7 @@ void avoidance(){
     twist.angular.z = 0;
 
   }
-    if(ping[2] <= 50){
+    if(ping[2] <= 40){
     //gerakan maju
     twist.linear.x = 0.5;
     twist.linear.y = 0;
