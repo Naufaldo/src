@@ -167,7 +167,7 @@ float speed(1);                                                 // Linear veloci
 float turn(1);                                                  // Angular velocity (rad/s)
 float x(0), y(0), z(0), xa(0), ya(0), za(0), xb(0), yb(0), th(0); // Forward/backward/neutral direction vars
 char key(' ');
-int offset(1);
+int offset(10);
 bool isAvoidanceActive = false;
 geometry_msgs::Twist twist;
 geometry_msgs::Twist head_Tws;
@@ -178,21 +178,21 @@ std_msgs::Int32 Led_;
 
 void avoidance(){
   
-  if (ping[0] <= 100 || ping[1] <= 100 || ping[2] <= 100 || ping[3] <= 100) {
+  if (ping[0] <= 20 || ping[1] <= 20 || ping[2] <= 20 || ping[3] <= 20) {
     isAvoidanceActive = true;
-    if(ping[0] <= 30){
+    if(ping[0] <= 20){
     //gerakan ke kiri
     twist.linear.y = -1;
   }
-  if(ping[1] <= 30){
+  if(ping[1] <= 20){
     //gerakan mundur
     twist.linear.x = -1;
   }
-  if(ping[2] <= 30){
+  if(ping[2] <= 20){
     //gerakan ke depan
     twist.linear.x = 1;
   }
-  if(ping[3] <= 30){
+  if(ping[3] <= 20){
     //gerakan ke kanan
     twist.linear.y = 1;
   }
