@@ -172,7 +172,7 @@ float speed(1);                                                 // Linear veloci
 float turn(1);                                                  // Angular velocity (rad/s)
 float x(0), y(0), z(0), xa(0), ya(0), za(0), xb(0), yb(0), th(0); // Forward/backward/neutral direction vars
 char key(' ');
-int offset(10);
+int offset(1);
 geometry_msgs::Twist twist;
 geometry_msgs::Twist head_Tws;
 std_msgs::Bool imu_override_;
