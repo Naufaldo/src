@@ -94,7 +94,7 @@ std::map<int, std::vector<int>> step{
   {3, {0, 0, 100, 0, -2, 0,2,1}}, //dari k1
   {4, {200, 600, 0, 0, -2, 0,1,1}}, //ke jalan retak, miring, batu
   {5, {150, 300, 200, 0, -2, 0,1,1}}, //ke sz1
-  {6, {160, 600, 0, 0, 0, -1,1,1}}, //sz1
+  {6, {160, 170, 0, 0, 0, -1,1,1}}, //sz1
   {7, {160, 600, 0, 0, -2, 0,1,1}}, //arah kelereng
   {8, {0, 400, 400, 330, -2, 0,1,1}}, //ke k2
   {9, {440,200,0,220,-2,0,1,1}}, //hadap k2
@@ -185,7 +185,7 @@ std_msgs::Int32 Led_;
 
 void avoidance(){
   
-  if (ping[0] <= 50 || ping[1] <= 120 || ping[2] <= 40 || ping[3] <= 50) {
+  if (ping[0] <= 50 || ping[1] <= 90 || ping[2] <= 40 || ping[3] <= 50) {
     isAvoidanceActive = true;
     if(ping[0] <= 50){
     //gerakan ke kiri
