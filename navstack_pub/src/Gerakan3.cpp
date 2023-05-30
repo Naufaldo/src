@@ -100,7 +100,7 @@ std::map<int, std::vector<int>> step{
   {9, {440,200,0,500,-2,0,1,1}}, //hadap k2
   {10, {0,50,0, 0,0,-1,1,1}}, //ke k2
   {11, {0, 50, 0, 0, 0, -1, 1, 1 }}, //k2
-  {12, {150,0,0,0,-2,0,1,1}},
+  {12, {120,0,0,0,-2,0,1,1}},
   // d','w','s','a
   // {12, {400,430,260,0,-2,0,1,1}}, //arah sz2 //d
   // {13, {0,250,0,0,-2,0,1,1}}, //ke sz2 //w
@@ -172,7 +172,7 @@ float speed(1);                                                 // Linear veloci
 float turn(1);                                                  // Angular velocity (rad/s)
 float x(0), y(0), z(0), xa(0), ya(0), za(0), xb(0), yb(0), th(0); // Forward/backward/neutral direction vars
 char key(' ');
-int offset(10);
+int offset(15);
 geometry_msgs::Twist twist;
 geometry_msgs::Twist head_Tws;
 std_msgs::Bool imu_override_;
