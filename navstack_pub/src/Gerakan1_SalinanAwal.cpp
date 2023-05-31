@@ -78,7 +78,7 @@ std::map<char, std::vector<float>> moveBindings{
     {'C', {-1, 1, 0, 0}}};
 
 //step
-char a_gerak[]  ={'a','w', 'a', 'w','s','x','D','d','s','a','w','a','w','s','D','w','A','w','d','w','A','a','D','w','s','x','A','w','d','w','s'}; 
+char a_gerak[]  ={'a','w', 'a', 'w','s', 'x', 'D','d', 's', 'a', 'w', 'a', 'w', 's', 'd', 'w', 's', 'a', 'w', 'a','w','d','w', 'x', 'A', 'a','d', 'D','x','w','x', 'A','w','A','a','w','d','w','c','A','w','s'};
 
 int gerak_1_[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
@@ -92,83 +92,95 @@ std::map<int, std::vector<int>> step{
   {1, {0, 0, 600, 0, -2 ,0,1,1}},
   {2, {0, 0, 180, 625, -2, 0,1,1}},
   {3, {0,120,300,0,0,-1,1,1}},
-  {4, {0, 250, 0, 0, 0, 0,1,1}}, //k1
-  {5, {0, 0, 100, 0, -2, 0,2,1}}, //dari k1
-  {6, {200, 600, 0, 0, -2, 0,1,1}}, //ke jalan retak, miring, batu
-  {7, {150, 300, 200, 0, -2, 0,1,1}}, //ke sz1
-  {8, {210, 550, 0, 360, 0, -1,1,1}}, //sz1
-  {9, {200, 600, 0, 0, -2, 0,1,1}}, //arah kelereng
-  {10, {0, 400, 400, 330, -2, 0,1,1}}, //ke k2
-  {11, {440,300,0,220,-2,0,1,1}}, //hadap k2
-  {12, {350,180,100, 0,0,-1,1,1}}, //ke k2
-  {13, {350, 180, 100, 0, 0, -1, 1, 1 }}, //k2
-  {14, {70,0,0,0,-2,0,1,1}},
-  // d','w','s','a
-  // {12, {400,430,260,0,-2,0,1,1}}, //arah sz2 //d
-  // {13, {0,250,0,0,-2,0,1,1}}, //ke sz2 //w
-  // {14, {0,180,0,0,0,-1,1,1}}, //sz2 //s
-  // {15, {0,510,320,0,-2,0,1,1}}, //keluar sz2 //a
-  {15, {0,0,600,0,-2,0,1,1}}, //menuju jalan retak
-  {16, {425,0,0,0,-2,0,1,1}}, //menuju jalan retak
-  {17, {0,150,0,0,-2,0,1,1}}, //melewati jalan retak dan batu
-  {18, {0,300,200,150,-2,0,1,1}}, //posisi siap naik tangga
-  //masih kurang dapet buat maju ke tangga
-  {19, {0,190,0,0,-2,0,1,1}}, //posisi siap naik tangga
-  {20, {0,0,600,220,-2,0,1,1}}, //naik tangga
-  {21, {140,220,0,0,-2,0,1,1}}, //hadap k5
-  {22, {140,100,0,0,0,-1,1,1}}, //hadap k5
-  {23, {0,100,0,0,0,0,1,1}}, //di k5
-  {24, {0,100,0,0,-2,0,1,1}}, //di k5
-  {25, {0,200,0,0,-2,0,1,1}}, //dari k5
-  {26, {0,0,0,350,-2,0,1,1}}, //ke sz5
-  {27, {0,250,0,0,-2,0,1,1}}, //sz5
-  {28, {400,0,0,600,0,-1,1,1}}, //arah finish
-  {29, {0,400,0, 0, 0, -2, 0, 1, 1}}, //finish
-  {30, {0,0,0,0,-2,0,1,1}},
-  
+  {4, {0, 250, 0, 0, 0, 0,1,1}},
+  {5, {0, 0, 100, 0, -2, 0,1,1}},
+  {6, {200, 800, 0, 300, -2, 0,1,1}},
+  {7, {150, 300, 300, 0, -2, 0,2,2}},
+  {8, {0, 120, 0, 0, 0, -1,2,2}},
+  {9, {300, 0, 200, 0, -2, 0,2,2}},
+  {10, {300, 0, 350, 0, -2, 0,1,1}},
+  {11, {0,0,340,0,0,-1,2,2}},
+  {12, {0,180,0,0,-2,0,2,2}},
+  {13, {0,180,0,0,-2,0,2,2}},
+  {14, {242,473,423,178,-2,0,2,2}},
+  {15, {0,248,0,0,-2,0,2,2}},
+  {16, {0,125,0,0,0,-1,2,2}},
+  {17, {360,629,195,260,-2,0,2,2}},
+  {18, {205,285,370,450,-2,0,2,2}},
+  {19, {234,0,275,0,-2,0,2,2}},
+  {20, {0,397,368,0,-2,0,2,2}},
+  {21, {0,295,166,0,-2,0,2,2}},
+  {22, {0,115,190,0,0,-1,2,2}},
+  {23, {0,255,168,0,0,-1,2,2}},
+  {24, {160,0,0,425,-2,0,2,2}},
+  {25, {450,260,352,385,-2,0,2,2}},
+  {26, {630, 270,230,300,0,-1,2,2}},
+  {27, {340, 90, 0, 710,-2,0,2,2}},
+  {28, {0,0,160,0,-2,0,2,2}},
+  {29, {0,0,170,0,0,-1,2,2}},
+  {30, {0,0,150,0,-2,0,2,2}},
+  {31, {290,0,0,150,-2,0,2,2}},
+  {32, {0,0,307,0,-2,0,2,2}},
+  {33, {0,0,770,390,-2,0,2,2}},
+  {34, {220,470,0,750,-2,0,2,2}},
+  {35, {0,230,0,0,-2,0,2,2}},
+  {36, {235,260,0,0,0,-1,2,2}},
+  {37, {0,220,0,0,0,-1,2,2}},
+  {38, {180,280,0,550,-2,0,2,2}},
+  {39, {660,0,0,190,-2,0,2,2}},
+  {40, {0,210,315,0,-2,0,2,2}},
+  {41, {0 ,0 ,0 ,0 ,-2,0,2,2}},
+  {42, {185,180,325,770,-2,0,2,2}},
 };
 
 std::map<int, std::vector<bool>> _f_{
   // ini program untuk kondisi if 1 atau 0 (komparasi)
 
-  // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-4 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=laser && 0=odom) //odom ,imu over , leg height
+  // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-4 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=lase && 0=odom) //odom ,imu over , leg height
   //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
-  {0, {0,0,0,0,1,0,0}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
-  {1, {0,1,0,0,1,0,1}},
+  {0, {0,0,1,0,1,0,0}},
+  {1, {0,0,0,0,1,0,0}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
   {2, {0,1,0,0,1,0,0}},
-  {3, {0,0,1,0,1,0,0}},
+  {3, {0,1,1,0,1,0,1}},
   {4, {0,1,0,0,1,0,0}},
   {5, {0,0,1,0,1,0,0}},
   {6, {1,0,0,0,1,0,1}},
-  {7, {0,1,0,0,1,0,1}},
-  {8, {1,1,0,1,1,0,1}},
-  {9, {1,0,0,0,1,0,1}},
-  {10, {0,1,0,1,1,0,1}},
-  {11, {0,1,0,0,1,0,1}},
+  {7, {1,1,0,0,1,0,1}},
+  {8, {0,1,0,0,1,0,1}},
+  {9, {0,0,1,0,1,0,1}},
+  {10, {0,0,0,0,1,0,1}},
+  {11, {0,0,1,0,1,0,1}},
   {12, {0,1,0,0,1,0,1}},
   {13, {0,0,0,0,1,0,1}},
-  {14, {1,0,0,0,1,0,1}},
-  // {12, {1,0,0,0,1,0,1}},
-  // {13, {0,1,0,0,1,0,1}},
-  // {14, {0,1,0,0,1,0,1}},
-  // {15, {0,1,0,0,1,0,1}},
-  {15, {0,0,0,0,1,0,1}},
-  {16, {0,0,0,0,1,0,1}},
-  {17, {0,1,0,0,1,0,1}},
-  {18, {0,0,1,1,1,0,1}},
-  {19, {0,1,0,0,1,0,1}},
-  {20, {0,0,0,1,1,0,1}},
-  {21, {1,1,0,0,1,0,1}},
-  {22, {1,1,0,0,1,0,1}},
-  {23, {0,1,0,0,1,0,1}},
-  {24, {0,0,0,0,1,0,1}},
-  {25, {0,0,0,0,1,0,1}},
-  {26, {0,0,0,1,1,0,1}},
-  {27, {0,1,0,0,1,0,1}},
-  {28, {1,0,0,0,1,0,1}},
-  {29, {0,1,0,0,1,0,1}},
-  {30, {1,1,1,1,1,0,1}},
-
+  {14, {0,1,1,0,1,0,1}},
+  {15, {0,1,0,0,1,0,1}},
+  {16, {0,1,0,0,1,0,1}},
+  {17, {1,0,1,1,1,0,1}},
+  {18, {1,1,0,0,1,0,1}},
+  {19, {0,0,1,0,1,0,1}},
+  {20, {0,1,0,1,1,0,1}},
+  {21, {0,1,1,0,1,0,1}},
+  {22, {0,1,0,0,1,0,1}},
+  {23, {0,0,1,0,1,0,1}},
+  {24, {0,0,0,1,1,0,1}},
+  {25, {0,1,0,1,1,0,1}},
+  {26, {0,0,0,0,1,0,1}},
+  {27, {1,1,0,0,1,0,1}},
+  {28, {0,0,1,0,1,0,1}},
+  {29, {0,0,0,0,1,0,1}},
+  {30, {0,0,1,0,1,0,1}},
+  {31, {0,0,0,1,1,0,1}},
+  {32, {0,0,0,0,1,0,1}},
+  {33, {0,0,0,1,1,0,1}},
+  {34, {1,0,0,0,1,0,1}},
+  {35, {0,1,0,0,1,0,1}},
+  {36, {0,1,0,0,1,0,1}},
+  {37, {0,1,0,0,1,0,1}},
+  {38, {1,0,0,0,1,0,1}},
+  {39, {0,0,0,1,1,0,1}},
+  {40, {0,1,0,0,1,0,1}},
+  {41, {0,0,0,0,1,0,1}},
+  {42, {1,1,0,0,1,0,1}},
 
   // {0, {0,0,0,0,1,0,1}}
 };
@@ -178,9 +190,6 @@ float speed(1);                                                 // Linear veloci
 float turn(1);                                                  // Angular velocity (rad/s)
 float x(0), y(0), z(0), xa(0), ya(0), za(0), xb(0), yb(0), th(0); // Forward/backward/neutral direction vars
 char key(' ');
-int offset(15);
-bool isAvoidanceActive = false;
-int currentStep = 0;
 geometry_msgs::Twist twist;
 geometry_msgs::Twist head_Tws;
 std_msgs::Bool imu_override_;
@@ -188,70 +197,10 @@ std_msgs::Bool leg_height_;
 std_msgs::Bool state_;
 std_msgs::Int32 Led_;
 
-void avoidance(){
-  
-  if (ping[0] <= 50 || ping[1] <= 90 || ping[2] <= 40 || ping[3] <= 50) {
-    isAvoidanceActive = true;
-    if(ping[0] <= 50){
-    //gerakan ke kiri
-    twist.linear.x = 0;
-    twist.linear.y = -0.5;
-    twist.linear.z = 0;
-    twist.angular.x = 0;
-    twist.angular.y = 0;
-    twist.angular.z = 0;
- 
-  }
-  if(ping[1] <= 70 && xb == -2){
-    //gerakan mundur
-    twist.linear.x = -0.5;
-    twist.linear.y = 0;
-    twist.linear.z = 0;
-    twist.angular.x = 0;
-    twist.angular.y = 0;
-    twist.angular.z = 0;
 
-  }
-  if(ping[1] <= 120 && xb == 0 && yb == 0){
-    //gerakan mundur
-    twist.linear.x = -0.5;
-    twist.linear.y = 0;
-    twist.linear.z = 0;
-    twist.angular.x = 0;
-    twist.angular.y = 0;
-    twist.angular.z = 0;
-
-  }
-    if(ping[2] <= 40){
-    //gerakan maju
-    twist.linear.x = 0.5;
-    twist.linear.y = 0;
-    twist.linear.z = 0;
-    twist.angular.x = 0;
-    twist.angular.y = 0;
-    twist.angular.z = 0;
-
-  }
-  if(ping[3] <= 50){
-    //gerakan ke kanan
-    twist.linear.x = 0;
-    twist.linear.y = 0.5;
-    twist.linear.z = 0;
-    twist.angular.x = 0;
-    twist.angular.y = 0;
-    twist.angular.z = 0;
-
-  }
-  } else {
-    isAvoidanceActive = false;
-  }
-}
 
 bool pilih;
 void kontrol(char arah_, int step_){
-  if (isAvoidanceActive) {
-    return;
-  }
   key=arah_;
   int batas[4];
   if (step.count(step_) == 1)
@@ -259,7 +208,6 @@ void kontrol(char arah_, int step_){
       for(int a=0;a<4;a++){
         batas[a]=step[step_][a];
       }
-      // currentStep = step_;
       xb=step[step_][4];
       yb=step[step_][5];
       speed=step[step_][6];
@@ -315,24 +263,24 @@ void kontrol(char arah_, int step_){
 
   if(pilih==true){
     for (int a=0; a<4; a++){
-    for (int a = 0; a < 4; a++) {
-        if (flag_[a] == true) {
-            if (ping[a] <= (batas[a] + offset) || ping[a] <= (batas[a] - offset)) {
-                s[a] = true;
-            } else {
-                s[a] = false;
-            }
-        } else {
-            if (ping[a] >= (batas[a] + offset) || ping[a] >= (batas[a] - offset)) {
-                s[a] = true;
-            } else {
-                s[a] = false;
-            }
+      if(flag_[a]==true){
+        if(ping[a]<=batas[a])
+        {
+          s[a]=true;
         }
-        yaa[a] = xaa[a];
+        else{s[a]=false;}
+      }
+      else{
+        if(ping[a]>=batas[a])
+        {
+          s[a]=true;
+        }
+        else{s[a]=false;}
+      }
+      yaa[a]=xaa[a];
     }
   }
-}
+
   else{
 
     for (int a=0; a<4; a++){
@@ -367,7 +315,7 @@ void kontrol(char arah_, int step_){
  
 int main(int argc, char **argv)
 {
-  flag1=0;
+   flag1=0;
   ros::init(argc, argv, "Move_Control");
   ros::NodeHandle n;
   ros::param::get("TELEOP_SPEED", speed);
@@ -389,7 +337,7 @@ int main(int argc, char **argv)
   while (ros::ok())
   {
     // //baca setpoin
-    // ROS_INFO("-------------------------");
+     //ROS_INFO("-------------------------");
      //ROS_INFO("%f, %f, %f, %f, %f",xas[0],xas[1],xas[2],xas[3],xas[4]);
     // //  ROS_INFO("I heard: [%d] [%d]", ir, pb);
     // for(int i = 0; i < 5; i++) {
@@ -397,7 +345,6 @@ int main(int argc, char **argv)
     // }
     
     //eksekusi
-      avoidance();
       kontrol(a_gerak[flag1],flag1);
       
       state_pub_.publish(state_);
