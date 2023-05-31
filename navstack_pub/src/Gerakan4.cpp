@@ -100,7 +100,7 @@ std::map<int, std::vector<int>> step{
   {9, {440,250,0,220,-2,0,1,1}}, //hadap k2
   {10, {350,180,100, 0,0,-1,1,1}}, //ke k2
   {11, {350, 180, 100, 0, 0, -1, 1, 1 }}, //k2
-  {12, {100,0,0,0,-2,0,1,1}},
+  {12, {70,0,0,0,-2,0,1,1}},
   // d','w','s','a
   // {12, {400,430,260,0,-2,0,1,1}}, //arah sz2 //d
   // {13, {0,250,0,0,-2,0,1,1}}, //ke sz2 //w
@@ -109,7 +109,7 @@ std::map<int, std::vector<int>> step{
   {13, {0,0,600,0,-2,0,1,1}}, //menuju jalan retak
   {14, {425,0,0,0,-2,0,1,1}}, //menuju jalan retak
   {15, {0,150,0,0,-2,0,1,1}}, //melewati jalan retak dan batu
-  {16, {0,300,200,0,-2,0,1,1}}, //posisi siap naik tangga
+  {16, {0,300,200,150,-2,0,1,1}}, //posisi siap naik tangga
   //masih kurang dapet buat maju ke tangga
   {17, {0,190,0,0,-2,0,1,1}}, //posisi siap naik tangga
   {18, {0,0,600,220,-2,0,1,1}}, //naik tangga
