@@ -53,7 +53,7 @@
   </node>  
 
   <!-- Map File -->
-  <arg name="map_file" default="$(find navigation_data_pub)/maps/my_map.yaml"/>
+  <arg name="map_file" default="$(find navstack_pub)/maps/my_map.yaml"/>
 	
   <!-- Map Server -->
   <!-- Publish: /map, /map_metadata -->
