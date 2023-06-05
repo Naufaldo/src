@@ -27,7 +27,7 @@
   <!-- Publish: /amcl_pose, /particlecloud, /tf -->
   <!-- <include file="$(find amcl)/examples/amcl_diff.launch"/> -->
   <!-- <include file="$(find hector_slam)/hector_slam_launch/launch/slam.launch"/> -->
-  <!-- <node pkg="hector_slam" name="hector_slam_launch" type="launch" args="slam.launch" /> -->
+  <node pkg="hector_slam" name="hector_slam_launch" type="launch" args="slam.launch" />
   
   <arg name="base_global_planner" default="navfn/NavfnROS"/>
   <arg name="base_local_planner" default="dwa_local_planner/DWAPlannerROS"/>
