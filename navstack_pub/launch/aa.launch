@@ -11,7 +11,7 @@
 
   <remap from="odom" to="odom_data_quat" />
   <remap from="imu_data" to="imu/data" />
-  <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+  <!-- <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
     <param name="output_frame" value="odom"/>
     <param name="base_footprint_frame" value="base_footprint"/>
     <param name="freq" value="30.0"/>
@@ -22,7 +22,7 @@
     <param name="gps_used" value="false"/>
     <param name="debug" value="false"/>
     <param name="self_diagnose" value="false"/>
-  </node>
+  </node> -->
   
  <!-- <node pkg="rviz" type="rviz" name="rviz" args="-d /home/automaticaddison/catkin_ws/src/jetson_nano_bot/navigation_data_pub/maps/floorplan4.rviz">
   </node>  -->
