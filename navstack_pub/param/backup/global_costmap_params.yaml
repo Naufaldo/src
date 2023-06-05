@@ -1,9 +1,14 @@
 global_costmap:
   global_frame: odom
-  update_frequency: 30.0
-  publish_frequency: 30.0
+  update_frequency: 1.0
+  publish_frequency: 0.5
   transform_tolerance: 0.2  #0.2
   resolution: 0.1 #0.1
+  rolling_window: true
+  plugins: 
+  - {name: static_layer, type: "costmap_2d::StaticLayer"} 
+  - {name: obstacle_layer, type: "costmap_2d::VoxelLayer"} 
+  - {name: inflation_layer, type: "costmap_2d::InflationLayer"}
 
   static_map: true
 
