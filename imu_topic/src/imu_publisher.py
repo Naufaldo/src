@@ -1,22 +1,22 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import rospy
 from sensor_msgs.msg import Imu
 from std_msgs.msg import Float64
 import math
 import time
-from adafruit_extended_bus import ExtendedI2C as I2C
 from adafruit_mpu6050 import MPU6050
+import board
 
 
 class IMUNode:
     def __init__(self):
-          rospy.init_node('mpu6050_node')
-        self.pub_imu = rospy.Publisher('/imu/data', Imu, queue_size=10)
-        self.pub_temp = rospy.Publisher('/imu/temperature', Float64, queue_size=10)
-        self.rate = rospy.Rate(100)  # Publish at 100 Hz
+        rospy.init_node('imu_node')
+        self.rate = rospy.Rate(10)  # 10 Hz
         i2c = board.I2C()
-        self.mpu = MPU6050(i2c)
+        self.imu = MPU6050(i2c)
+        self.pub_imu = rospy.Publisher('imu/data', Imu, queue_size=10)
+        self.pub_temp = rospy.Publisher('imu/temperature', Float64, queue_size=10)
         self.dt = 0.1  # Time step in seconds
         self.alpha = 0.98  # Complementary filter coefficient
         self.roll = 0.0
