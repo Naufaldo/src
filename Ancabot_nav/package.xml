@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>Ancabot_nav</name>
+  <name>ancabot_nav</name>
   <version>0.0.0</version>
   <description>The Ancabot_nav package</description>
 
