@@ -13,10 +13,11 @@
   <node pkg="localization_data_pub" type="rviz_click_to_2d" name="rviz_click_to_2d">
   </node>   
 
-
+<node name="rviz" pkg="rviz" type="rviz" 
+     args="-d $(find hexapod_description)/rviz_prefs/RobotViz.rviz"/>
 
   <!-- Map File -->
-  <arg name="map_file" default="$(find navstack_pub)/maps/my_map.yaml"/>
+  <arg name="map_file" default="$(find ancabot_nav)/maps/lab_robotik.yaml"/>
 	
   <!-- Map Server -->
   <!-- Publish: /map, /map_metadata -->
