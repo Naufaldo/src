@@ -12,10 +12,10 @@
   <!-- motor_controller_diff_drive_2.ino is the Arduino sketch -->
   <!-- Subscribe: /cmd_vel -->
   <!-- Publish: /right_ticks, /left_ticks -->
-  <!-- <node pkg="rosserial_python" type="serial_node.py" name="serial_node">
+  <node pkg="rosserial_python" type="serial_node.py" name="serial_node">
     <param name="port" value="/dev/ttyACM0"/>
     <param name="baud" value="115200"/>
-  </node> -->
+  </node>
 
   <!-- Wheel Odometry Publisher -->
   <!-- Subscribe: /right_ticks, /left_ticks, /initial_2d -->
@@ -25,11 +25,11 @@
 	
   <!-- IMU Data Publisher Using the BNO055 IMU Sensor -->
   <!-- Publish: /imu/data -->
-  <!-- <node ns="imu" name="imu_node" pkg="imu_bno055" type="bno055_i2c_node" respawn="true" respawn_delay="2">
-    <param name="device" type="string" value="/dev/i2c-1"/> -->
-    <!--<param name="address" type="int" value="40"/>--> <!-- 0x28 == 40 is the default for BNO055 -->
-    <!-- <param name="frame_id" type="string" value="imu"/>
-  </node> -->
+  <node ns="imu" name="imu_node" pkg="imu_bno055" type="bno055_i2c_node" respawn="true" respawn_delay="2">
+    <param name="device" type="string" value="/dev/i2c-1"/>
+    <param name="address" type="int" value="40"/> <!-- 0x28 == 40 is the default for BNO055 -->
+    <param name="frame_id" type="string" value="imu"/>
+  </node>
 	
   <!-- Extended Kalman Filter from robot_pose_ekf Node-->
   <!-- Subscribe: /odom, /imu_data, /vo -->
@@ -51,8 +51,8 @@
 	
   <!-- Initial Pose and Goal Publisher -->
   <!-- Publish: /initialpose, /move_base_simple/goal -->
-  <!-- <node pkg="rviz" type="rviz" name="rviz" args="-d /home/automaticaddison/catkin_ws/src/jetson_nano_bot/navigation_data_pub/maps/floorplan4.rviz">
-  </node>  -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d /home/automaticaddison/catkin_ws/src/jetson_nano_bot/navigation_data_pub/maps/floorplan4.rviz">
+  </node> 
 
   <!-- Subscribe: /initialpose, /move_base_simple/goal -->
   <!-- Publish: /initial_2d, /goal_2d --> 
@@ -63,7 +63,7 @@
   <!-- Used for obstacle avoidance and can be used for mapping --> 
   <!-- Publish: /scan -->
   <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
-    <param name="serial_port"         type="string" value="/dev/Lidar"/>
+    <param name="serial_port"         type="string" value="/dev/ttyUSB0"/>
     <param name="serial_baudrate"     type="int"    value="115200"/><!--A1/A2 -->
     <!--param name="serial_baudrate"  type="int"    value="256000"--><!--A3 -->
     <param name="frame_id"            type="string" value="laser"/>
@@ -72,7 +72,7 @@
   </node>  
 
   <!-- Map File -->
-  <arg name="map_file" default="$(find Mapping)/maps/lab_robotik.yaml"/>
+  <arg name="map_file" default="$(find navigation_data_pub)/maps/floorplan4.yaml"/>
 	
   <!-- Map Server -->
   <!-- Publish: /map, /map_metadata -->
@@ -95,4 +95,3 @@
   </node>
 
 </launch>
-
