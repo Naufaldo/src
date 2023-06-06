@@ -72,7 +72,7 @@
   </node>  
 
   <!-- Map File -->
-  <arg name="map_file" default="$(find Mapping)/maps/lab_robotik.yaml"/>
+  <arg name="map_file" default="$(find ancabot_nav)/maps/lab_robotik.yaml"/>
 	
   <!-- Map Server -->
   <!-- Publish: /map, /map_metadata -->
