@@ -1,0 +1,49 @@
+<launch>
+
+  <!-- Transformation Configuration ... Setting Up the Relationships Between Coordinate Frames -->
+  <!-- <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0.06 0 0.08 0 0 0 base_link laser 30" />
+  <node pkg="tf" type="static_transform_publisher" name="imu_broadcaster" args="0 0.06 0.02 0 0 0 base_link imu 30" />
+  <node pkg="tf" type="static_transform_publisher" name="base_link_broadcaster" args="0 0 0.09 0 0 0 base_footprint base_link 30" /> -->
+  <!-- odom to base_footprint transform will be provided by the robot_pose_ekf node -->
+  <!-- map to odom will be provided by Hector SLAM -->
+  <!-- Uncomment and configure the following if you have separate static transform publishers for Hector SLAM -->
+  <!-- <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="x y z roll pitch yaw map odom 30" /> -->
+
+  <!-- Subscribe: /initialpose, /move_base_simple/goal -->
+  <!-- Publish: /initial_2d, /goal_2d -->
+  <node pkg="localization_data_pub" type="rviz_click_to_2d" name="rviz_click_to_2d">
+  </node>
+
+  <!-- Lidar Data Publisher Using RPLIDAR from Slamtec -->
+  <!-- Used for obstacle avoidance and can be used for mapping -->
+  <!-- Publish: /scan -->
+  <node name="rplidarNode" pkg="rplidar_ros" type="rplidarNode" output="screen">
+    <param name="serial_port" type="string" value="/dev/Lidar"/>
+    <param name="serial_baudrate" type="int" value="115200" /><!--A1/A2 -->
+    <!--param name="serial_baudrate" type="int" value="256000"--><!--A3 -->
+    <param name="frame_id" type="string" value="laser" />
+    <param name="inverted" type="bool" value="false" />
+    <param name="angle_compensate" type="bool" value="true" />
+  </node>
+
+  <!-- Hector SLAM -->
+  <!-- Run Hector SLAM to generate the map -->
+  <!-- Modify the following according to your Hector SLAM launch configuration -->
+  <include file="$(find hector_slam_launch)/launch/tutorial.launch" />
+
+  <!-- Move Base Node -->
+  <!-- Subscribe: /move_base_simple/goal -->
+  <!-- Publish: /cmd_vel -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find hexapod_navigation)/param/costmap_common.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find hexapod_navigation)/param/costmap_common.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find hexapod_navigation)/param/costmap_local.yaml" command="load" ns="local_costmap" />
+    <param name="local_costmap/width" value="6.0" />
+    <param name="local_costmap/height" value="6.0" />
+    <rosparam file="$(find hexapod_navigation)/param/costmap_global_laser.yaml" command="load" ns="global_costmap" />
+    <param name="global_costmap/width" value="30.0" />
+    <param name="global_costmap/height" value="30.0" />
+    <rosparam file="$(find navstack_pub)/param/base_local_planner_params.yaml" command="load" />
+  </node>
+
+</launch>
