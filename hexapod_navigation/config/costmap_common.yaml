@@ -8,12 +8,12 @@ transform_tolerance: 0.25
 
 resolution: 0.05
 
-obstacle_range: 12 #5.5
-raytrace_range: 12 #6.0
+obstacle_range: 15 #5.5
+raytrace_range: 15 #6.0
 
 #layer definitions
 static:
-    map_topic: /rtabmap/grid_map
+    map_topic: /map
     subscribe_to_updates: true
 
 obstacles_laser:

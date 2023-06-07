@@ -9,7 +9,7 @@ TrajectoryPlannerROS:
   # Robot Configuration Parameters
   acc_lim_x: 0.008464
   acc_lim_y: 0.008464
-  acc_lim_th: 0.1089
+  acc_lim_theta: 0.1089
 
   max_vel_x: 0.092
   min_vel_x: 0.0
