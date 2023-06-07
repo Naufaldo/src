@@ -42,15 +42,15 @@
     <param name="base_local_planner" value="$(arg base_local_planner)"/>
     <rosparam file="$(find navstack_pub)/param/base_local_planner_params.yaml" command="load" />
 
-    <rosparam file="$(find hexapod_navigation)/param/costmap_common.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find hexapod_navigation)/param/costmap_common.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find hexapod_navigation)/param/costmap_local.yaml" command="load" ns="local_costmap" />
-    <param name="local_costmap/width" value="6.0" />
-    <param name="local_costmap/height" value="6.0" />
-    <rosparam file="$(find hexapod_navigation)/param/costmap_global_laser.yaml" command="load" ns="global_costmap" />
-    <param name="global_costmap/width" value="30.0" />
+    <rosparam file="$(find navstack_pub/param/costmap_common.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find navstack_pub)/param/costmap_common.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find navstack_pub)/param/costmap_local.yaml" command="load" ns="local_costmap" />
+    <!-- <param name="local_costmap/width" value="6.0" />
+    <param name="local_costmap/height" value="6.0" /> -->
+    <rosparam file="$(find navstack_pub)/param/costmap_global_laser.yaml" command="load" ns="global_costmap" />
+    <!-- <param name="global_costmap/width" value="30.0" />
     <param name="global_costmap/height" value="30.0" />
-    
+     -->
   </node>
 
 </launch>
