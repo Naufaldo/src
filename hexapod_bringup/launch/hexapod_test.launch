@@ -8,7 +8,7 @@
 
     <include file="$(find hexapod_bringup)/launch/components/locomotion.launch" /> 
     <include file="$(find hexapod_bringup)/launch/components/gripper.launch" />
-    <include file="$(find hexapod_bringup)/launch/components/imu_sub.launch" /> 
+    <!-- <include file="$(find hexapod_bringup)/launch/components/imu_sub.launch" />  -->
    <include file="$(find hexapod_bringup)/launch/components/TOF.launch" />
     <!--<include file="$(find hexapod_bringup)/launch/components/starter.launch" />-->
     
