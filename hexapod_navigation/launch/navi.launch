@@ -24,10 +24,10 @@
     <param name="debug" value="false"/>
     <param name="self_diagnose" value="false"/>
   </node>
-
+<include file="$(find hexapod_bringup)/launch/rviz.launch" />
 
   <!-- Map File -->
-  <arg name="map_file" default="$(find navstack_pub)/maps/my_map.yaml"/>
+  <arg name="map_file" default="$(find navstack_pub)/maps/trial_dc.yaml"/>
 	
   <!-- Map Server -->
   <!-- Publish: /map, /map_metadata -->
