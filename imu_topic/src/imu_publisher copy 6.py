@@ -28,13 +28,13 @@ class IMUNode:
         gyro_x, gyro_y, gyro_z = self.imu.gyro
         temp = self.imu.temperature
 
-        accel_x /= 9.80665  # Convert acceleration to m/s^2
-        accel_y /= 9.80665
-        accel_z /= 9.80665
+        # accel_x /= 9.80665  # Convert acceleration to m/s^2
+        # accel_y /= 9.80665
+        # accel_z /= 9.80665
 
-        gyro_x *= math.pi / 180.0  # Convert gyro values to rad/s
-        gyro_y *= math.pi / 180.0
-        gyro_z *= math.pi / 180.0
+        # gyro_x *= math.pi / 180.0  # Convert gyro values to rad/s
+        # gyro_y *= math.pi / 180.0
+        # gyro_z *= math.pi / 180.0
 
         return accel_x, accel_y, accel_z, gyro_x, gyro_y, gyro_z, temp
 
