@@ -11,9 +11,9 @@ from std_msgs.msg import Int32MultiArray
 # GPIO for Sensor 1 shutdown pin
 sensor1_shutdown = 4
 # GPIO for Sensor 2 shutdown pin
-sensor2_shutdown = 17
+sensor2_shutdown = 13
 # GPIO for Sensor 3 shutdown pin
-sensor3_shutdown = 27
+sensor3_shutdown = 19
 # GPIO for Sensor 4 shutdown pin
 sensor4_shutdown = 22
 
