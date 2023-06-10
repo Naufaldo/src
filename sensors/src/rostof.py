@@ -53,7 +53,7 @@ time.sleep(0.50)
 
 # Create one object per VL53L0X passing the address to give to each
 tof = VL53L0X.VL53L0X(address=0x2B)
-tof1 = VL53L0X.VL53L0X(address=0x2D)
+tof1 = VL53L0X.VL53L0X(address=0x2C)
 tof2 = VL53L0X.VL53L0X(address=0x2F)
 tof3 = VL53L0X.VL53L0X(address=0x2E)
 tof4 = VL53L0X.VL53L0X(address=0x30)
@@ -149,6 +149,10 @@ try:
         # Publish the distances as Int32MultiArray
         msg = Int32MultiArray(data=distances)
         pub.publish(msg)
+
+        # Get the maximum timing value among all sensors
+        timing = max(tof.get_timing(), tof1.get_timing(), tof2.get_timing(), tof3.get_timing(),
+                     tof4.get_timing(), tof5.get_timing(), tof6.get_timing(), tof7.get_timing())
 
         time.sleep(timing / 1000000.00)
 
