@@ -53,8 +53,8 @@ time.sleep(0.50)
 
 # Create one object per VL53L0X passing the address to give to each
 tof = VL53L0X.VL53L0X(address=0x2B)
-tof1 = VL53L0X.VL53L0X(address=0x2D)
-tof2 = VL53L0X.VL53L0X(address=0x2F)
+tof1 = VL53L0X.VL53L0X(address=0x2C)
+tof2 = VL53L0X.VL53L0X(address=0x2D)
 tof3 = VL53L0X.VL53L0X(address=0x2E)
 tof4 = VL53L0X.VL53L0X(address=0x30)
 tof5 = VL53L0X.VL53L0X(address=0x31)
