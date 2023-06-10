@@ -7,8 +7,8 @@ import RPi.GPIO as GPIO
 import subprocess
 
 # Set the GPIO pins for the LEDs
-led_pin_1 = 17
-led_pin_2 = 18
+led_pin_1 = 5
+led_pin_2 = 6
 # Set the GPIO pin for the button
 button_pin = 26
 
