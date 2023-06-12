@@ -146,12 +146,34 @@ try:
         if distance > 0:
             distances.append(distance)
 
-        # Publish the distances as Int32MultiArray
-        msg = Int32MultiArray(data=distances)
-        pub.publish(msg)
+        # Check if all 8 sensors have published their distances
+        if len(distances) == 8:
+            # Publish the distances as Int32MultiArray
+            msg = Int32MultiArray(data=distances)
+            pub.publish(msg)
+        else:
+            # If any sensor fails to publish, restart ranging for all sensors
+            tof.stop_ranging()
+            tof1.stop_ranging()
+            tof2.stop_ranging()
+            tof3.stop_ranging()
+            tof4.stop_ranging()
+            tof5.stop_ranging()
+            tof6.stop_ranging()
+            tof7.stop_ranging()
+
+            time.sleep(0.50)
+
+            tof.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
+            tof1.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
+            tof2.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
+            tof3.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
+            tof4.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
+            tof5.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
+            tof6.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
+            tof7.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
 
         # Get the maximum timing value among all sensors
-        
         time.sleep(timing / 1000000.00)
 
 except KeyboardInterrupt:
