@@ -101,7 +101,8 @@ GPIO.output(sensor8_shutdown, GPIO.HIGH)
 time.sleep(0.50)
 tof7.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
 
-timing = tof.get_timing()
+timing = max(tof.get_timing(), tof1.get_timing(), tof2.get_timing(), tof3.get_timing(),
+                     tof4.get_timing(), tof5.get_timing(), tof6.get_timing(), tof7.get_timing())
 if timing < 30000:
     timing = 30000
 print("Timing %d ms" % (timing / 1000))
