@@ -64,42 +64,42 @@ tof7 = VL53L0X.VL53L0X(address=0x33)
 # Set shutdown pin high for the first VL53L0X, then call to start ranging
 GPIO.output(sensor1_shutdown, GPIO.HIGH)
 time.sleep(0.50)
-tof.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
+tof.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
 
 # Set shutdown pin high for the second VL53L0X, then call to start ranging
 GPIO.output(sensor2_shutdown, GPIO.HIGH)
 time.sleep(0.50)
-tof1.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
+tof1.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
 
 # Set shutdown pin high for the third VL53L0X, then call to start ranging
 GPIO.output(sensor3_shutdown, GPIO.HIGH)
 time.sleep(0.50)
-tof2.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
+tof2.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
 
 # Set shutdown pin high for the fourth VL53L0X, then call to start ranging
 GPIO.output(sensor4_shutdown, GPIO.HIGH)
 time.sleep(0.50)
-tof3.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
+tof3.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
 
 # Set shutdown pin high for the fifth VL53L0X, then call to start ranging
 GPIO.output(sensor5_shutdown, GPIO.HIGH)
 time.sleep(0.50)
-tof4.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
+tof4.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
 
 # Set shutdown pin high for the sixth VL53L0X, then call to start ranging
 GPIO.output(sensor6_shutdown, GPIO.HIGH)
 time.sleep(0.50)
-tof5.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
+tof5.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
 
 # Set shutdown pin high for the seventh VL53L0X, then call to start ranging
 GPIO.output(sensor7_shutdown, GPIO.HIGH)
 time.sleep(0.50)
-tof6.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
+tof6.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
 
 # Set shutdown pin high for the eighth VL53L0X, then call to start ranging
 GPIO.output(sensor8_shutdown, GPIO.HIGH)
 time.sleep(0.50)
-tof7.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
+tof7.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
 
 timing = tof.get_timing()
 if timing < 100000:
