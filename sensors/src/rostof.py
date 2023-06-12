@@ -101,6 +101,7 @@ GPIO.output(sensor8_shutdown, GPIO.HIGH)
 time.sleep(0.50)
 tof7.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
 
+#update
 timing = tof.get_timing()
 if timing < 100000:
     timing = 100000
