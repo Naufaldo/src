@@ -89,7 +89,7 @@ tof4.start_ranging(VL53L0X.VL53L0X_GOOD_ACCURACY_MODE)
 # Set shutdown pin high for the sixth VL53L0X, then call to start ranging
 GPIO.output(sensor6_shutdown, GPIO.HIGH)
 time.sleep(0.50)
-tof5.start_ranging(VL53L0X.VL53L0X_GOOD_ACCURACY_MODE)
+tof5.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
 
 # Set shutdown pin high for the seventh VL53L0X, then call to start ranging
 GPIO.output(sensor7_shutdown, GPIO.HIGH)
@@ -99,7 +99,7 @@ tof6.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
 # Set shutdown pin high for the eighth VL53L0X, then call to start ranging
 GPIO.output(sensor8_shutdown, GPIO.HIGH)
 time.sleep(0.50)
-tof7.start_ranging(VL53L0X.VL53L0X_GOOD_ACCURACY_MODE)
+tof7.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
 
 timing = tof.get_timing()
 if timing < 100000:
