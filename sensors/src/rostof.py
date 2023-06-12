@@ -102,8 +102,8 @@ time.sleep(0.50)
 tof7.start_ranging(VL53L0X.VL53L0X_HIGH_SPEED_MODE)
 
 timing = tof.get_timing()
-if timing < 50000:
-    timing = 50000
+if timing < 60000:
+    timing = 60000
 print("Timing %d ms" % (timing / 1000))
 
 rospy.init_node('tof_publisher', anonymous=True)
