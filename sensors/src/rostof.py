@@ -151,9 +151,7 @@ try:
         pub.publish(msg)
 
         # Get the maximum timing value among all sensors
-        timing = max(tof.get_timing(), tof1.get_timing(), tof2.get_timing(), tof3.get_timing(),
-                     tof4.get_timing(), tof5.get_timing(), tof6.get_timing(), tof7.get_timing())
-
+        
         time.sleep(timing / 1000000.00)
 
 except KeyboardInterrupt:
