@@ -72,10 +72,10 @@ def handleSerialData(raw_data):
             stamp = rospy.get_rostime()
 
             imu_msg.header.stamp = stamp
-            imu_msg.header.frame_id = "base_link"
+            imu_msg.header.frame_id = "imu_link"
 
             mag_msg.header.stamp = stamp
-            mag_msg.header.frame_id = "base_link"
+            mag_msg.header.frame_id = "imu_link"
 
             angle_radian = [angle_degree[i] * math.pi / 180 for i in range(3)]
             qua = quaternion_from_euler(angle_radian[0], angle_radian[1], angle_radian[2])
@@ -131,8 +131,8 @@ if __name__ == "__main__":
         rospy.loginfo("\033[31mSerial port opening failure\033[0m")
         exit(0)
     else:
-        imu_pub = rospy.Publisher("wit/imu", Imu, queue_size=10)
-        mag_pub = rospy.Publisher("wit/mag", MagneticField, queue_size=10)
+        imu_pub = rospy.Publisher("imu/data", Imu, queue_size=10)
+        mag_pub = rospy.Publisher("mag/data", MagneticField, queue_size=10)
 
         while not rospy.is_shutdown():
             try:
