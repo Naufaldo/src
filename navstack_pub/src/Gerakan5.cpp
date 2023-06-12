@@ -16,8 +16,8 @@
 #include <termios.h>
 #include <map>
 
-int ping[4]={0,0,0,0};
-// Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri
+int ping[8]={0,0,0,0,0,0,0,0};
+// Depan kanan, Kanan , belakang kanan , depan , belakang , belakang kiri , kiri , depan kiri
 void tofdistancesCallback(const std_msgs::Int32MultiArray::ConstPtr& msg)
 {
   for (int i=0;i<8;i++){
@@ -86,6 +86,7 @@ int gerak_1_[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
+  // Depan kanan, Kanan , belakang kanan , depan , belakang , belakang kiri , kiri , depan kiri, lifter , gripper , turn , speed
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Gripper, Gripper}}
   {0, {0, 300, 0, 510,0,0,0,0, -2 ,0,1,2}}, //keluar home
