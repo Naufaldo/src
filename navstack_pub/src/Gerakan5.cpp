@@ -89,6 +89,7 @@ std::map<int, std::vector<int>> step{
   // Depan kanan, Kanan , belakang kanan , depan , belakang , belakang kiri , kiri , depan kiri, lifter , gripper , turn , speed
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Gripper, Gripper}}
+  //coba update
   {0, {0, 300, 0, 510,0,0,0,0, -2 ,0,1,2}}, //keluar home
   {1, {0, 120, 110, 0,0,0,0,0, 0, -1,1,1}}, //ke k1
   {2, {0, 250, 0, 0,0,0,0,0, 0, 0,1,1}}, //k1
