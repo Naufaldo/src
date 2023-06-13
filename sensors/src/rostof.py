@@ -1,4 +1,8 @@
+#!/usr/bin/env python3
+
 import time
+import sys
+sys.path.append('/home/pi/VL53L0X_rasp_python/python')
 import VL53L0X
 import rospy
 from std_msgs.msg import Int32MultiArray
