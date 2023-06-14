@@ -180,9 +180,9 @@ std_msgs::Int32 Led_;
 
 void avoidance(){
   
-  if (ping[0] <= 50 || ping[1] <= 90 || ping[2] <= 40 || ping[3] <= 50) {
+  if (ping[7] <= 50 || ping[5] <= 90 || ping[4] <= 40 || ping[2] <= 50) {
     isAvoidanceActive = true;
-    if(ping[0] <= 50){
+    if(ping[7] <= 50){
     //gerakan ke kiri
     twist.linear.x = 0;
     twist.linear.y = -0.5;
@@ -192,7 +192,7 @@ void avoidance(){
     twist.angular.z = 0;
  
   }
-  if(ping[1] <= 70 && xb == -2){
+  if(ping[5] <= 70 && xb == -2){
     //gerakan mundur
     twist.linear.x = -0.5;
     twist.linear.y = 0;
@@ -202,7 +202,7 @@ void avoidance(){
     twist.angular.z = 0;
 
   }
-  if(ping[1] <= 120 && xb == 0 && yb == 0){
+  if(ping[5] <= 120 && xb == 0 && yb == 0){
     //gerakan mundur
     twist.linear.x = -0.5;
     twist.linear.y = 0;
@@ -212,7 +212,7 @@ void avoidance(){
     twist.angular.z = 0;
 
   }
-    if(ping[2] <= 40){
+    if(ping[4] <= 40){
     //gerakan maju
     twist.linear.x = 0.5;
     twist.linear.y = 0;
@@ -222,7 +222,7 @@ void avoidance(){
     twist.angular.z = 0;
 
   }
-  if(ping[3] <= 50){
+  if(ping[2] <= 50){
     //gerakan ke kanan
     twist.linear.x = 0;
     twist.linear.y = 0.5;
@@ -232,24 +232,24 @@ void avoidance(){
     twist.angular.z = 0;
 
   }
-  if(ping[3]<= 50 && ping[1] <=70){
-    //gerakan balik Kanan
-    twist.linear.x = 0;
-    twist.linear.y = 0;
-    twist.linear.z = 0;
-    twist.angular.x = 0;
-    twist.angular.y = 0;
-    twist.angular.z = -0.5;
-  }
-    if(ping[0]<= 50 && ping[1] <=70){
-    //gerakan balik Kiri
-    twist.linear.x = 0;
-    twist.linear.y = 0;
-    twist.linear.z = 0;
-    twist.angular.x = 0;
-    twist.angular.y = 0;
-    twist.angular.z = 0.5;
-  }
+  // if(ping[3]<= 50 && ping[1] <=70){
+  //   //gerakan balik Kanan
+  //   twist.linear.x = 0;
+  //   twist.linear.y = 0;
+  //   twist.linear.z = 0;
+  //   twist.angular.x = 0;
+  //   twist.angular.y = 0;
+  //   twist.angular.z = -0.5;
+  // }
+  //   if(ping[0]<= 50 && ping[1] <=70){
+  //   //gerakan balik Kiri
+  //   twist.linear.x = 0;
+  //   twist.linear.y = 0;
+  //   twist.linear.z = 0;
+  //   twist.angular.x = 0;
+  //   twist.angular.y = 0;
+  //   twist.angular.z = 0.5;
+  // }
   } else {
     isAvoidanceActive = false;
   }
