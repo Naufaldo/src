@@ -45,6 +45,7 @@ try:
             publish_distances(distances)
         else:
             print("Error: Failed to get distances from all sensors")
+            publish_distances(distances)
 
         time.sleep(timing / 1000000.00)
 
