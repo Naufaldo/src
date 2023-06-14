@@ -87,15 +87,15 @@ std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   //{step, {kanan_depan, kanan_tengah, kanan_belakang, depan, belakang, kiri_belakang, kiri_tengah, kiri_depan, Lifter, Gripper, speed, turn}}
   //{step, {kiri_depan, kiri_tengah, kiri_belakang, belakang, depan, kanan_belakang, kanan_tengah, kanan_depan, Lifter, Gripper, speed, turn}}
-  {0, {0,538,0,0,278,0,0,0,-2,0,2,1}}, //keluar home
-  {1, {0,0,0,220,99,0,0,0,0,-1,1,1}}, //ke k1
-  {2, {0,0,0,0,99,0,0,0,-2,0,1,1}}, //k1
+  {0, {0,538,0,0,278,0,0,0,-2,0,1,2}}, //keluar home
+  {1, {0,0,0,220,99,0,0,0,0,-1,2,1}}, //ke k1
+  {2, {0,0,0,0,99,0,0,0,0,0,1,1}}, //k1
   {3, {0,0,0,75,0,0,0,0,-2,0,1,1}}, //dari k1
-  {4, {0,0,0,0,647,0,112,0,-2,0,1,1}}, //ke jalan retak, miring, batu
-  {5, {80,0,0,0,220,0,0,157,-2,0,1,1}}, //ke sz1
+  {4, {0,0,0,0,647,0,112,0,-2,0,1,2}}, //ke jalan retak, miring, batu
+  {5, {80,0,0,0,220,0,0,157,-2,0,1,2}}, //ke sz1
   {6, {0,0,0,0,110,0,0,0,0,-1,1,1}}, //sz1
-  {7, {0,0,0,200,664,0,80,0,-2,0,1,1}}, //arah kelereng
-  {8, {0,215,0,560,416,0,0,0,-2,0,1,1}}, //ke k2
+  {7, {0,0,0,350,664,0,120,0,-2,0,1,2}}, //arah kelereng
+  {8, {0,215,0,560,416,0,0,0,-2,0,2,1}}, //ke k2
   {9, {0,0,0,175,190,0,395,0,-2,0,1,1}}, //hadap k2
   {10, {0,0,0,260,110,0,0,0,0,-1,1,1}}, //ke k2
   {11, {0,0,0,0,180,0,0,0,0,0,1,1}}, //k2
