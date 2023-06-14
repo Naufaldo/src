@@ -21,13 +21,13 @@ sensors = []
 # Create VL53L0X objects for devices on TCA9548A buses 0 to 7
 for i in range(8):
     sensor = VL53L0X.VL53L0X(TCA9548A_Num=i, TCA9548A_Addr=0x70)
-    sensor.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
+    sensor.start_ranging(VL53L0X.VL53L0X_GOOD_ACCURACY_MODE)
     sensors.append(sensor)
 
 # Get the timing from the first sensor
 timing = sensors[0].get_timing()
-if timing < 150000:
-    timing = 150000
+if timing < 100000:
+    timing = 100000
 print("Timing %d ms" % (timing / 1000))
 
 try:
