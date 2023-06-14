@@ -85,10 +85,48 @@ int gerak_1_[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 //program buat limit sensor dan gerakan kaki dan juga gerakan gripper
 std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
+<<<<<<< HEAD
+  //{step, {kanan_depan, kanan_tengah, kanan_belakang, depan, belakang, kiri_belakang, kiri_tengah, kiri_depan, Lifter, Gripper, speed, turn}}
+  //{step, {kiri_depan, kiri_tengah, kiri_belakang, belakang, depan, kanan_belakang, kanan_tengah, kanan_depan, Lifter, Gripper, speed, turn}}
+  {0, {0,538,0,0,278,0,0,0,-2,0,2,1}}, //keluar home
+  {1, {0,0,0,220,99,0,0,0,0,-1,1,1}}, //ke k1
+  {2, {0,0,0,0,154,0,0,0,0,0,1,1}}, //k1
+  {3, {0,0,0,50,0,0,0,0,-2,0,2,1}}, //dari k1
+  {4, {0,0,647,0,0,112,0,-2,0,1,1}}, //ke jalan retak, miring, batu
+  {5, {80,0,0,0,220,0,0,157,-2,0,1,1}}, //ke sz1
+  {6, {0,0,0,0,110,0,0,0,0,-1,1,1}}, //sz1
+  {7, {0,0,0,200,664,0,80,0,-2,0,1,1}}, //arah kelereng
+  {8, {0,215,0,560,416,0,0,0,-2,0,1,1}}, //ke k2
+  {9, {0,0,0,175,190,0,395,0,-2,0,1,1}}, //hadap k2
+  {10, {0,0,0,260,110,0,0,0,0,-1,1,1}}, //ke k2
+  {11, {0,0,0,0,180,0,0,0,0,0,1,1}}, //k2
+  {12, {0,0,0,0,378,310,210,170,-2,0,1,1}}, //arah sz2
+  {13, {0,0,0,0,165,0,0,0,-2,0,1,1}}, //ke sz2
+  {14, {0,0,0,485,180,0,0,0,0,-2,0,1,1}}, //ke sz2
+  {15, {0,0,0,0,150,0,0,0,0,-1,1,1}}, //sz2 //s
+  {16, {0,0,0,150,0,135,120,135,-2,0,1,1}}, //keluar sz2 //a
+  {17, {0,340,0,750,0,0,0,0,-2,0,1,1}}, //menuju jalan retak
+  {18, {0,100,0,100,0,0,0,0,-2,0,1,1}}, //menyamping sebelum ke jalan retak
+  {19, {0,0,0,800,165,0,0,0,-2,0,1,1}}, //melewati jalan retak dan batu
+  {20, {0,190,190,110,430,0,0,0,-2,0,1,1}}, //posisi siap naik tangga
+  {21, {0,0,0,350,135,0,0,0,-2,0,1,1}}, //posisi siap naik tangga
+  {22, {0,0,0,600,0,0,0,0,-2,0,1,1}}, //naik tangga
+  {23, {0,0,0,0,0,0,0,0,0,-1,1,1}}, //
+  {24, {0,0,0,0,0,0,0,0,0,0,1,1}}, //
+  {25, {0,0,0,0,0,0,0,0,-2,0,1,1}}, //
+  {26, {0,0,0,0,0,0,0,0,-2,0,1,1}}, //
+  {27, {0,0,0,0,0,0,0,0,-2,0,1,1}}, //
+  {28, {0,0,0,0,0,0,0,0,-2,0,1,1}}, //
+  {29, {0,0,0,0,0,0,0,0,0,-1,1,1}}, //
+  {30, {0,0,0,0,0,0,0,0,-2,0,1,1}}, //
+  {31, {0,0,0,0,0,0,0,0,-2,0,1,1}}, //
+  {32, {0,0,0,0,0,0,0,0,-2,0,1,1}}, //
+=======
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Kanan , belakang kanan , depan , belakang , belakang kiri , kiri , depan kiri, lifter , gripper , turn , speed
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Gripper, Gripper}}
+  //coba update tes 123
   {0, {0, 300, 0, 510,0,0,0,0, -2 ,0,1,2}}, //keluar home
   {1, {0, 120, 110, 0,0,0,0,0, 0, -1,1,1}}, //ke k1
   {2, {0, 250, 0, 0,0,0,0,0, 0, 0,1,1}}, //k1
@@ -125,6 +163,7 @@ std::map<int, std::vector<int>> step{
   // {27, {0,400,0, 0, 0, -2, 0, 1, 1}}, //finish
   // {28, {0,0,0,0,-2,0,1,1}},
   
+>>>>>>> 3bddd7b034d89a7fd0afd2078ff3fd97a305b28c
 };
 
 std::map<int, std::vector<bool>> _f_{
