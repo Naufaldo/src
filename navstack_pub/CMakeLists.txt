@@ -259,4 +259,7 @@ target_link_libraries(Gerakan3 ${catkin_LIBRARIES})
 add_executable(Gerakan4 src/Gerakan4.cpp)
 target_link_libraries(Gerakan4 ${catkin_LIBRARIES})
 
+add_executable(Gerakan5 src/Gerakan5.cpp)
+target_link_libraries(Gerakan4 ${catkin_LIBRARIES})
+
 
