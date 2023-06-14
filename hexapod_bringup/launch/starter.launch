@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <launch>
-    <node name="starter" pkg="starter" type="starter.py"/>
+    <include file="$(find hexapod_bringup)/launch/components/imu_sub.launch" />
 </launch>
