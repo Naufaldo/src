@@ -36,18 +36,23 @@ try:
 
         # Get distances from each sensor
         for i, sensor in enumerate(sensors):
-            distance = sensor.get_distance()
-            if distance > 0:
-                distances.append(distance)
+            try:
+                distance = sensor.get_distance()
+                if distance > 0:
+                    distances.append(distance)
+                else:
+                    print("Error: Invalid distance value from sensor %d" % i)
+            except Exception as e:
+                print("Error: Failed to get distance from sensor %d. Exception: %s" % (i, str(e)))
 
         # Check if all 8 sensors have published their distances
         if len(distances) == 8:
             publish_distances(distances)
         else:
             print("Error: Failed to get distances from all sensors")
+            publish_distances(distances)
 
         time.sleep(timing / 1000000.00)
-
 except KeyboardInterrupt:
     # Stop ranging for all sensors when program is interrupted
     for sensor in sensors:
