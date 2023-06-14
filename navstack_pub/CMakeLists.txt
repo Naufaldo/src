@@ -256,10 +256,10 @@ target_link_libraries(Gerakan1 ${catkin_LIBRARIES})
 # add_executable(Gerakan3 src/Gerakan3.cpp)
 # target_link_libraries(Gerakan3 ${catkin_LIBRARIES})
 
-# add_executable(Gerakan4 src/Gerakan4.cpp)
-# target_link_libraries(Gerakan4 ${catkin_LIBRARIES})
+add_executable(Gerakan4 src/Gerakan4.cpp)
+target_link_libraries(Gerakan4 ${catkin_LIBRARIES})
 
 add_executable(Gerakan5 src/Gerakan5.cpp)
-target_link_libraries(Gerakan4 ${catkin_LIBRARIES})
+target_link_libraries(Gerakan5 ${catkin_LIBRARIES})
 
 
