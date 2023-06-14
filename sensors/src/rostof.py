@@ -21,7 +21,7 @@ sensors = []
 # Create VL53L0X objects for devices on TCA9548A buses 0 to 7
 for i in range(8):
     sensor = VL53L0X.VL53L0X(TCA9548A_Num=i, TCA9548A_Addr=0x70)
-    sensor.start_ranging(VL53L0X.VL53L0X_GOOD_ACCURACY_MODE)
+    sensor.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
     sensors.append(sensor)
 
 # Get the timing from the first sensor
@@ -36,9 +36,14 @@ try:
 
         # Get distances from each sensor
         for i, sensor in enumerate(sensors):
-            distance = sensor.get_distance()
-            if distance > 0:
-                distances.append(distance)
+            try:
+                distance = sensor.get_distance()
+                if distance > 0:
+                    distances.append(distance)
+                else:
+                    print("Error: Invalid distance value from sensor %d" % i)
+            except Exception as e:
+                print("Error: Failed to get distance from sensor %d. Exception: %s" % (i, str(e)))
 
         # Check if all 8 sensors have published their distances
         if len(distances) == 8:
@@ -48,7 +53,6 @@ try:
             publish_distances(distances)
 
         time.sleep(timing / 1000000.00)
-
 except KeyboardInterrupt:
     # Stop ranging for all sensors when program is interrupted
     for sensor in sensors:
