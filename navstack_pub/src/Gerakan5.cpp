@@ -87,8 +87,8 @@ std::map<int, std::vector<int>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   //{step, {kanan_depan, kanan_tengah, kanan_belakang, depan, belakang, kiri_belakang, kiri_tengah, kiri_depan, Lifter, Gripper, speed, turn}}
   //{step, {kiri_depan, kiri_tengah, kiri_belakang, belakang, depan, kanan_belakang, kanan_tengah, kanan_depan, Lifter, Gripper, speed, turn}}
-  {0, {0,538,0,0,278,0,0,0,-2,0,1,2}}, //keluar home
-  {1, {0,0,0,220,99,0,0,0,0,-1,2,1}}, //ke k1
+  {0, {0,538,0,0,278,0,0,0,-2,0,2,1}}, //keluar home
+  {1, {0,0,0,220,99,0,0,0,0,-1,1,1}}, //ke k1
   {2, {0,0,0,0,99,0,0,0,0,0,1,1}}, //k1
   {3, {0,0,0,75,0,0,0,0,-2,0,1,1}}, //dari k1
   {4, {0,0,0,0,647,0,112,0,-2,0,1,2}}, //ke jalan retak, miring, batu
