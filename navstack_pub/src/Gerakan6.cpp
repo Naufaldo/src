@@ -23,14 +23,14 @@ void tofdistancesCallback(const std_msgs::Int32MultiArray::ConstPtr& msg)
   for (int i=0;i<4;i++){
     ping[i]=msg->data[i];
   }
-  ROS_INFO("I heard: [%d]", ping[0]);
+  ROS_INFO("I heard: [%f]", ping[0]);
 }
 void imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
 {
-  ping[5] = msg->orientation.w;
-  ping[6] = msg->orientation.z;
+  ping[4] = msg->orientation.w;
+  ping[5] = msg->orientation.z;
 
-  ROS_INFO("IMU Orientation: w=%f, z=%f", ping[5], ping[6]);
+  ROS_INFO("IMU Orientation: w=%f, z=%f", ping[4], ping[5]);
 }
 
 
@@ -95,41 +95,41 @@ std::map<int, std::vector<float>> step{
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Gripper, Gripper}}
-  {0, {0, 300, 0, 510, -2 ,0,1,2}}, //keluar home
-  {1, {0, 120, 110, 0, 0, -1,1,1}}, //ke k1
-  {2, {0, 250, 0, 0, 0, 0,1,1}}, //k1
-  {3, {0, 0, 100, 0, -2, 0,2,1}}, //dari k1
-  {4, {200, 600, 0, 0, -2, 0,1,1}}, //ke jalan retak, miring, batu
-  {5, {150, 300, 200, 0, -2, 0,1,1}}, //ke sz1
-  {6, {210, 550, 0, 360, 0, -1,1,1}}, //sz1
-  {7, {200, 600, 0, 0, -2, 0,1,1}}, //arah kelereng
-  {8, {0, 400, 400, 330, -2, 0,1,1}}, //ke k2
-  {9, {440,300,0,220,-2,0,1,1}}, //hadap k2
-  {10, {350,180,100, 0,0,-1,1,1}}, //ke k2
-  {11, {350, 180, 100, 0, 0, -1, 1, 1 }}, //k2
-  {12, {70,0,0,0,-2,0,1,1}},
-  // d','w','s','a
-  // {12, {400,430,260,0,-2,0,1,1}}, //arah sz2 //d
-  // {13, {0,250,0,0,-2,0,1,1}}, //ke sz2 //w
-  // {14, {0,180,0,0,0,-1,1,1}}, //sz2 //s
-  // {15, {0,510,320,0,-2,0,1,1}}, //keluar sz2 //a
-  {13, {0,0,600,0,-2,0,1,1}}, //menuju jalan retak
-  {14, {425,0,0,0,-2,0,1,1}}, //menuju jalan retak
-  {15, {0,150,0,0,-2,0,1,1}}, //melewati jalan retak dan batu
-  {16, {0,300,200,150,-2,0,1,1}}, //posisi siap naik tangga
-  //masih kurang dapet buat maju ke tangga
-  {17, {0,190,0,0,-2,0,1,1}}, //posisi siap naik tangga
-  {18, {0,0,600,220,-2,0,1,1}}, //naik tangga
-  {19, {140,220,0,0,-2,0,1,1}}, //hadap k5
-  {20, {140,100,0,0,0,-1,1,1}}, //hadap k5
-  {21, {0,100,0,0,0,0,1,1}}, //di k5
-  {22, {0,100,0,0,-2,0,1,1}}, //di k5
-  {23, {0,200,0,0,-2,0,1,1}}, //dari k5
-  {24, {0,0,0,350,-2,0,1,1}}, //ke sz5
-  {25, {0,250,0,0,-2,0,1,1}}, //sz5
-  {26, {400,0,0,600,0,-1,1,1}}, //arah finish
-  {27, {0,400,0, 0, 0, -2, 0, 1, 1}}, //finish
-  {28, {0,0,0,0,-2,0,1,1}},
+  {0, {0, 300, 0, 510,0.0,0.0, -2 ,0,1,2}}, //keluar home
+  // {1, {0, 120, 110, 0, 0, -1,1,1}}, //ke k1
+  // {2, {0, 250, 0, 0, 0, 0,1,1}}, //k1
+  // {3, {0, 0, 100, 0, -2, 0,2,1}}, //dari k1
+  // {4, {200, 600, 0, 0, -2, 0,1,1}}, //ke jalan retak, miring, batu
+  // {5, {150, 300, 200, 0, -2, 0,1,1}}, //ke sz1
+  // {6, {210, 550, 0, 360, 0, -1,1,1}}, //sz1
+  // {7, {200, 600, 0, 0, -2, 0,1,1}}, //arah kelereng
+  // {8, {0, 400, 400, 330, -2, 0,1,1}}, //ke k2
+  // {9, {440,300,0,220,-2,0,1,1}}, //hadap k2
+  // {10, {350,180,100, 0,0,-1,1,1}}, //ke k2
+  // {11, {350, 180, 100, 0, 0, -1, 1, 1 }}, //k2
+  // {12, {70,0,0,0,-2,0,1,1}},
+  // // d','w','s','a
+  // // {12, {400,430,260,0,-2,0,1,1}}, //arah sz2 //d
+  // // {13, {0,250,0,0,-2,0,1,1}}, //ke sz2 //w
+  // // {14, {0,180,0,0,0,-1,1,1}}, //sz2 //s
+  // // {15, {0,510,320,0,-2,0,1,1}}, //keluar sz2 //a
+  // {13, {0,0,600,0,-2,0,1,1}}, //menuju jalan retak
+  // {14, {425,0,0,0,-2,0,1,1}}, //menuju jalan retak
+  // {15, {0,150,0,0,-2,0,1,1}}, //melewati jalan retak dan batu
+  // {16, {0,300,200,150,-2,0,1,1}}, //posisi siap naik tangga
+  // //masih kurang dapet buat maju ke tangga
+  // {17, {0,190,0,0,-2,0,1,1}}, //posisi siap naik tangga
+  // {18, {0,0,600,220,-2,0,1,1}}, //naik tangga
+  // {19, {140,220,0,0,-2,0,1,1}}, //hadap k5
+  // {20, {140,100,0,0,0,-1,1,1}}, //hadap k5
+  // {21, {0,100,0,0,0,0,1,1}}, //di k5
+  // {22, {0,100,0,0,-2,0,1,1}}, //di k5
+  // {23, {0,200,0,0,-2,0,1,1}}, //dari k5
+  // {24, {0,0,0,350,-2,0,1,1}}, //ke sz5
+  // {25, {0,250,0,0,-2,0,1,1}}, //sz5
+  // {26, {400,0,0,600,0,-1,1,1}}, //arah finish
+  // {27, {0,400,0, 0, 0, -2, 0, 1, 1}}, //finish
+  // {28, {0,0,0,0,-2,0,1,1}},
   
 };
 
@@ -138,39 +138,39 @@ std::map<int, std::vector<bool>> _f_{
 
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-4 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=laser && 0=odom) //odom ,imu over , leg height
   //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
-  {0, {0,0,0,0,1,0,0}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
-  {1, {0,1,0,0,1,0,1}},
-  {2, {0,1,0,0,1,0,0}},
-  {3, {0,0,1,0,1,0,0}},
-  {4, {1,0,0,0,1,0,1}},
-  {5, {0,1,0,0,1,0,1}},
-  {6, {1,1,0,1,1,0,1}},
-  {7, {1,0,0,0,1,0,1}},
-  {8, {0,1,0,1,1,0,1}},
-  {9, {0,1,0,0,1,0,1}},
-  {10, {0,1,0,0,1,0,1}},
-  {11, {0,0,0,0,1,0,1}},
-  {12, {1,0,0,0,1,0,1}},
+  {0, {0,0,0,0,0,0,1,0,0}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
+  // {1, {0,1,0,0,1,0,1}},
+  // {2, {0,1,0,0,1,0,0}},
+  // {3, {0,0,1,0,1,0,0}},
+  // {4, {1,0,0,0,1,0,1}},
+  // {5, {0,1,0,0,1,0,1}},
+  // {6, {1,1,0,1,1,0,1}},
+  // {7, {1,0,0,0,1,0,1}},
+  // {8, {0,1,0,1,1,0,1}},
+  // {9, {0,1,0,0,1,0,1}},
+  // {10, {0,1,0,0,1,0,1}},
+  // {11, {0,0,0,0,1,0,1}},
   // {12, {1,0,0,0,1,0,1}},
-  // {13, {0,1,0,0,1,0,1}},
-  // {14, {0,1,0,0,1,0,1}},
+  // // {12, {1,0,0,0,1,0,1}},
+  // // {13, {0,1,0,0,1,0,1}},
+  // // {14, {0,1,0,0,1,0,1}},
+  // // {15, {0,1,0,0,1,0,1}},
+  // {13, {0,0,0,0,1,0,1}},
+  // {14, {0,0,0,0,1,0,1}},
   // {15, {0,1,0,0,1,0,1}},
-  {13, {0,0,0,0,1,0,1}},
-  {14, {0,0,0,0,1,0,1}},
-  {15, {0,1,0,0,1,0,1}},
-  {16, {0,0,1,1,1,0,1}},
-  {17, {0,1,0,0,1,0,1}},
-  {18, {0,0,0,1,1,0,1}},
-  {19, {1,1,0,0,1,0,1}},
-  {20, {1,1,0,0,1,0,1}},
-  {21, {0,1,0,0,1,0,1}},
-  {22, {0,0,0,0,1,0,1}},
-  {23, {0,0,0,0,1,0,1}},
-  {24, {0,0,0,1,1,0,1}},
-  {25, {0,1,0,0,1,0,1}},
-  {26, {1,0,0,0,1,0,1}},
-  {27, {0,1,0,0,1,0,1}},
-  {28, {1,1,1,1,1,0,1}},
+  // {16, {0,0,1,1,1,0,1}},
+  // {17, {0,1,0,0,1,0,1}},
+  // {18, {0,0,0,1,1,0,1}},
+  // {19, {1,1,0,0,1,0,1}},
+  // {20, {1,1,0,0,1,0,1}},
+  // {21, {0,1,0,0,1,0,1}},
+  // {22, {0,0,0,0,1,0,1}},
+  // {23, {0,0,0,0,1,0,1}},
+  // {24, {0,0,0,1,1,0,1}},
+  // {25, {0,1,0,0,1,0,1}},
+  // {26, {1,0,0,0,1,0,1}},
+  // {27, {0,1,0,0,1,0,1}},
+  // {28, {1,1,1,1,1,0,1}},
 
 
   // {0, {0,0,0,0,1,0,1}}
@@ -256,28 +256,28 @@ void kontrol(char arah_, int step_){
     return;
   }
   key=arah_;
-  int batas[4];
+  int batas[6];
   if (step.count(step_) == 1)
     {
-      for(int a=0;a<4;a++){
+      for(int a=0;a<6;a++){
         batas[a]=step[step_][a];
       }
       // currentStep = step_;
-      xb=step[step_][4];
-      yb=step[step_][5];
-      speed=step[step_][6];
-      turn=step[step_][7];
+      xb=step[step_][6];
+      yb=step[step_][7];
+      speed=step[step_][8];
+      turn=step[step_][9];
     }
 
-  bool flag_[4];
+  bool flag_[6];
   if (_f_.count(step_) == 1)
     {
-      for(int a=0;a<4;a++){
+      for(int a=0;a<6;a++){
         flag_[a]=_f_[step_][a];
       }
-    pilih=_f_[step_][4];
-    imu_override_.data = _f_[step_][5];
-    leg_height_.data = _f_[step_][6];
+    pilih=_f_[step_][6];
+    imu_override_.data = _f_[step_][7];
+    leg_height_.data = _f_[step_][8];
     }
     
 
@@ -310,15 +310,15 @@ void kontrol(char arah_, int step_){
     
   
     ROS_INFO("%d, %d, %d, %d ", batas[0], batas[1], batas[2], batas[3]);
-    ROS_INFO("%d, %d, %d, %d",ping[0],ping[1],ping[2],ping[3]);
+    ROS_INFO("%f, %f, %f, %f, %f, %f",ping[0],ping[1],ping[2],ping[3],ping[4],ping[5]);
     ROS_INFO("%d, %d, %d, %d",flag_[0],flag_[1],flag_[2],flag_[3]);
 
 
-    bool s[4]={false,false,false,false};
+    bool s[6]={false,false,false,false,false,false};
 
   if(pilih==true){
-    for (int a=0; a<4; a++){
-    for (int a = 0; a < 4; a++) {
+    for (int a=0; a<6; a++){
+    for (int a = 0; a < 6; a++) {
         if (flag_[a] == true) {
             if (ping[a] <= (batas[a] + offset) || ping[a] <= (batas[a] - offset)) {
                 s[a] = true;
@@ -338,7 +338,7 @@ void kontrol(char arah_, int step_){
 }
   else{
 
-    for (int a=0; a<4; a++){
+    for (int a=0; a<6; a++){
       xas[a]=xaa[a]-yaa[a];
       if(flag_[a]==true){
         if(xas[a]<=batas[a])
@@ -358,7 +358,7 @@ void kontrol(char arah_, int step_){
   }
 //  //ROS_INFO("%d, %d, %d, %d ",s[0], s[1], s[2], s[3], s[4]);
   
-  if(s[0]==true && s[1]==true && s[2]==true && s[3]==true ){
+  if(s[0]==true && s[1]==true && s[2]==true && s[3]==true && s[4]==true && s[5]==true){
     flag1++;
     ROS_INFO("clear");
     yaa[0]=xaa[0];
