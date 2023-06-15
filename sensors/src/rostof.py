@@ -26,8 +26,8 @@ for i in range(4):
 
 # Get the timing from the first sensor
 timing = sensors[0].get_timing()
-if timing < 20000:
-    timing = 20000
+if timing < 100000:
+    timing = 100000
 print("Timing %d ms" % (timing / 1000))
 
 try:
