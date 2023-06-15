@@ -95,7 +95,7 @@ std::map<int, std::vector<float>> step{
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Imu Z, Imu X, Gripper, Gripper}}
   {0, {0,295,0,480,-1,-1,-2,0,1,1}}, //keluar home
   {1, {0,100,230,0,-1,-1,0,-1,1,1}}, //ke k1
-  {2, {0,160,0,0,0,0,-1,-1,1,1}}, //k1
+  {2, {0,160,0,0,-1,-1,0,0,1,1}}, //k1
   {3, {0,0,80,0,-1,-1,-2,0,1,1}}, //dari k1
   {4, {100,600,0,0,-1,-1,-2,0,1,1}}, //ke jalan retak, miring, batu
   {5, {0,0,0,0,0.920,0.370,0-2,0,1,1}}, //ke sz1
