@@ -179,7 +179,7 @@ std_msgs::Bool state_;
 std_msgs::Int32 Led_;
 
 void avoidance(){
-  
+  //Settingan Pergerakan ngerubah
   if (ping[7] <= 50 || ping[4] <= 90 || ping[3] <= 40 || ping[2] <= 50 || ping[1] <= 50 || ping[0] <= 50 || ping[6] <= 50 || ping[5] <= 50) {
     isAvoidanceActive = true;
     if(ping[5] <= 50  || ping[6] <= 50 || ping[7] <= 50){
