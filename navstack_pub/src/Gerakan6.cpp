@@ -2,7 +2,7 @@
 #include "std_msgs/String.h"
 
 #include <nav_msgs/Odometry.h>
-#include <std_msgs/Int32MultiArray.h>
+#include <std_msgs/Float32MultiArray.h>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/AccelStamped.h>
 #include <std_msgs/Bool.h>
@@ -16,16 +16,22 @@
 #include <termios.h>
 #include <map>
 
-int ping[4]={0,0,0,0};
+float ping[6]={0,0,0,0,0,0};
 // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri
-void tofdistancesCallback(const std_msgs::Int32MultiArray::ConstPtr& msg)
+void tofdistancesCallback(const std_msgs::Float32MultiArray::ConstPtr& msg)
 {
   for (int i=0;i<4;i++){
     ping[i]=msg->data[i];
   }
   ROS_INFO("I heard: [%d]", ping[0]);
 }
+void imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
+{
+  ping[5] = msg->orientation.w;
+  ping[6] = msg->orientation.z;
 
+  ROS_INFO("IMU Orientation: w=%f, z=%f", ping[5], ping[6]);
+}
 
 
 float xaa[5],yaa[5],xas[5];
@@ -83,7 +89,7 @@ char a_gerak[]  ={'D','w','s','x','D','d','s','a','w','a','w','s','D','w','A','w
 int gerak_1_[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
 //program buat limit sensor dan gerakan kaki dan juga gerakan gripper
-std::map<int, std::vector<int>> step{
+std::map<int, std::vector<float>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   // Penejlasan {urutan gerakan , {lmit sensor 1,2,3,4,5 , nilai gripper x , nilai gripper y}}
   // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri,lifter , gripper
@@ -374,6 +380,7 @@ int main(int argc, char **argv)
   ros::Publisher leg_height_pub_ = n.advertise<std_msgs::Bool>("/leg", 100);
   ros::Publisher state_pub_ = n.advertise<std_msgs::Bool>("/state", 100);
   ros::Publisher Led = n.advertise<std_msgs::Int32>("/led_control", 10);
+  ros::Subscriber imu_sub = n.subscribe("/imu/data", 10, imuCallback);
   ros::Subscriber sub = n.subscribe("tof_distances", 10, tofdistancesCallback);
 
   ros::Subscriber _sub1 = n.subscribe("/chatter1", 1, chatter1Callback);
