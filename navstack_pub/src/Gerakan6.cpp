@@ -27,10 +27,10 @@ void tofdistancesCallback(const std_msgs::Int32MultiArray::ConstPtr& msg)
 }
 void imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
 {
-  ping[4] = msg->orientation.w;
-  ping[5] = msg->orientation.z;
+  ping[4] = msg->orientation.z;
+  ping[5] = msg->orientation.w;
 
-  ROS_INFO("IMU Orientation: w=%f, z=%f", ping[4], ping[5]);
+  ROS_INFO("IMU Orientation: z=%f, w=%f", ping[4], ping[5]);
 }
 
 
