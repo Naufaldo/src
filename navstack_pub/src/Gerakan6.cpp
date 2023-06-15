@@ -2,7 +2,7 @@
 #include "std_msgs/String.h"
 
 #include <nav_msgs/Odometry.h>
-#include <std_msgs/Float32MultiArray.h>
+#include <std_msgs/Float64MultiArray.h>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/AccelStamped.h>
 #include <std_msgs/Bool.h>
@@ -18,7 +18,7 @@
 
 float ping[6]={0,0,0,0,0,0};
 // Depan kanan, Belakang Kanan, Belakang, Belakang kiri, depan kiri
-void tofdistancesCallback(const std_msgs::Float32MultiArray::ConstPtr& msg)
+void tofdistancesCallback(const std_msgs::Float64MultiArray::ConstPtr& msg)
 {
   for (int i=0;i<4;i++){
     ping[i]=msg->data[i];
