@@ -5,15 +5,15 @@ import sys
 sys.path.append('/home/pi/VL53L0X_rasp_python/python')
 import VL53L0X
 import rospy
-from std_msgs.msg import Float32MultiArray
+from std_msgs.msg import Int32MultiArray
 
 def publish_distances(distances):
-    # Publish the distances as Float32MultiArray
-    msg = Float32MultiArray(data=distances)
+    # Publish the distances as Int32MultiArray
+    msg = Int32MultiArray(data=distances)
     pub.publish(msg)
 
 rospy.init_node('tof_publisher', anonymous=True)
-pub = rospy.Publisher('tof_distances', Float32MultiArray, queue_size=10)
+pub = rospy.Publisher('tof_distances', Int32MultiArray, queue_size=10)
 
 # Create a list to store the VL53L0X objects for each sensor
 sensors = []

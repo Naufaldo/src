@@ -5,29 +5,29 @@ import sys
 sys.path.append('/home/pi/VL53L0X_rasp_python/python')
 import VL53L0X
 import rospy
-from std_msgs.msg import Float32MultiArray
+from std_msgs.msg import Int32MultiArray
 
 def publish_distances(distances):
-    # Publish the distances as Float32MultiArray
-    msg = Float32MultiArray(data=distances)
+    # Publish the distances as Int32MultiArray
+    msg = Int32MultiArray(data=distances)
     pub.publish(msg)
 
 rospy.init_node('tof_publisher', anonymous=True)
-pub = rospy.Publisher('tof_distances', Float32MultiArray, queue_size=10)
+pub = rospy.Publisher('tof_distances', Int32MultiArray, queue_size=10)
 
 # Create a list to store the VL53L0X objects for each sensor
 sensors = []
 
 # Create VL53L0X objects for devices on TCA9548A buses 0 to 7
-for i in range(4):
+for i in range(8):
     sensor = VL53L0X.VL53L0X(TCA9548A_Num=i, TCA9548A_Addr=0x70)
     sensor.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
     sensors.append(sensor)
 
 # Get the timing from the first sensor
 timing = sensors[0].get_timing()
-if timing < 20000:
-    timing = 20000
+if timing < 100000:
+    timing = 100000
 print("Timing %d ms" % (timing / 1000))
 
 try:
@@ -46,7 +46,7 @@ try:
                 print("Error: Failed to get distance from sensor %d. Exception: %s" % (i, str(e)))
 
         # Check if all 8 sensors have published their distances
-        if len(distances) == 4:
+        if len(distances) == 8:
             publish_distances(distances)
         else:
             print("Error: Failed to get distances from all sensors")
