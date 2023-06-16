@@ -93,9 +93,9 @@ int gerak_1_[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 std::map<int, std::vector<float>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Imu Z, Imu X, Gripper, Gripper}}
-  {0, {0,0,100,0,-1,-1,-2,0,1,1}},
+  {0, {0,0,70,0,-1,-1,-2,0,1,1}},
   {1, {0,295,0,450,-1,-1,-2,0,2,1}}, //keluar home
-  {2, {0,100,230,0,-1,-1,0,-1,2,1}}, //ke k1
+  {2, {0,150,200,0,-1,-1,0,-1,2,1}}, //ke k1
   {3, {0,180,0,0,-1,-1,0,0,2,1}}, //k1
   {4, {0,0,80,0,-1,-1,-2,0,2,1}}, //dari k1
   {5, {200,350,0,0,-1,-1,-2,0,1,1}}, //ke jalan retak, miring, batu
@@ -310,7 +310,7 @@ void kontrol(char arah_, int step_){
     twist.angular.y = 0;
     twist.angular.z = th * turn *0.5;
 
-    head_Tws.linear.x = xb * 0.5 ; //lifter
+    head_Tws.linear.x = xb * 0.625 ; //lifter
     head_Tws.linear.y = yb * 1 ; //gripper
 
     state_.data = true;
