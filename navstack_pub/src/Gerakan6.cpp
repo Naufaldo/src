@@ -122,7 +122,7 @@ std::map<int, std::vector<float>> step{
   {26, {70,0,0,0,-1,-1,-2,0,1,1}},
   {27, {0,0,750,200,-1,-1,-2,0,1,1}}, //menuju jalan retak
   {28, {370,0,0,120,-1,-1,-2,0,2,1}}, //menuju jalan retak
-  {29, {350,180,0,0,-1,-1,-2,0,1,1}}, //melewati jalan retak dan batu
+  {29, {250,180,0,0,-1,-1,-2,0,1,1}}, //melewati jalan retak dan batu
   {30, {0,0,0,190,-1,-1,-2,0,1,1}},
   {31, {400,300,200,150,0.80,-1,-2,0,1,1}}, //posisi siap naik tangga
   {32, {0,100,0,0,-1,-1,-2,0,1,1}}, //posisi siap naik tangga
