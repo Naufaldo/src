@@ -94,7 +94,7 @@ std::map<int, std::vector<float>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Imu Z, Imu X, Gripper, Gripper}}
   {0, {0,0,60,0,-1,-1,-2,0,1,1}},
-  {1, {0,270,0,370,-1,-1,-2,0,1,1}}, //keluar home
+  {1, {0,270,0,338,-1,-1,-2,0,1,1}}, //keluar home
   {2, {0,0,190,0,-1,-1,0,-1,1,1}}, //ke k1
   {3, {0,140,0,0,-1,-1,0,0,1,1}}, //k1
   {4, {0,140,0,0,-1,-1,-2,0,1,1}},
