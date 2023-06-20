@@ -7,6 +7,10 @@ import VL53L0X
 import rospy
 from std_msgs.msg import Int32MultiArray
 
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
+
 # Import the required libraries for the GME12864 display using I2C
 import Adafruit_GPIO.I2C as I2C
 import Adafruit_SSD1306
@@ -22,23 +26,40 @@ disp.begin()
 disp.clear()
 disp.display()
 
+# Create a blank image for drawing
+image = Image.new('1', (DISPLAY_WIDTH, DISPLAY_HEIGHT))
+draw = ImageDraw.Draw(image)
+
+# Define font
+font = ImageFont.load_default()
+
 def publish_distances(distances):
     # Publish the distances as Int32MultiArray
     msg = Int32MultiArray(data=distances)
     pub.publish(msg)
 
 def display_distance(sensor_index, distance):
-    # Display the distance on the GME12864 display
-    disp.clear()
-    disp.draw_text((0, 0), 'Sensor {}:'.format(sensor_index), fill=1)
-    disp.draw_text((0, 20), str(distance), fill=1)
+    # Clear the image
+    draw.rectangle((0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
+    
+    # Draw the sensor index and distance
+    draw.text((0, 0), 'Sensor {}:'.format(sensor_index), font=font, fill=255)
+    draw.text((0, 20), str(distance), font=font, fill=255)
+    
+    # Display the image
+    disp.image(image)
     disp.display()
 
 def display_error(sensor_index):
-    # Display the error message on the GME12864 display
-    disp.clear()
-    disp.draw_text((0, 0), 'Sensor {}:'.format(sensor_index), fill=1)
-    disp.draw_text((0, 20), 'Error', fill=1)
+    # Clear the image
+    draw.rectangle((0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
+    
+    # Draw the sensor index and error message
+    draw.text((0, 0), 'Sensor {}:'.format(sensor_index), font=font, fill=255)
+    draw.text((0, 20), 'Error', font=font, fill=255)
+    
+    # Display the image
+    disp.image(image)
     disp.display()
 
 rospy.init_node('tof_publisher', anonymous=True)
