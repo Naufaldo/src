@@ -46,7 +46,7 @@ i2c = board.I2C()
 tca = adafruit_tca9548a.TCA9548A(i2c)
 
 # Select the TCA9548A bus number 4
-tca[4].reset()
+tca.channels[4].enable = True
 
 # Create VL53L0X objects for devices on TCA9548A bus 4
 for i in range(4):
