@@ -94,12 +94,12 @@ std::map<int, std::vector<float>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Imu Z, Imu X, Gripper, Gripper}}
   {0, {0,0,60,0,-1,-1,-2,0,1,1}},
-  {1, {360,270,0,0,-1,-1,-2,0,1,1}}, //keluar home
-  {2, {0,0,190,0,-1,-1,0,-1,1,1}}, //ke k1
-  {3, {0,140,0,0,-1,-1,0,0,1,1}}, //k1
-  {4, {0,140,0,0,-1,-1,-2,0,1,1}},
+  {1, {460,270,0,0,-1,-1,-2,0,2,1}}, //keluar home
+  {2, {0,0,100,0,-1,-1,0,-1,1,1}}, //ke k1
+  {3, {0,100,0,0,-1,-1,0,0,2,1}}, //k1
+  {4, {0,100,0,0,-1,-1,-2,0,1,1}},
   {5, {0,0,80,0,-1,-1,-2,0,2,1}}, //dari k1
-  {6, {0,500,190,0,-1,-1,-2,0,1,1}}, //ke jalan retak, miring, batu
+  {6, {0,500,0,190,-1,-1,-2,0,1,1}}, //ke jalan retak, miring, batu
   {7, {0,0,50,0,-1,-1,-2,0,1,1}},
   {8, {0,0,0,200,-1,-1,-2,0,1,1}},
   {9, {0,240,480,100,-1,-1,-2,0,1,1}}, //ke sz1
@@ -229,9 +229,9 @@ std_msgs::Int32 Led_;
 
 void avoidance(){
   
-  if (ping[0] <= 50 || ping[1] <=90 || ping[2] <= 40 || ping[3] <= 50) {
+  if (ping[0] <= 30 || ping[1] <=90 || ping[2] <= 40 || ping[3] <= 30) {
     isAvoidanceActive = true;
-    if(ping[0] <= 50){
+    if(ping[0] <= 30){
     //gerakan ke kiri
     twist.linear.x = 0;
     twist.linear.y = -0.5;
@@ -271,7 +271,7 @@ void avoidance(){
     twist.angular.z = 0;
 
   }
-  if(ping[3] <= 50){
+  if(ping[3] <= 30){
     //gerakan ke kanan
     twist.linear.x = 0;
     twist.linear.y = 0.5;
@@ -338,8 +338,8 @@ void kontrol(char arah_, int step_){
     twist.angular.y = 0;
     twist.angular.z = th * turn *0.5;
 
-    head_Tws.linear.x = xb * 0.7 ; //lifter
-    head_Tws.linear.y = yb * turn ; //gripper
+    head_Tws.linear.x = xb * 0.625 ; //lifter
+    head_Tws.linear.y = yb * 1.1 ; //gripper
 
     state_.data = true;
     Led_.data=2;
