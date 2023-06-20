@@ -346,7 +346,7 @@ void kontrol(char arah_, int step_){
     twist.angular.y = 0;
     twist.angular.z = th * turn *0.5;
 
-    head_Tws.linear.x = xb * 0.625 ; //lifter
+    head_Tws.linear.x = xb * 0.3125 ; //lifter
     head_Tws.linear.y = yb * 1.1 ; //gripper
 
     state_.data = true;
