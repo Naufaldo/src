@@ -63,7 +63,7 @@ DISPLAY_WIDTH = 128
 DISPLAY_HEIGHT = 64
 
 # Create an instance of the Adafruit SSD1306 OLED display
-display = Adafruit_SSD1306.SSD1306_128_64(tca[4])  # Use the appropriate I2C bus number
+display = Adafruit_SSD1306.SSD1306_128_64(rst=RST, i2c_bus=tca[4])  # Use the appropriate I2C bus number
 display.begin()
 display.clear()
 display.display()
