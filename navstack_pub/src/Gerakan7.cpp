@@ -94,8 +94,8 @@ std::map<int, std::vector<float>> step{
   // {1, {0,0,-2,0,0,0,0,0,0.5,0.5}},   //batas 0-7, speed, turn  //rotate kanan
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Imu Z, Imu X, Gripper, Gripper}}
   {0, {0,0,60,0,-1,-1,-2,0,1,1}},
-  {1, {460,270,0,0,-1,-1,-2,0,2,1}}, //keluar home
-  {2, {0,0,100,0,-1,-1,0,-1,1,1}}, //ke k1
+  {1, {495,230,0,0,-1,-1,-2,0,2,1}}, //keluar home
+  {2, {0,190,0,0,-1,-1,0,-1,1,1}}, //ke k1
   {3, {0,100,0,0,-1,-1,0,0,2,1}}, //k1
   {4, {0,100,0,0,-1,-1,-2,0,1,1}},
   {5, {0,0,80,0,-1,-1,-2,0,2,1}}, //dari k1
@@ -156,9 +156,9 @@ std::map<int, std::vector<bool>> _f_{
   // {1, {0,0,1,0,0,0,0,0,0}},  //kompar 0-6 (0)(sensor>=batas) (1)(Sensor<=batas), LaserOrOdom(1=laser && 0=odom) //odom ,imu over , leg height
   //uneven = 0,1 && normal = 0,0 ( 2 digit terakhir) 
   {0, {0,0,1,0,0,0,1,0,0}},
-  {1, {0,0,0,0,0,0,1,0,0}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
-  {2, {0,0,0,0,0,0,1,0,0}},
-  {3, {0,1,0,0,0,0,1,0,0}},
+  {1, {0,1,0,0,0,0,1,0,0}}, // posisi home gerak ke kanan semua sensor nilai lebih dari batas
+  {2, {0,1,0,0,0,0,1,0,0}},
+  {3, {0,0,0,0,0,0,1,0,0}},
   {4, {0,0,0,0,0,0,1,0,0}},
   {5, {0,0,1,0,0,0,1,0,0}},
   {6, {0,0,0,1,0,0,1,0,1}},
