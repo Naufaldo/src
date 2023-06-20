@@ -45,8 +45,6 @@ sensors = []
 i2c = board.I2C()
 tca = adafruit_tca9548a.TCA9548A(i2c)
 
-# Select the TCA9548A bus number 4
-tca.channels[4].enable = True
 
 # Create VL53L0X objects for devices on TCA9548A bus 4
 for i in range(4):
@@ -65,7 +63,7 @@ DISPLAY_WIDTH = 128
 DISPLAY_HEIGHT = 64
 
 # Create an instance of the Adafruit SSD1306 OLED display
-display = Adafruit_SSD1306.SSD1306_128_64(rst=None, i2c_bus=4)  # Use the appropriate I2C bus number
+display = Adafruit_SSD1306.SSD1306_128_64(tca[4])  # Use the appropriate I2C bus number
 display.begin()
 display.clear()
 display.display()
