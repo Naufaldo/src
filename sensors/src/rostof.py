@@ -30,25 +30,15 @@ def publish_distances(distances):
 def display_distance(sensor_index, distance):
     # Display the distance on the GME12864 display
     disp.clear()
-    disp.set_text_color(disp.WHITE)
-    disp.set_font_size(2)
-    disp.set_cursor(0, 0)
-    disp.write('Sensor {}:'.format(sensor_index))
-    disp.set_font_size(3)
-    disp.set_cursor(0, 20)
-    disp.write(str(distance))
+    disp.draw_text((0, 0), 'Sensor {}:'.format(sensor_index), fill=1)
+    disp.draw_text((0, 20), str(distance), fill=1)
     disp.display()
 
 def display_error(sensor_index):
     # Display the error message on the GME12864 display
     disp.clear()
-    disp.set_text_color(disp.WHITE)
-    disp.set_font_size(2)
-    disp.set_cursor(0, 0)
-    disp.write('Sensor {}:'.format(sensor_index))
-    disp.set_font_size(1)
-    disp.set_cursor(0, 20)
-    disp.write('Error')
+    disp.draw_text((0, 0), 'Sensor {}:'.format(sensor_index), fill=1)
+    disp.draw_text((0, 20), 'Error', fill=1)
     disp.display()
 
 rospy.init_node('tof_publisher', anonymous=True)
