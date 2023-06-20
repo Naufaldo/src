@@ -15,11 +15,12 @@ import Adafruit_SSD1306
 DISPLAY_WIDTH = 128
 DISPLAY_HEIGHT = 64
 
-# Initialize the display using I2C
-display = Adafruit_SSD1306.SSD1306_128_64(rst=None, i2c_bus=I2C.get_i2c_device(0x3C))
-display.begin()
-display.clear()
-display.display()
+# Initialize the display using I2C with the specified parameters
+RST = None  # If you have a reset pin, specify it here
+disp = Adafruit_SSD1306.SSD1306_128_64(rst=RST, i2c_address=0x3C)
+disp.begin()
+disp.clear()
+disp.display()
 
 def publish_distances(distances):
     # Publish the distances as Int32MultiArray
@@ -28,27 +29,27 @@ def publish_distances(distances):
 
 def display_distance(sensor_index, distance):
     # Display the distance on the GME12864 display
-    display.clear()
-    display.set_text_color(display.WHITE)
-    display.set_font_size(2)
-    display.set_cursor(0, 0)
-    display.write('Sensor {}:'.format(sensor_index))
-    display.set_font_size(3)
-    display.set_cursor(0, 20)
-    display.write(str(distance))
-    display.display()
+    disp.clear()
+    disp.set_text_color(disp.WHITE)
+    disp.set_font_size(2)
+    disp.set_cursor(0, 0)
+    disp.write('Sensor {}:'.format(sensor_index))
+    disp.set_font_size(3)
+    disp.set_cursor(0, 20)
+    disp.write(str(distance))
+    disp.display()
 
 def display_error(sensor_index):
     # Display the error message on the GME12864 display
-    display.clear()
-    display.set_text_color(display.WHITE)
-    display.set_font_size(2)
-    display.set_cursor(0, 0)
-    display.write('Sensor {}:'.format(sensor_index))
-    display.set_font_size(1)
-    display.set_cursor(0, 20)
-    display.write('Error')
-    display.display()
+    disp.clear()
+    disp.set_text_color(disp.WHITE)
+    disp.set_font_size(2)
+    disp.set_cursor(0, 0)
+    disp.write('Sensor {}:'.format(sensor_index))
+    disp.set_font_size(1)
+    disp.set_cursor(0, 20)
+    disp.write('Error')
+    disp.display()
 
 rospy.init_node('tof_publisher', anonymous=True)
 pub = rospy.Publisher('tof_distances', Int32MultiArray, queue_size=10)
