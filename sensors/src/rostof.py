@@ -6,33 +6,64 @@ sys.path.append('/home/pi/VL53L0X_rasp_python/python')
 import VL53L0X
 import rospy
 from std_msgs.msg import Int32MultiArray
-import smbus
+
+from PIL import Image
+from PIL import ImageDraw
+from PIL import ImageFont
+
+# Import the required libraries for the GME12864 display using I2C
+import Adafruit_GPIO.I2C as I2C
 import Adafruit_SSD1306
-from PIL import Image, ImageDraw, ImageFont
+
+# Define display constants
+DISPLAY_WIDTH = 128
+DISPLAY_HEIGHT = 64
+
+# Initialize the display using I2C with the specified parameters
+RST = None  # If you have a reset pin, specify it here
+disp = Adafruit_SSD1306.SSD1306_128_64(rst=RST, i2c_address=0x3C)
+disp.begin()
+disp.clear()
+disp.display()
+
+# Create a blank image for drawing
+image = Image.new('1', (DISPLAY_WIDTH, DISPLAY_HEIGHT))
+draw = ImageDraw.Draw(image)
+
+# Define font
+font = ImageFont.load_default()
 
 def publish_distances(distances):
     # Publish the distances as Int32MultiArray
     msg = Int32MultiArray(data=distances)
     pub.publish(msg)
 
-    # Clear the OLED display and draw the distances
+def display_distances(sensor_distances):
+    # Clear the image
     draw.rectangle((0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
-    for i, distance in enumerate(distances):
-        text = "Sensor {}: {} mm".format(i+1, distance)
-        draw.text((0, i*10), text, font=font, fill=255)
-    display.image(image)
-    display.display()
 
-def display_error(error_message):
-    # Clear the OLED display and draw the error message
-    draw.rectangle((0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
-    draw.text((0, 0), "Error:", font=font, fill=255)
-    draw.text((0, 10), error_message, font=font, fill=255)
-    display.image(image)
-    display.display()
+    # Display the sensor array
+    array_text = 'Sensor Array:\n{}'.format(sensor_distances)
+    draw.text((0, 0), array_text, font=font, fill=255)
 
-    # Log the error message using rospy.loginfo
-    rospy.loginfo("Error: {}".format(error_message))
+    # Display the image
+    disp.image(image)
+    disp.display()
+
+def display_error(sensor_index):
+    # Calculate the top position for displaying the error message
+    top = DISPLAY_HEIGHT - 20
+
+    # Clear the image
+    draw.rectangle((0, top, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
+
+    # Display the sensor index and error message
+    draw.text((0, top), 'Sensor {}:'.format(sensor_index), font=font, fill=255)
+    draw.text((0, top + 20), 'Error', font=font, fill=255)
+
+    # Display the image
+    disp.image(image)
+    disp.display()
 
 rospy.init_node('tof_publisher', anonymous=True)
 pub = rospy.Publisher('tof_distances', Int32MultiArray, queue_size=10)
@@ -52,46 +83,42 @@ if timing < 100000:
     timing = 100000
 print("Timing %d ms" % (timing / 1000))
 
-# OLED display resolution
-DISPLAY_WIDTH = 128
-DISPLAY_HEIGHT = 64
-
-# Create an I2C object for the correct bus number (4 in this case)
-i2c_bus = smbus.SMBus(4)
-display = Adafruit_SSD1306.SSD1306_128_64(rst=None, i2c_bus=i2c_bus)
-display.begin()
-display.clear()
-display.display()
-image = Image.new('1', (DISPLAY_WIDTH, DISPLAY_HEIGHT))
-draw = ImageDraw.Draw(image)
-font = ImageFont.load_default()
-
 try:
     while not rospy.is_shutdown():
-        distances = []
+        sensor_distances = []
+        has_error = False
 
         # Get distances from each sensor
         for i, sensor in enumerate(sensors):
             try:
                 distance = sensor.get_distance()
                 if distance > 0:
-                    distances.append(distance)
+                    sensor_distances.append(distance)
                 else:
-                    error_message = "Invalid distance from sensor {}".format(i+1)
-                    display_error(error_message)
-                    print("Error: " + error_message)
+                    print("Error: Invalid distance value from sensor %d" % i)
+                    has_error = True
             except Exception as e:
-                error_message = "Failed to get distance from sensor {}: {}".format(i+1, str(e))
-                display_error(error_message)
-                print("Error: " + error_message)
+                print("Error: Failed to get distance from sensor %d. Exception: %s" % (i, str(e)))
+                has_error = True
 
-        # Check if all 4 sensors have published their distances
-        if len(distances) == 4:
-            publish_distances(distances)
+        # Display the distances if no error occurred
+        if not has_error:
+            display_distances(sensor_distances)
+        else:
+            # Display sensor distances before showing the error message
+            display_distances(sensor_distances)
+            display_error(len(sensors))
+
+        # Check if all sensors have published their distances
+        if len(sensor_distances) == len(sensors):
+            publish_distances(sensor_distances)
+        else:
+            print("Error: Failed to get distances from all sensors")
+            publish_distances(sensor_distances)
 
         time.sleep(timing / 1000000.00)
 except KeyboardInterrupt:
-    # Stop ranging for all sensors when program is interrupted
+    # Stop ranging for all sensors when the program is interrupted
     for sensor in sensors:
         sensor.stop_ranging()
 
