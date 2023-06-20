@@ -38,26 +38,29 @@ def publish_distances(distances):
     msg = Int32MultiArray(data=distances)
     pub.publish(msg)
 
-def display_distance(sensor_index, distance):
+def display_distances(sensor_distances):
     # Clear the image
     draw.rectangle((0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
-    
-    # Draw the sensor index and distance
-    draw.text((0, 0), 'Sensor {}:'.format(sensor_index), font=font, fill=255)
-    draw.text((0, 20), str(distance), font=font, fill=255)
-    
+
+    # Display the sensor array
+    array_text = 'Sensor Array:\n{}'.format(sensor_distances)
+    draw.text((0, 0), array_text, font=font, fill=255)
+
     # Display the image
     disp.image(image)
     disp.display()
 
 def display_error(sensor_index):
+    # Calculate the top position for displaying the error message
+    top = DISPLAY_HEIGHT - 20
+
     # Clear the image
-    draw.rectangle((0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
-    
-    # Draw the sensor index and error message
-    draw.text((0, 0), 'Sensor {}:'.format(sensor_index), font=font, fill=255)
-    draw.text((0, 20), 'Error', font=font, fill=255)
-    
+    draw.rectangle((0, top, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
+
+    # Display the sensor index and error message
+    draw.text((0, top), 'Sensor {}:'.format(sensor_index), font=font, fill=255)
+    draw.text((0, top + 20), 'Error', font=font, fill=255)
+
     # Display the image
     disp.image(image)
     disp.display()
@@ -82,32 +85,40 @@ print("Timing %d ms" % (timing / 1000))
 
 try:
     while not rospy.is_shutdown():
-        distances = []
+        sensor_distances = []
+        has_error = False
 
         # Get distances from each sensor
         for i, sensor in enumerate(sensors):
             try:
                 distance = sensor.get_distance()
                 if distance > 0:
-                    distances.append(distance)
-                    display_distance(i, distance)  # Display distance on the GME12864 display
+                    sensor_distances.append(distance)
                 else:
                     print("Error: Invalid distance value from sensor %d" % i)
-                    display_error(i)  # Display error message on the GME12864 display
+                    has_error = True
             except Exception as e:
                 print("Error: Failed to get distance from sensor %d. Exception: %s" % (i, str(e)))
-                display_error(i)  # Display error message on the GME12864 display
+                has_error = True
 
-        # Check if all 4 sensors have published their distances
-        if len(distances) == 4:
-            publish_distances(distances)
+        # Display the distances if no error occurred
+        if not has_error:
+            display_distances(sensor_distances)
+        else:
+            # Display sensor distances before showing the error message
+            display_distances(sensor_distances)
+            display_error(len(sensors))
+
+        # Check if all sensors have published their distances
+        if len(sensor_distances) == len(sensors):
+            publish_distances(sensor_distances)
         else:
             print("Error: Failed to get distances from all sensors")
-            publish_distances(distances)
+            publish_distances(sensor_distances)
 
         time.sleep(timing / 1000000.00)
 except KeyboardInterrupt:
-    # Stop ranging for all sensors when program is interrupted
+    # Stop ranging for all sensors when the program is interrupted
     for sensor in sensors:
         sensor.stop_ranging()
 
