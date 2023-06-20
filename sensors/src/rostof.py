@@ -6,11 +6,33 @@ sys.path.append('/home/pi/VL53L0X_rasp_python/python')
 import VL53L0X
 import rospy
 from std_msgs.msg import Int32MultiArray
+import smbus
+import Adafruit_SSD1306
+from PIL import Image, ImageDraw, ImageFont
 
 def publish_distances(distances):
     # Publish the distances as Int32MultiArray
     msg = Int32MultiArray(data=distances)
     pub.publish(msg)
+
+    # Clear the OLED display and draw the distances
+    draw.rectangle((0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
+    for i, distance in enumerate(distances):
+        text = "Sensor {}: {} mm".format(i+1, distance)
+        draw.text((0, i*10), text, font=font, fill=255)
+    display.image(image)
+    display.display()
+
+def display_error(error_message):
+    # Clear the OLED display and draw the error message
+    draw.rectangle((0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
+    draw.text((0, 0), "Error:", font=font, fill=255)
+    draw.text((0, 10), error_message, font=font, fill=255)
+    display.image(image)
+    display.display()
+
+    # Log the error message using rospy.loginfo
+    rospy.loginfo("Error: {}".format(error_message))
 
 rospy.init_node('tof_publisher', anonymous=True)
 pub = rospy.Publisher('tof_distances', Int32MultiArray, queue_size=10)
@@ -30,6 +52,20 @@ if timing < 100000:
     timing = 100000
 print("Timing %d ms" % (timing / 1000))
 
+# OLED display resolution
+DISPLAY_WIDTH = 128
+DISPLAY_HEIGHT = 64
+
+# Create an I2C object for the correct bus number (4 in this case)
+i2c_bus = smbus.SMBus(4)
+display = Adafruit_SSD1306.SSD1306_128_64(rst=None, i2c_bus=i2c_bus)
+display.begin()
+display.clear()
+display.display()
+image = Image.new('1', (DISPLAY_WIDTH, DISPLAY_HEIGHT))
+draw = ImageDraw.Draw(image)
+font = ImageFont.load_default()
+
 try:
     while not rospy.is_shutdown():
         distances = []
@@ -41,15 +77,16 @@ try:
                 if distance > 0:
                     distances.append(distance)
                 else:
-                    print("Error: Invalid distance value from sensor %d" % i)
+                    error_message = "Invalid distance from sensor {}".format(i+1)
+                    display_error(error_message)
+                    print("Error: " + error_message)
             except Exception as e:
-                print("Error: Failed to get distance from sensor %d. Exception: %s" % (i, str(e)))
+                error_message = "Failed to get distance from sensor {}: {}".format(i+1, str(e))
+                display_error(error_message)
+                print("Error: " + error_message)
 
-        # Check if all 8 sensors have published their distances
+        # Check if all 4 sensors have published their distances
         if len(distances) == 4:
-            publish_distances(distances)
-        else:
-            print("Error: Failed to get distances from all sensors")
             publish_distances(distances)
 
         time.sleep(timing / 1000000.00)
