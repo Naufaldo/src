@@ -6,34 +6,49 @@ sys.path.append('/home/pi/VL53L0X_rasp_python/python')
 import VL53L0X
 import rospy
 from std_msgs.msg import Int32MultiArray
+
+# Import the required libraries for the GME12864 display using I2C
+import Adafruit_GPIO.I2C as I2C
 import Adafruit_SSD1306
-from PIL import Image, ImageDraw, ImageFont
-import board
-import adafruit_tca9548a
+
+# Define display constants
+DISPLAY_WIDTH = 128
+DISPLAY_HEIGHT = 64
+
+# Initialize the display using I2C
+display = Adafruit_SSD1306.SSD1306_128_64(rst=None, i2c_bus=I2C.get_i2c_device(0x3C))
+display.begin()
+display.clear()
+display.display()
 
 def publish_distances(distances):
     # Publish the distances as Int32MultiArray
     msg = Int32MultiArray(data=distances)
     pub.publish(msg)
 
-    # Clear the OLED display and draw the distances
-    draw.rectangle((0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
-    for i, distance in enumerate(distances):
-        text = "Sensor {}: {} mm".format(i+1, distance)
-        draw.text((0, i*10), text, font=font, fill=255)
-    display.image(image)
+def display_distance(sensor_index, distance):
+    # Display the distance on the GME12864 display
+    display.clear()
+    display.set_text_color(display.WHITE)
+    display.set_font_size(2)
+    display.set_cursor(0, 0)
+    display.write('Sensor {}:'.format(sensor_index))
+    display.set_font_size(3)
+    display.set_cursor(0, 20)
+    display.write(str(distance))
     display.display()
 
-def display_error(error_message):
-    # Clear the OLED display and draw the error message
-    draw.rectangle((0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
-    draw.text((0, 0), "Error:", font=font, fill=255)
-    draw.text((0, 10), error_message, font=font, fill=255)
-    display.image(image)
+def display_error(sensor_index):
+    # Display the error message on the GME12864 display
+    display.clear()
+    display.set_text_color(display.WHITE)
+    display.set_font_size(2)
+    display.set_cursor(0, 0)
+    display.write('Sensor {}:'.format(sensor_index))
+    display.set_font_size(1)
+    display.set_cursor(0, 20)
+    display.write('Error')
     display.display()
-
-    # Log the error message using rospy.loginfo
-    rospy.loginfo("Error: {}".format(error_message))
 
 rospy.init_node('tof_publisher', anonymous=True)
 pub = rospy.Publisher('tof_distances', Int32MultiArray, queue_size=10)
@@ -41,16 +56,9 @@ pub = rospy.Publisher('tof_distances', Int32MultiArray, queue_size=10)
 # Create a list to store the VL53L0X objects for each sensor
 sensors = []
 
-# Create an instance of the TCA9548A multiplexer
-i2c = board.I2C()
-tca = adafruit_tca9548a.TCA9548A(i2c)
-
-# Select the TCA9548A bus number 4
-tca.channels[4].enable = True
-
-# Create VL53L0X objects for devices on TCA9548A bus 4
+# Create VL53L0X objects for devices on TCA9548A buses 0 to 7
 for i in range(4):
-    sensor = VL53L0X.VL53L0X(i2c_bus=4)  # Use the appropriate I2C bus number
+    sensor = VL53L0X.VL53L0X(TCA9548A_Num=i, TCA9548A_Addr=0x70)
     sensor.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
     sensors.append(sensor)
 
@@ -59,19 +67,6 @@ timing = sensors[0].get_timing()
 if timing < 100000:
     timing = 100000
 print("Timing %d ms" % (timing / 1000))
-
-# OLED display resolution
-DISPLAY_WIDTH = 128
-DISPLAY_HEIGHT = 64
-
-# Create an instance of the Adafruit SSD1306 OLED display
-display = Adafruit_SSD1306.SSD1306_128_64(rst=None, i2c_bus=i2c)  # Use the appropriate I2C bus object
-display.begin()
-display.clear()
-display.display()
-image = Image.new('1', (DISPLAY_WIDTH, DISPLAY_HEIGHT))
-draw = ImageDraw.Draw(image)
-font = ImageFont.load_default()
 
 try:
     while not rospy.is_shutdown():
@@ -83,17 +78,19 @@ try:
                 distance = sensor.get_distance()
                 if distance > 0:
                     distances.append(distance)
+                    display_distance(i, distance)  # Display distance on the GME12864 display
                 else:
-                    error_message = "Invalid distance from sensor {}".format(i+1)
-                    display_error(error_message)
-                    print("Error: " + error_message)
+                    print("Error: Invalid distance value from sensor %d" % i)
+                    display_error(i)  # Display error message on the GME12864 display
             except Exception as e:
-                error_message = "Failed to get distance from sensor {}: {}".format(i+1, str(e))
-                display_error(error_message)
-                print("Error: " + error_message)
+                print("Error: Failed to get distance from sensor %d. Exception: %s" % (i, str(e)))
+                display_error(i)  # Display error message on the GME12864 display
 
         # Check if all 4 sensors have published their distances
         if len(distances) == 4:
+            publish_distances(distances)
+        else:
+            print("Error: Failed to get distances from all sensors")
             publish_distances(distances)
 
         time.sleep(timing / 1000000.00)
