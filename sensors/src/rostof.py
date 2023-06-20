@@ -6,9 +6,9 @@ sys.path.append('/home/pi/VL53L0X_rasp_python/python')
 import VL53L0X
 import rospy
 from std_msgs.msg import Int32MultiArray
-import smbus
 import Adafruit_SSD1306
 from PIL import Image, ImageDraw, ImageFont
+from adafruit_tca9548a import TCA9548A
 
 def publish_distances(distances):
     # Publish the distances as Int32MultiArray
@@ -40,9 +40,15 @@ pub = rospy.Publisher('tof_distances', Int32MultiArray, queue_size=10)
 # Create a list to store the VL53L0X objects for each sensor
 sensors = []
 
-# Create VL53L0X objects for devices on TCA9548A buses 0 to 7
+# Create an instance of the TCA9548A multiplexer
+tca = TCA9548A()
+
+# Select the TCA9548A bus number 4
+tca.channel = 4
+
+# Create VL53L0X objects for devices on TCA9548A bus 4
 for i in range(4):
-    sensor = VL53L0X.VL53L0X(TCA9548A_Num=i, TCA9548A_Addr=0x70)
+    sensor = VL53L0X.VL53L0X(TCA9548A_Num=0, TCA9548A_Addr=0x70)
     sensor.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
     sensors.append(sensor)
 
@@ -56,9 +62,8 @@ print("Timing %d ms" % (timing / 1000))
 DISPLAY_WIDTH = 128
 DISPLAY_HEIGHT = 64
 
-# Create an I2C object for the correct bus number (4 in this case)
-i2c_bus = smbus.SMBus(4)
-display = Adafruit_SSD1306.SSD1306_128_64(rst=None, i2c_bus=i2c_bus)
+# Create an instance of the Adafruit SSD1306 OLED display
+display = Adafruit_SSD1306.SSD1306_128_64(rst=None)
 display.begin()
 display.clear()
 display.display()
