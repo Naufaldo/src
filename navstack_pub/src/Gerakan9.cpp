@@ -155,7 +155,6 @@ std::map<int, std::vector<float>> step{
   {57, {0,180,0,0,-1,-1,-2,0,1,1}}, //finish
   {58, {0,0,0,0,-1,-1,0,-1,1,1}},
 };
-};
 
 std::map<int, std::vector<bool>> _f_{
   // ini program untuk kondisi if 1 atau 0 (komparasi)
