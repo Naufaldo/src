@@ -6,7 +6,6 @@ sys.path.append('/home/pi/VL53L0X_rasp_python/python')
 import VL53L0X
 import rospy
 from std_msgs.msg import Int32MultiArray
-from sensor_msgs.msg import Imu
 
 from PIL import Image
 from PIL import ImageDraw
@@ -66,30 +65,8 @@ def display_error(sensor_index):
     disp.image(image)
     disp.display()
 
-def imu_callback(data):
-    # Extract the orientation data (z and w) from the IMU message
-    orientation_z = data.orientation.z
-    orientation_w = data.orientation.w
-    
-    # Calculate the top position for displaying the IMU data
-    top = DISPLAY_HEIGHT - 40
-    
-    # Clear the image
-    draw.rectangle((0, top, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
-    
-    # Display the IMU data
-    imu_text = 'IMU Data:\nZ: {}\nW: {}'.format(orientation_z, orientation_w)
-    draw.text((0, top), imu_text, font=font, fill=255)
-    
-    # Display the image
-    disp.image(image)
-    disp.display()
-
 rospy.init_node('tof_publisher', anonymous=True)
 pub = rospy.Publisher('tof_distances', Int32MultiArray, queue_size=10)
-
-# Subscribe to the IMU data topic
-rospy.Subscriber('imu/data', Imu, imu_callback)
 
 # Create a list to store the VL53L0X objects for each sensor
 sensors = []
