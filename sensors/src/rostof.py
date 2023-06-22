@@ -69,7 +69,6 @@ def display_error(sensor_index):
 def imu_callback(data):
     # Extract the orientation data (z and w) from the IMU message
     orientation_z = data.orientation.z
-    orientation_w = data.orientation.w
     
     # Calculate the top position for displaying the IMU data
     top = DISPLAY_HEIGHT - 40
@@ -78,7 +77,7 @@ def imu_callback(data):
     draw.rectangle((0, top, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
     
     # Display the IMU data
-    imu_text = 'IMU Data:\nZ: {}\nW: {}'.format(orientation_z, orientation_w)
+    imu_text = 'IMU Data:\nZ: {}'.format(orientation_z)
     draw.text((0, top), imu_text, font=font, fill=255)
     
     # Display the image
