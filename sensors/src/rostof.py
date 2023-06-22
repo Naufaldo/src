@@ -39,7 +39,7 @@ def publish_distances(distances):
     msg = Int32MultiArray(data=distances)
     pub.publish(msg)
 
-def display_distances(sensor_distances,):
+def display_distances(sensor_distances,orientation_z):
     # Clear the image
     draw.rectangle((0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
 
@@ -71,10 +71,11 @@ def display_error(sensor_index):
     disp.image(image)
     disp.display()
 
-def imu_callback(data):
+def imu_callback(data,orientation_z):
     # Extract the orientation data (z and w) from the IMU message
     orientation_z = data.orientation.z
     
+
 
 rospy.init_node('tof_publisher', anonymous=True)
 pub = rospy.Publisher('tof_distances', Int32MultiArray, queue_size=10)
