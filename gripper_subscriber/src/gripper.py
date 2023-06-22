@@ -29,15 +29,15 @@ def merged_ping_callback(data):
 def button_callback(channel):
     # Publish a message to the 'button_pressed' topic
     if ping[3] > 200 and ping[0] < 200:
-         #Uncomment kalo Arena Merah
-        #subprocess.call("/home/pi/Ancabots/src/Shell_script/Gerakan1.sh", shell=True)
+        #Uncomment kalo Arena Merah
+        subprocess.call("/home/pi/Ancabots/src/Shell_script/Gerakan1.sh", shell=True)
         #Uncomment kalo Arena Biru
-        subprocess.call("/home/pi/Ancabots/src/Shell_script/Gerakan3.sh", shell=True)
+        #subprocess.call("/home/pi/Ancabots/src/Shell_script/Gerakan3.sh", shell=True)
     elif ping[0] > 200 and ping[3] < 200:
         #Uncomment kalo Arena Merah
-        #subprocess.call("/home/pi/Ancabots/src/Shell_script/Gerakan2.sh", shell=True)
+        subprocess.call("/home/pi/Ancabots/src/Shell_script/Gerakan2.sh", shell=True)
         #Uncomment kalo Arena Biru
-        subprocess.call("/home/pi/Ancabots/src/Shell_script/Gerakan4.sh", shell=True)
+        #subprocess.call("/home/pi/Ancabots/src/Shell_script/Gerakan4.sh", shell=True)
     else:
         pub.publish(Bool(True))
 
