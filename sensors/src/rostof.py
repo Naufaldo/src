@@ -6,7 +6,6 @@ sys.path.append('/home/pi/VL53L0X_rasp_python/python')
 import VL53L0X
 import rospy
 from std_msgs.msg import Int32MultiArray
-from sensor_msgs.msg import Imu
 
 from PIL import Image
 from PIL import ImageDraw
@@ -39,57 +38,35 @@ def publish_distances(distances):
     msg = Int32MultiArray(data=distances)
     pub.publish(msg)
 
-def display_distances(sensor_distances, orientation_z):
+def display_distances(sensor_distances):
     # Clear the image
     draw.rectangle((0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
 
     # Display the sensor array
     array_text = 'Sensor Array:\n{}'.format(sensor_distances)
     draw.text((0, 0), array_text, font=font, fill=255)
-
-    # Display the orientation Z
-    orientation_text = 'Orientation Z: {}'.format(orientation_z)
-    draw.text((0, 15), orientation_text, font=font, fill=255)
 
     # Display the image
     disp.image(image)
     disp.display()
 
-def display_error(sensor_index, orientation_z):
+def display_error(sensor_index):
     # Calculate the top position for displaying the error message
-    top = 30  # Position below the gyro data
+    top = DISPLAY_HEIGHT - 20
 
     # Clear the image
-    draw.rectangle((0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
-
-    # Display the sensor array
-    array_text = 'Sensor Array:\n{}'.format(sensor_distances)
-    draw.text((0, 0), array_text, font=font, fill=255)
-
-    # Display the orientation Z
-    orientation_text = 'Orientation Z: {}'.format(orientation_z)
-    draw.text((0, 15), orientation_text, font=font, fill=255)
+    draw.rectangle((0, top, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
 
     # Display the sensor index and error message
-    error_text = 'Sensor {}: Error'.format(sensor_index)
-    draw.text((0, top), error_text, font=font, fill=255)
+    draw.text((0, top), 'Sensor {}:'.format(sensor_index), font=font, fill=255)
+    draw.text((0, top + 20), 'Error', font=font, fill=255)
 
     # Display the image
     disp.image(image)
     disp.display()
-
-def imu_callback(data):
-    # Extract the orientation data (z) from the IMU message
-    orientation_z = data.orientation.z
-
-    # Display the distances and orientation Z
-    display_distances(sensor_distances, orientation_z)
 
 rospy.init_node('tof_publisher', anonymous=True)
 pub = rospy.Publisher('tof_distances', Int32MultiArray, queue_size=10)
-
-# Subscribe to the IMU data topic
-rospy.Subscriber('imu/data', Imu, imu_callback)
 
 # Create a list to store the VL53L0X objects for each sensor
 sensors = []
@@ -126,11 +103,11 @@ try:
 
         # Display the distances if no error occurred
         if not has_error:
-            display_distances(sensor_distances, 0)  # Provide a default value for orientation Z
+            display_distances(sensor_distances)
         else:
             # Display sensor distances before showing the error message
-            display_distances(sensor_distances, 0)  # Provide a default value for orientation Z
-            display_error(len(sensors), 0)  # Provide a default value for orientation Z
+            display_distances(sensor_distances)
+            display_error(len(sensors))
 
         # Check if all sensors have published their distances
         if len(sensor_distances) == len(sensors):
