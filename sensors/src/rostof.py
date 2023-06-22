@@ -6,7 +6,6 @@ sys.path.append('/home/pi/VL53L0X_rasp_python/python')
 import VL53L0X
 import rospy
 from std_msgs.msg import Int32MultiArray
-from sensor_msgs.msg import Imu
 
 from PIL import Image
 from PIL import ImageDraw
@@ -26,7 +25,7 @@ disp = Adafruit_SSD1306.SSD1306_128_64(rst=RST, i2c_address=0x3C)
 disp.begin()
 disp.clear()
 disp.display()
-orientation_z = 0
+
 # Create a blank image for drawing
 image = Image.new('1', (DISPLAY_WIDTH, DISPLAY_HEIGHT))
 draw = ImageDraw.Draw(image)
@@ -39,16 +38,11 @@ def publish_distances(distances):
     msg = Int32MultiArray(data=distances)
     pub.publish(msg)
 
-def display_distances(sensor_distances,orientation_z):
+def display_distances(sensor_distances):
     # Clear the image
     draw.rectangle((0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
 
     # Display the sensor array
-    sop = DISPLAY_HEIGHT - 40
-    
-    # Display the IMU data
-    imu_text = 'IMU Data:\nZ: {}'.format(orientation_z)
-    draw.text((0, sop), imu_text, font=font, fill=255)
     array_text = 'Sensor Array:\n{}'.format(sensor_distances)
     draw.text((0, 0), array_text, font=font, fill=255)
 
@@ -71,17 +65,8 @@ def display_error(sensor_index):
     disp.image(image)
     disp.display()
 
-def imu_callback(data,orientation_z):
-    # Extract the orientation data (z and w) from the IMU message
-    orientation_z = data.orientation.z
-    
-
-
 rospy.init_node('tof_publisher', anonymous=True)
 pub = rospy.Publisher('tof_distances', Int32MultiArray, queue_size=10)
-
-# Subscribe to the IMU data topic
-rospy.Subscriber('imu/data', Imu, imu_callback)
 
 # Create a list to store the VL53L0X objects for each sensor
 sensors = []
