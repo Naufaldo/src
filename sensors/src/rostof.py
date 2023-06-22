@@ -26,7 +26,7 @@ disp = Adafruit_SSD1306.SSD1306_128_64(rst=RST, i2c_address=0x3C)
 disp.begin()
 disp.clear()
 disp.display()
-
+orientation_z = 0
 # Create a blank image for drawing
 image = Image.new('1', (DISPLAY_WIDTH, DISPLAY_HEIGHT))
 draw = ImageDraw.Draw(image)
@@ -39,11 +39,16 @@ def publish_distances(distances):
     msg = Int32MultiArray(data=distances)
     pub.publish(msg)
 
-def display_distances(sensor_distances):
+def display_distances(sensor_distances,):
     # Clear the image
     draw.rectangle((0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
 
     # Display the sensor array
+    sop = DISPLAY_HEIGHT - 40
+    
+    # Display the IMU data
+    imu_text = 'IMU Data:\nZ: {}'.format(orientation_z)
+    draw.text((0, sop), imu_text, font=font, fill=255)
     array_text = 'Sensor Array:\n{}'.format(sensor_distances)
     draw.text((0, 0), array_text, font=font, fill=255)
 
@@ -70,19 +75,6 @@ def imu_callback(data):
     # Extract the orientation data (z and w) from the IMU message
     orientation_z = data.orientation.z
     
-    # Calculate the top position for displaying the IMU data
-    top = DISPLAY_HEIGHT - 40
-    
-    # Clear the image
-    draw.rectangle((0, top, DISPLAY_WIDTH, DISPLAY_HEIGHT), outline=0, fill=0)
-    
-    # Display the IMU data
-    imu_text = 'IMU Data:\nZ: {}'.format(orientation_z)
-    draw.text((0, top), imu_text, font=font, fill=255)
-    
-    # Display the image
-    disp.image(image)
-    disp.display()
 
 rospy.init_node('tof_publisher', anonymous=True)
 pub = rospy.Publisher('tof_distances', Int32MultiArray, queue_size=10)
