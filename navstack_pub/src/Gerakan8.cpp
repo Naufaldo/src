@@ -95,7 +95,7 @@ std::map<int, std::vector<float>> step{
   //{step, {Tof_Kanan, Tof_depan, Tof_belakang, Tof_Kiri, Imu Z, Imu X, Gripper, Gripper}}
   {0, {500,0,0,200,-0.80,-1,-2,0,1,1}},
   {1, {0,0,60,0,-1,-1,-2,0,1,1}},
-  {2, {0,270,0,520,-1,-1,-2,0,1,1}}, //keluar home
+  {2, {0,220,0,520,-1,-1,-2,0,1,1}}, //keluar home
   {3, {0,0,190,0,-1,-1,0,-1,1,1}}, //ke k1
   {4, {0,140,0,0,-1,-1,0,0,1,1}}, //k1
   {5, {0,140,0,0,-1,-1,-2,0,1,1}},
@@ -272,7 +272,7 @@ void avoidance(){
   }
     if(ping[2] <= 40){
     //gerakan maju
-    twist.linear.x = 0.5;
+    twist.linear.x = 0.25;
     twist.linear.y = 0;
     twist.linear.z = 0;
     twist.angular.x = 0;
