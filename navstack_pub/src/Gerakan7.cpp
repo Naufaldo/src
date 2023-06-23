@@ -272,7 +272,7 @@ void avoidance(){
   }
     if(ping[2] <= 40){
     //gerakan maju
-    twist.linear.x = 0.5;
+    twist.linear.x = 0.2;
     twist.linear.y = 0;
     twist.linear.z = 0;
     twist.angular.x = 0;
