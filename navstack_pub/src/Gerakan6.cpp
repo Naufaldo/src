@@ -28,9 +28,9 @@ void tofdistancesCallback(const std_msgs::Int32MultiArray::ConstPtr& msg)
 void imuCallback(const sensor_msgs::Imu::ConstPtr& msg)
 {
   ping[4] = msg->orientation.z;
-  ping[5] = msg->orientation.w;
+  ping[5] = msg->orientation.y;
 
-  ROS_INFO("IMU Orientation: z=%f, w=%f", ping[4], ping[5]);
+  ROS_INFO("IMU Orientation: z=%f, y=%f", ping[4], ping[5]);
 }
 
 
@@ -128,9 +128,9 @@ std::map<int, std::vector<float>> step{
   {32, {700,0,0,0,-1,-1,-2,0,1.5,1}},
   {33, {0,0,800,0,-1,-1,-2,0,1.5,1}},
   {34, {370,0,0,120,-1,-1,-2,0,2,1}}, //menuju jalan retak
-  {35, {0,300,0,0,-1,-1,-2,0,1.5,1}},
+  {35, {0,300,0,0,-1,0.1,-2,0,1.5,1}},
   {36, {0,0,0,150,-1,-1,-2,0,1.5,1}},
-  {37, {250,180,300,0,-1,-1,-2,0,1,1.5}}, //melewati jalan retak dan batu
+  {37, {250,180,300,0,-1,0.1,-2,0,1,1.5}}, //melewati jalan retak dan batu
   {38, {0,0,0,190,-1,-1,-2,0,1.5,1}},
   {39, {400,300,180,150,-0.80,-1,-2,0,1,1}}, //posisi siap naik tangga
   {40, {0,0,0,150,-1,-1,-2,0,1,1}},
@@ -196,9 +196,9 @@ std::map<int, std::vector<bool>> _f_{
   {32, {1,0,0,0,0,0,1,0,1}},
   {33, {0,0,0,0,0,0,1,0,1}},
   {34, {0,0,0,1,0,0,1,0,0}},
-  {35, {0,1,0,0,0,0,1,0,1}},
+  {35, {0,1,0,0,0,1,1,0,1}},
   {36, {0,0,0,1,0,0,1,0,1}},
-  {37, {0,1,0,0,0,0,1,0,1}},
+  {37, {0,1,0,0,0,1,1,0,1}},
   {38, {0,0,0,1,0,0,1,0,1}},
   {39, {0,0,1,1,1,0,1,0,1}},
   {40, {0,0,0,0,0,0,1,0,1}},
