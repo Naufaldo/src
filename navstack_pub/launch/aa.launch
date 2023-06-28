@@ -34,7 +34,7 @@
   
   <!-- d map -->
   <!-- Map File -->
-  <arg name="map_file" default="$(find navstack_pub)/maps/trial_dc.yaml"/>
+  <arg name="map_file" default="$(find navstack_pub)/maps/lab_robotik2.yaml"/>
 
   <!-- Map Server -->
   <!-- Publish: /map, /map_metadata -->
