@@ -9,7 +9,7 @@
     <xacro:property name="coxa_length" value="0.05893"/>
     <xacro:property name="femur_length" value="0.10798"/>
     <xacro:property name="tibia_length" value="0.08774"/>
-    <!-- <xacro:property name="tarsus_length" value="0.12065"/> -->
+    <xacro:property name="tarsus_length" value="0.12065"/>
 
     <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
@@ -318,7 +318,7 @@
         </gazebo>
 
         <!-- tarsus -->
-        <!-- <joint name="tarsus_joint_${side}${position}" type="revolute">
+        <joint name="tarsus_joint_${side}${position}" type="revolute">
             <origin xyz="${tibia_length} 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <parent link="tibia_${side}${position}"/>
             <child link="tarsus_${side}${position}"/>
@@ -365,12 +365,12 @@
         </link>
         <gazebo reference="tarsus_${side}${position}">
             <material>Gazebo/DarkGrey</material>
-        </gazebo> -->
+        </gazebo>
 
         <!-- foot -->
         <joint name="foot_joint_${side}${position}" type="fixed">
-            <origin xyz="${tibia_length} 0.0 0.0" rpy="0.0 0.0 0.0" />
-            <parent link="tibia__${side}${position}" />
+            <origin xyz="${tarsus_length} 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <parent link="tarsus_${side}${position}" />
             <child link="foot_${side}${position}" />
         </joint>
         <link name="foot_${side}${position}">
