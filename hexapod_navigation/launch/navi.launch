@@ -25,7 +25,7 @@
     <param name="self_diagnose" value="false"/>
   </node> -->
 <node name="rviz" pkg="rviz" type="rviz" 
-     args="-d $(find hexapod_description)/rviz_prefs/robotViz.rviz"/>
+     args="-d $(find hexapod_description)/rviz_prefs/urdf.rviz"/>
 
   <!-- Map File -->
   <arg name="map_file" default="$(find navstack_pub)/maps/lab_robotik2.yaml"/>
