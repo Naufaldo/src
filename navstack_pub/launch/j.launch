@@ -3,8 +3,8 @@
 <!-- Move Base Node -->
   <!-- Subscribe: /move_base_simple/goal -->
   <!-- Publish: /cmd_vel -->
-  <arg name="base_global_planner" default="navfn/NavfnROS"/>
-  <arg name="base_local_planner" default="dwa_local_planner/DWAPlannerROS"/>
+  <!-- <arg name="base_global_planner" default="navfn/NavfnROS"/>
+  <arg name="base_local_planner" default="dwa_local_planner/DWAPlannerROS"/> -->
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <rosparam file="$(find navstack_pub)/param/backup/costmap_common_params.yaml" command="load" ns="global_costmap" />
