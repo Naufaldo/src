@@ -38,7 +38,7 @@
   <!-- Add AMCL example for differential drive robots for Localization -->
   <!-- Subscribe: /scan, /tf, /initialpose, /map -->
   <!-- Publish: /amcl_pose, /particlecloud, /tf -->
-  <include file="$(find amcl)/examples/amcl_diff.launch"/>
+  <include file="$(find amcl)/examples/amcl_omni.launch"/>
   
   <arg name="base_global_planner" default="navfn/NavfnROS"/>
   <arg name="base_local_planner" default="dwa_local_planner/DWAPlannerROS"/>
