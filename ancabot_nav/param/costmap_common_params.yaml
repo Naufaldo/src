@@ -1,6 +1,7 @@
 obstacle_range: 0.5
 raytrace_range: 0.5
-footprint: [[-0.14, -0.14], [-0.14, 0.14], [0.14, 0.14], [0.14, -0.14]]
+footprint: [[-0.31215, -0.2725], [-0.31215, 0.2725], [0.31215, 0.2725], [0.31215, -0.2725]]
+footprint_padding: 0.01
 map_topic: /map
 subscribe_to_updates: true
 global_frame: odom
