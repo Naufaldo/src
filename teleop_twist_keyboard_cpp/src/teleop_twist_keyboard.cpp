@@ -49,7 +49,7 @@ std::map<char, std::vector<float>> baseBindings{
     {'o', {0, 0, 0, 0, 0}},
     {'p', {0, 0, 0, -2, 0}},
     {'l', {0, 0, 0, 0, -1}},
-    {';', {0, 0, 0, -2, 1}}};
+    {';', {0, 0, 0, -1, 1}}};
 
 // Reminder message
 const char *msg = R"(
