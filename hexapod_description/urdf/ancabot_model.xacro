@@ -79,7 +79,7 @@
         <child link="laser"/>
         <origin xyz="0.150 -0.0225 0.034" rpy="${pi/2} ${pi} ${pi/2}"/>
     </joint>
-    <link name="camera_depth_optical_frame">
+    <link name="laser">
         <inertial>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
             <mass value="0.00001"/>
