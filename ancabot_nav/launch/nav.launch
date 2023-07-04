@@ -8,7 +8,7 @@
   <node pkg="tf" type="static_transform_publisher" name="base_link_broadcaster" args="0 0 0.0115 0 0 0 base_footprint base_link 30" /> -->
   <!-- odom to base_footprint transform will be provided by the robot_pose_ekf node -->
   <!-- map to odom will be provided by the AMCL -->
-  <!-- <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom 30" /> -->
+  <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom 30" />
 
   <!-- Wheel Encoder Tick Publisher and Base Controller Using Arduino -->  
   <!-- motor_controller_diff_drive_2.ino is the Arduino sketch -->
@@ -36,7 +36,7 @@
   <!-- Extended Kalman Filter from robot_pose_ekf Node-->
   <!-- Subscribe: /odom, /imu_data, /vo -->
   <!-- Publish: /robot_pose_ekf/odom_combined -->
-  <!-- <remap from="odom" to="odom_data_quat" />
+  <remap from="odom" to="odom_data_quat" />
   <remap from="imu_data" to="imu/data" />
   <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
     <param name="output_frame" value="odom"/>
@@ -49,7 +49,7 @@
     <param name="gps_used" value="false"/>
     <param name="debug" value="false"/>
     <param name="self_diagnose" value="false"/>
-  </node> -->
+  </node>
 	
   <!-- Initial Pose and Goal Publisher -->
   <!-- Publish: /initialpose, /move_base_simple/goal -->
