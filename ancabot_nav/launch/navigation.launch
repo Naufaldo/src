@@ -74,7 +74,7 @@
   </node>   --> 
 
   <!-- Map File -->
-  <arg name="map_file" default="$(find ancabot_nav)/maps/Lab_plc2.yaml"/>
+  <arg name="map_file" default="$(find ancabot_nav)/maps/lab_plc2.yaml"/>
 	
   <!-- Map Server -->
   <!-- Publish: /map, /map_metadata -->
