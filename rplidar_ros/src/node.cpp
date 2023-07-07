@@ -219,7 +219,7 @@ int main(int argc, char * argv[]) {
     float angle_compensate_multiple = 1.0;//min 360 ponits at per 1 degree
     int points_per_circle = 360;//min 360 ponits at per circle 
     std::string scan_mode;
-    float max_distance;
+    float max_distance = 5.0;
     double scan_frequency;
     ros::NodeHandle nh;
     ros::Publisher scan_pub = nh.advertise<sensor_msgs::LaserScan>("scan", 1000);
