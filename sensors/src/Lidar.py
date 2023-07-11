@@ -12,6 +12,11 @@ def callback(msg):
     print('450:', msg.ranges[450])
     print('540:', msg.ranges[540])
     print('630:', msg.ranges[630])
+    print('720:', msg.ranges[720])
+    print('810:', msg.ranges[810])
+    print('900:', msg.ranges[900])
+    print('990:', msg.ranges[990])
+    print('1080:', msg.ranges[1080])
 
 
 rospy.init_node('data_lidar')
