@@ -1,28 +1,56 @@
 #include <ros/ros.h>
 #include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/client/simple_action_client.h>
-#include <iostream>
+#include <geometry_msgs/PoseWithCovarianceStamped.h>
 
 using namespace std;
 
 // Action specification for move_base
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
-int main(int argc, char** argv){
-
-  // Connect to ROS
+int main(int argc, char** argv) {
+  // Initialize ROS
   ros::init(argc, argv, "simple_navigation_goals");
 
-  // Tell the action client that we want to spin a thread by default
+  // Create a ROS node handle
+  ros::NodeHandle nh;
+
+  // Create a publisher to publish the initial pose
+  ros::Publisher initialPosePub = nh.advertise<geometry_msgs::PoseWithCovarianceStamped>("initialpose", 1);
+
+  // Create the initial pose message
+  geometry_msgs::PoseWithCovarianceStamped initialPoseMsg;
+  initialPoseMsg.header.frame_id = "map";
+  initialPoseMsg.pose.pose.position.x = 0.029102548956871033;
+  initialPoseMsg.pose.pose.position.y = -0.006215959787368774;
+  initialPoseMsg.pose.pose.position.z = 0.0;
+  initialPoseMsg.pose.pose.orientation.x = 0.0;
+  initialPoseMsg.pose.pose.orientation.y = 0.0;
+  initialPoseMsg.pose.pose.orientation.z = 0.028834942647973153;
+  initialPoseMsg.pose.pose.orientation.w = 0.9995841865908485;
+  initialPoseMsg.pose.covariance = {
+    0.25, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.25, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.06853892326654787
+  };
+
+  // Publish the initial pose
+  initialPosePub.publish(initialPoseMsg);
+
+  // Connect to the move_base action server
   MoveBaseClient ac("move_base", true);
 
-  // Wait for the action server to come up so that we can begin processing goals.
-  while(!ac.waitForServer(ros::Duration(5.0))){
+  // Wait for the action server to come up
+  while (!ac.waitForServer(ros::Duration(5.0))) {
     ROS_INFO("Waiting for the move_base action server to come up");
   }
 
   // Define the sequence of destinations
   double destinations[][3] = {
+    // {x, y, w}
     {0.46674978733062744, 0.009915530681610107, 0.9995841865908485}, // Arah Korban 1
     {0.47411449790000916, 0.1285257339477539, 0.6555718605526236},    // Ambil Korban 1
     {2.4658145904541016, 0.19893264770507812, 0.9196588897926539},   // Simpen Korban 1
@@ -33,7 +61,7 @@ int main(int argc, char** argv){
   };
   int numDestinations = sizeof(destinations) / sizeof(destinations[0]);
 
-  for(int i = 0; i < numDestinations; i++) {
+  for (int i = 0; i < numDestinations; i++) {
     // Create a new goal to send to move_base
     move_base_msgs::MoveBaseGoal goal;
 
@@ -50,7 +78,7 @@ int main(int argc, char** argv){
     // Wait until the robot reaches the goal
     ac.waitForResult();
 
-    if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+    if (ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
       ROS_INFO("The robot has arrived at the goal location");
     else
       ROS_INFO("The robot failed to reach the goal location for some reason");
