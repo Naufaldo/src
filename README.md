@@ -1,4 +1,4 @@
-# ROS Hexapod Stack
+# ROS Ancabot Stack
 
 https://rdzryan.github.io/src/
 
