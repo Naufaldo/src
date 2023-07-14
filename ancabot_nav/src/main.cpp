@@ -170,9 +170,9 @@ int main(int argc, char** argv){
         break;
       case 2:
         cout << "\nGoal Location: Ambil Korban 1\n" << endl;
-        goal.target_pose.pose.position.x = 0.48411449790000916;
+        goal.target_pose.pose.position.x = 0.47411449790000916;
     goal.target_pose.pose.position.y = 0.1285257339477539;
-        goal.target_pose.pose.orientation.w = 0.6879711140221385;
+        goal.target_pose.pose.orientation.w = 0.6555718605526236;
         break;
       case 3:
         cout << "\nGoal Location: Simpen Korban 1\n" << endl;
