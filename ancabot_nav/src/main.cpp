@@ -176,33 +176,34 @@ int main(int argc, char** argv){
         break;
       case 3:
         cout << "\nGoal Location: Simpen Korban 1\n" << endl;
-        goal.target_pose.pose.position.x = 10.5;
-    goal.target_pose.pose.position.y = 2.0;
-        goal.target_pose.pose.orientation.w = 1.0;
+        goal.target_pose.pose.position.x = 2.4658145904541016;
+    goal.target_pose.pose.position.y = 0.19893264770507812;
+        goal.target_pose.pose.orientation.w = 0.9196588897926539;
         break;
       case 4:
         cout << "\nGoal Location: Arah Korban 2\n" << endl;
-        goal.target_pose.pose.position.x = 5.3;
-    goal.target_pose.pose.position.y = 2.7;
-        goal.target_pose.pose.orientation.w = 1.0;
+        goal.target_pose.pose.position.x = 2.1826889514923096;
+    goal.target_pose.pose.position.y = 0.6185263991355896;
+        goal.target_pose.pose.orientation.w = 0.03423934984405933;
         break;
       case 5:
+      //belum di program sampe case 7
         cout << "\nGoal Location: Ambil korban 2\n" << endl;
-        goal.target_pose.pose.position.x = 2.5;
-    goal.target_pose.pose.position.y = 2.0;
-        goal.target_pose.pose.orientation.w = 1.0;
+        goal.target_pose.pose.position.x = 2.1826889514923096;
+    goal.target_pose.pose.position.y = 0.6185263991355896;
+        goal.target_pose.pose.orientation.w = 0.03423934984405933;
         break;
       case 6:
         cout << "\nGoal Location: Simpen korban 2\n" << endl;
-        goal.target_pose.pose.position.x = 3.0;
-    goal.target_pose.pose.position.y = 6.0;
-        goal.target_pose.pose.orientation.w = 1.0;
+        goal.target_pose.pose.position.x = 2.1826889514923096;
+    goal.target_pose.pose.position.y = 0.6185263991355896;
+        goal.target_pose.pose.orientation.w = 0.03423934984405933;
         break;
         case 7:
         cout << "\nGoal Location: Menuju Sebelum Tangga\n" << endl;
-        goal.target_pose.pose.position.x = 3.0;
-    goal.target_pose.pose.position.y = 6.0;
-        goal.target_pose.pose.orientation.w = 1.0;
+        goal.target_pose.pose.position.x = 2.1826889514923096;
+    goal.target_pose.pose.position.y = 0.6185263991355896;
+        goal.target_pose.pose.orientation.w = 0.03423934984405933;
         break;
       default:
         cout << "\nInvalid selection. Please try again.\n" << endl;
