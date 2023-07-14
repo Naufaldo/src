@@ -1,4 +1,6 @@
 #include <ros/ros.h>
+#include <geometry_msgs/Twist.h>
+#include <std_msgs/Bool.h>
 #include <move_base_msgs/MoveBaseAction.h>
 #include <actionlib/client/simple_action_client.h>
 #include <geometry_msgs/PoseWithCovarianceStamped.h>
@@ -17,6 +19,8 @@ int main(int argc, char** argv) {
 
   // Create a publisher to publish the initial pose
   ros::Publisher initialPosePub = nh.advertise<geometry_msgs::PoseWithCovarianceStamped>("initialpose", 1);
+  ros::Publisher headPub = nh.advertise<geometry_msgs::Twist>("/head_Tws", 1);
+  ros::Publisher legHeightPub = nh.advertise<std_msgs::Bool>("/leg", 1);
 
   // Create the initial pose message
   geometry_msgs::PoseWithCovarianceStamped initialPoseMsg;
@@ -49,15 +53,15 @@ int main(int argc, char** argv) {
   }
 
   // Define the sequence of destinations
-  double destinations[][3] = {
-    // {x, y, w}
-    {0.46674978733062744, 0.009915530681610107, 0.9995841865908485}, // Arah Korban 1
-    {0.47411449790000916, 0.1285257339477539, 0.6555718605526236},    // Ambil Korban 1
-    {2.4658145904541016, 0.19893264770507812, 0.9196588897926539},   // Simpen Korban 1
-    {2.1826889514923096, 0.6185263991355896, 0.03423934984405933},    // Arah Korban 2
+  double destinations[][6] = {
+    // {x, y, w, Lifter, Gripper, leg_height}
+    {0.46674978733062744, 0.009915530681610107, 0.9995841865908485, -2, 0, 0}, // Arah Korban 1
+    {0.47411449790000916, 0.1285257339477539, 0.6555718605526236, 0, -1, 1},    // Ambil Korban 1
+    {2.4658145904541016, 0.19893264770507812, 0.9196588897926539, -2, 0, 1},   // Simpen Korban 1
+    {2.1826889514923096, 0.6185263991355896, 0.03423934984405933, -2, 0, 1},    // Arah Korban 2
     // Add more destinations in the sequence
-    {2.4959347248077393, 0.8430209755897522, 0.7359457450143778},     // Simpen korban kelereng
-    {1.3070660829544067, 0.6406080722808838, 0.01420421912936522}     // Arah Tangga
+    {2.4959347248077393, 0.8430209755897522, 0.7359457450143778, -2, 0, 1},     // Simpen korban kelereng
+    {1.3070660829544067, 0.6406080722808838, 0.01420421912936522, -2, 0, 1}     // Arah Tangga
   };
   int numDestinations = sizeof(destinations) / sizeof(destinations[0]);
 
@@ -72,8 +76,19 @@ int main(int argc, char** argv) {
     goal.target_pose.pose.position.y = destinations[i][1];
     goal.target_pose.pose.orientation.w = destinations[i][2];
 
+    // Create and set the head and leg height messages
+    geometry_msgs::Twist headTws;
+    headTws.linear.x = destinations[i][3] * 0.625;
+    headTws.linear.y = destinations[i][4] * 1.1;
+    std_msgs::Bool legHeight;
+    legHeight.data = destinations[i][5];
+
     ROS_INFO("Sending goal");
     ac.sendGoal(goal);
+
+    // Publish the head and leg height commands
+    headPub.publish(headTws);
+    legHeightPub.publish(legHeight);
 
     // Wait until the robot reaches the goal
     ac.waitForResult();
