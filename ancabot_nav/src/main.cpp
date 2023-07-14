@@ -1,18 +1,7 @@
 /*
- * Author: Automatic Addison
- * Date: May 30, 2021
- * ROS Version: ROS 1 - Melodic
- * Website: https://automaticaddison.com
- * This ROS node sends the robot goals to move to a particular location on 
- * a map. I have configured this program to the map of my own apartment.
- *
- * 1 = Bathroom
- * 2 = Bedroom
- * 3 = Front Door
- * 4 = Living Room
- * 5 = Home Office
- * 6 = Kitchen (Default)
- */
+ * Author: Naufaldo
+ * Date: 14 july, 2023
+ * ROS Version: ROS 1 - noetic
  
  /*
 
