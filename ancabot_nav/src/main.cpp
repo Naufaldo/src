@@ -163,40 +163,40 @@ int main(int argc, char** argv){
     switch (user_choice) {
       case 1:
         cout << "\nGoal Location: Home\n" << endl;
-        goal.target_pose.pose.position.x = 0;
-    goal.target_pose.pose.position.y =0;
-        goal.target_pose.pose.orientation.w =0;
+        goal.target_pose.pose.position.x = 0.0;
+    goal.target_pose.pose.position.y =0.0;
+        goal.target_pose.pose.orientation.w =0.0;
         break;
       case 2:
         cout << "\nGoal Location: 1 meter\n" << endl;
-        goal.target_pose.pose.position.x =1;
-    goal.target_pose.pose.position.y = 0;
-        goal.target_pose.pose.orientation.w =0;
+        goal.target_pose.pose.position.x =1.0;
+    goal.target_pose.pose.position.y = 0.0;
+        goal.target_pose.pose.orientation.w =0.0;
         break;
       case 3:
         cout << "\nGoal Location: 2 meter\n" << endl;
-        goal.target_pose.pose.position.x = 2;
-    goal.target_pose.pose.position.y = 0;
-        goal.target_pose.pose.orientation.w = 0;
+        goal.target_pose.pose.position.x = 2.0;
+    goal.target_pose.pose.position.y = 0.0;
+        goal.target_pose.pose.orientation.w = 0.0;
         break;
       case 4:
         cout << "\nGoal Location: 3 meter\n" << endl;
-        goal.target_pose.pose.position.x = 3;
-    goal.target_pose.pose.position.y = 0;
-        goal.target_pose.pose.orientation.w = 0;
+        goal.target_pose.pose.position.x = 3.0;
+    goal.target_pose.pose.position.y = 0.0;
+        goal.target_pose.pose.orientation.w = 0.0;
         break;
       case 5:
       //belum di program sampe case 7
         cout << "\nGoal Location: 4 meter\n" << endl;
-        goal.target_pose.pose.position.x = 4;
-    goal.target_pose.pose.position.y = 0;
-        goal.target_pose.pose.orientation.w = 0;
+        goal.target_pose.pose.position.x = 4.0;
+    goal.target_pose.pose.position.y = 0.0;
+        goal.target_pose.pose.orientation.w = 0.0;
         break;
       case 6:
         cout << "\nGoal Location: 5 meter\n" << endl;
-        goal.target_pose.pose.position.x = 5;
-    goal.target_pose.pose.position.y = 0;
-        goal.target_pose.pose.orientation.w = 0;
+        goal.target_pose.pose.position.x = 5.0;
+    goal.target_pose.pose.position.y = 0.0;
+        goal.target_pose.pose.orientation.w = 0.0;
         break;
       default:
         cout << "\nInvalid selection. Please try again.\n" << endl;
