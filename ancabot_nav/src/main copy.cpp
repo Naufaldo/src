@@ -131,7 +131,7 @@ int main(int argc, char** argv){
     ROS_INFO("Waiting for the move_base action server to come up");
   }
  
-  int user_choice = 6;
+  int user_choice = 7;
   char choice_to_continue = 'Y';
   bool run = true;
      
@@ -139,12 +139,13 @@ int main(int argc, char** argv){
  
     // Ask the user where he wants the robot to go?
     cout << "\nWhere do you want the robot to go?" << endl;
-    cout << "\n1 = Home" << endl;
-    cout << "2 = 1 meter" << endl;
-    cout << "3 = 2 meter" << endl;
-    cout << "4 = 3 meter" << endl;
-    cout << "5 = 4 meter" << endl;
-    cout << "6 = 5 meter" << endl;
+    cout << "\n1 = Arah korban 1" << endl;
+    cout << "2 = Ambil Korban 1" << endl;
+    cout << "3 = Simpen Korban 1" << endl;
+    cout << "4 = Arah Korban 2" << endl;
+    cout << "5 = Ambil Korban 2" << endl;
+    cout << "6 = Simpen Korban 2" << endl;
+    cout << "7 = Akhir sebelum tangga" << endl;
     cout << "\nEnter a number: ";
     cin >> user_choice;
  
@@ -162,41 +163,47 @@ int main(int argc, char** argv){
     // display the coordinates to the /clicked_point topic.
     switch (user_choice) {
       case 1:
-        cout << "\nGoal Location: Home\n" << endl;
-        goal.target_pose.pose.position.x = 0;
-    goal.target_pose.pose.position.y =0;
-        goal.target_pose.pose.orientation.w =0;
+        cout << "\nGoal Location: Arah Korban 1\n" << endl;
+        goal.target_pose.pose.position.x = 0.46674978733062744;
+    goal.target_pose.pose.position.y = 0.009915530681610107;
+        goal.target_pose.pose.orientation.w = 0.9995841865908485;
         break;
       case 2:
-        cout << "\nGoal Location: 1 meter\n" << endl;
-        goal.target_pose.pose.position.x =1;
-    goal.target_pose.pose.position.y = 0;
-        goal.target_pose.pose.orientation.w =0;
+        cout << "\nGoal Location: Ambil Korban 1\n" << endl;
+        goal.target_pose.pose.position.x = 0.47411449790000916;
+    goal.target_pose.pose.position.y = 0.1285257339477539;
+        goal.target_pose.pose.orientation.w = 0.6555718605526236;
         break;
       case 3:
-        cout << "\nGoal Location: 2 meter\n" << endl;
-        goal.target_pose.pose.position.x = 2;
-    goal.target_pose.pose.position.y = 0;
-        goal.target_pose.pose.orientation.w = 0;
+        cout << "\nGoal Location: Simpen Korban 1\n" << endl;
+        goal.target_pose.pose.position.x = 2.4658145904541016;
+    goal.target_pose.pose.position.y = 0.19893264770507812;
+        goal.target_pose.pose.orientation.w = 0.9196588897926539;
         break;
       case 4:
-        cout << "\nGoal Location: 3 meter\n" << endl;
-        goal.target_pose.pose.position.x = 3;
-    goal.target_pose.pose.position.y = 0;
-        goal.target_pose.pose.orientation.w = 0;
+        cout << "\nGoal Location: Arah Korban 2\n" << endl;
+        goal.target_pose.pose.position.x = 2.1826889514923096;
+    goal.target_pose.pose.position.y = 0.6185263991355896;
+        goal.target_pose.pose.orientation.w = 0.03423934984405933;
         break;
       case 5:
       //belum di program sampe case 7
-        cout << "\nGoal Location: 4 meter\n" << endl;
-        goal.target_pose.pose.position.x = 4;
-    goal.target_pose.pose.position.y = 0;
-        goal.target_pose.pose.orientation.w = 0;
+        cout << "\nGoal Location: Ambil korban 2\n" << endl;
+        goal.target_pose.pose.position.x = 2.1826889514923096;
+    goal.target_pose.pose.position.y = 0.6185263991355896;
+        goal.target_pose.pose.orientation.w = 0.03423934984405933;
         break;
       case 6:
-        cout << "\nGoal Location: 5 meter\n" << endl;
-        goal.target_pose.pose.position.x = 5;
-    goal.target_pose.pose.position.y = 0;
-        goal.target_pose.pose.orientation.w = 0;
+        cout << "\nGoal Location: Simpen korban 2\n" << endl;
+        goal.target_pose.pose.position.x = 2.1826889514923096;
+    goal.target_pose.pose.position.y = 0.6185263991355896;
+        goal.target_pose.pose.orientation.w = 0.03423934984405933;
+        break;
+        case 7:
+        cout << "\nGoal Location: Menuju Sebelum Tangga\n" << endl;
+        goal.target_pose.pose.position.x = 2.1826889514923096;
+    goal.target_pose.pose.position.y = 0.6185263991355896;
+        goal.target_pose.pose.orientation.w = 0.03423934984405933;
         break;
       default:
         cout << "\nInvalid selection. Please try again.\n" << endl;
