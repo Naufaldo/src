@@ -169,13 +169,13 @@ int main(int argc, char** argv){
         cout << "\nGoal Location: Home\n" << endl;
         goal.target_pose.pose.position.x = 0.0;
     goal.target_pose.pose.position.y =0.0;
-        goal.target_pose.pose.orientation.z =0;
+        goal.target_pose.pose.orientation.w =1;
         break;
       case 2:
         cout << "\nGoal Location: 1 meter\n" << endl;
-        goal.target_pose.pose.position.x =0.9883392453193665;
-    goal.target_pose.pose.position.y = -0.007410168647766113;
-        goal.target_pose.pose.orientation.w =1;
+        goal.target_pose.pose.position.x =1;
+    goal.target_pose.pose.position.y = 0;
+        goal.target_pose.pose.orientation.w =0.1;
         break;
       case 3:
         cout << "\nGoal Location: 2 meter\n" << endl;
