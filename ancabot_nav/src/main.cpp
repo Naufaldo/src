@@ -203,9 +203,9 @@ int main(int argc, char** argv){
         goal.target_pose.pose.orientation.w = 1;
         break;
         case 7:
-        cout << "\nGoal Location: 0.5 & 0.5 meter\n" << endl;
-        goal.target_pose.pose.position.x = 0.5;
-    goal.target_pose.pose.position.y = 0.5;
+        cout << "\nGoal Location: y -0.5 meter\n" << endl;
+        goal.target_pose.pose.position.x = 0;
+    goal.target_pose.pose.position.y = -0.5;
         goal.target_pose.pose.orientation.w = 1;
         break;
         case 8:
@@ -215,9 +215,9 @@ int main(int argc, char** argv){
         goal.target_pose.pose.orientation.w = 1;
         break;
         case 9:
-        cout << "\nGoal Location: 1 & 0.5 meter\n" << endl;
+        cout << "\nGoal Location: harus 1 dulu & -1 meter\n" << endl;
         goal.target_pose.pose.position.x = 1;
-    goal.target_pose.pose.position.y = 0.5;
+    goal.target_pose.pose.position.y = -1;
         goal.target_pose.pose.orientation.w = 1;
         break;
         case 10:
