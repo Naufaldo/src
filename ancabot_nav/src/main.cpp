@@ -206,7 +206,7 @@ int main(int argc, char** argv){
         cout << "\nGoal Location: y -0.5 meter\n" << endl;
         goal.target_pose.pose.position.x = 0;
     goal.target_pose.pose.position.y = -0.5;
-        goal.target_pose.pose.orientation.w = 1;
+        goal.target_pose.pose.orientation.z = -1.5 ;
         break;
         case 8:
         cout << "\nGoal Location: 1.5 & -0.5 meter\n" << endl;
@@ -222,9 +222,9 @@ int main(int argc, char** argv){
         break;
         case 10:
         cout << "\nGoal Location: 0.5 & 0.5 meter\n" << endl;
-        goal.target_pose.pose.position.x = 0.5;
-    goal.target_pose.pose.position.y = 0.5;
-        goal.target_pose.pose.orientation.w = 1;
+        goal.target_pose.pose.position.x = 0;
+    goal.target_pose.pose.position.y = 0;
+        goal.target_pose.pose.orientation.z = -1.5;
         break;
       default:
         cout << "\nInvalid selection. Please try again.\n" << endl;
