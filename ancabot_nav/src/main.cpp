@@ -131,7 +131,7 @@ int main(int argc, char** argv){
     ROS_INFO("Waiting for the move_base action server to come up");
   }
  
-  int user_choice = 9;
+  int user_choice = 10;
   char choice_to_continue = 'Y';
   bool run = true;
      
@@ -147,7 +147,8 @@ int main(int argc, char** argv){
     cout << "6 = 0.5 meter" << endl;
     cout << "7 = 0.5 & 0.5 meter" << endl;
     cout << "8 = 1.5 & -0.5 meter" << endl;
-    cout << "9 = 1.5 & 0.5 meter" << endl;
+    cout << "9 = 1 & 0.5 meter" << endl;
+    cout << "10 = 0.5 & 0.5 meter" << endl;
     cout << "\nEnter a number: ";
     cin >> user_choice;
  
@@ -215,7 +216,13 @@ int main(int argc, char** argv){
         break;
         case 9:
         cout << "\nGoal Location: 1 & 0.5 meter\n" << endl;
-        goal.target_pose.pose.position.x = 1.5;
+        goal.target_pose.pose.position.x = 1;
+    goal.target_pose.pose.position.y = 0.5;
+        goal.target_pose.pose.orientation.w = 1;
+        break;
+        case 10:
+        cout << "\nGoal Location: 0.5 & 0.5 meter\n" << endl;
+        goal.target_pose.pose.position.x = 0.5;
     goal.target_pose.pose.position.y = 0.5;
         goal.target_pose.pose.orientation.w = 1;
         break;
