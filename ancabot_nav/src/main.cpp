@@ -185,14 +185,14 @@ int main(int argc, char** argv){
         break;
       case 4:
         cout << "\nGoal Location: 3 meter\n" << endl;
-        goal.target_pose.pose.position.x = 2.9894442558288574;
-    goal.target_pose.pose.position.y = -0.0009263157844543457;
+        goal.target_pose.pose.position.x = 2.5;
+    goal.target_pose.pose.position.y =0;
         goal.target_pose.pose.orientation.w = 1;
         break;
       case 5:
       //belum di program sampe case 7
         cout << "\nGoal Location: 1.5 meter\n" << endl;
-        goal.target_pose.pose.position.x = 1.5;
+        goal.target_pose.pose.position.x = 3;
     goal.target_pose.pose.position.y = 0;
         goal.target_pose.pose.orientation.w = 1;
         break;
