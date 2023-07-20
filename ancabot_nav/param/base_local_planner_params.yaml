@@ -7,7 +7,7 @@ TrajectoryPlannerROS:
 
   # acc_lim_theta: 0.07
   # acc_lim_x: 0.25
-  # acc_lim_Y: 0.25
+   acc_lim_Y: 0.25
 
   holonomic_robot: false
 
