@@ -131,7 +131,7 @@ int main(int argc, char** argv){
     ROS_INFO("Waiting for the move_base action server to come up");
   }
  
-  int user_choice = 6;
+  int user_choice = 9;
   char choice_to_continue = 'Y';
   bool run = true;
      
@@ -143,8 +143,11 @@ int main(int argc, char** argv){
     cout << "2 = 1 meter" << endl;
     cout << "3 = 2 meter" << endl;
     cout << "4 = 3 meter" << endl;
-    cout << "5 = 4 meter" << endl;
-    cout << "6 = 5 meter" << endl;
+    cout << "5 = 1.5 meter" << endl;
+    cout << "6 = 0.5 meter" << endl;
+    cout << "7 = 0.5 & 0.5 meter" << endl;
+    cout << "8 = 1.5 & -0.5 meter" << endl;
+    cout << "9 = 1.5 & 0.5 meter" << endl;
     cout << "\nEnter a number: ";
     cin >> user_choice;
  
@@ -187,15 +190,33 @@ int main(int argc, char** argv){
         break;
       case 5:
       //belum di program sampe case 7
-        cout << "\nGoal Location: 4 meter\n" << endl;
-        goal.target_pose.pose.position.x = 3.98321270942688;
-    goal.target_pose.pose.position.y = -0.00859805941581726;
+        cout << "\nGoal Location: 1.5 meter\n" << endl;
+        goal.target_pose.pose.position.x = 1.5;
+    goal.target_pose.pose.position.y = 0;
         goal.target_pose.pose.orientation.w = 1;
         break;
       case 6:
-        cout << "\nGoal Location: 5 meter\n" << endl;
-        goal.target_pose.pose.position.x = 5.0;
+        cout << "\nGoal Location: 0.5 meter\n" << endl;
+        goal.target_pose.pose.position.x = 0.5;
     goal.target_pose.pose.position.y = 0.0;
+        goal.target_pose.pose.orientation.w = 1;
+        break;
+        case 7:
+        cout << "\nGoal Location: 0.5 & 0.5 meter\n" << endl;
+        goal.target_pose.pose.position.x = 0.5;
+    goal.target_pose.pose.position.y = 0.5;
+        goal.target_pose.pose.orientation.w = 1;
+        break;
+        case 8:
+        cout << "\nGoal Location: 1.5 & -0.5 meter\n" << endl;
+        goal.target_pose.pose.position.x = 1.5;
+    goal.target_pose.pose.position.y = -0.5;
+        goal.target_pose.pose.orientation.w = 1;
+        break;
+        case 9:
+        cout << "\nGoal Location: 1 & 0.5 meter\n" << endl;
+        goal.target_pose.pose.position.x = 1.5;
+    goal.target_pose.pose.position.y = 0.5;
         goal.target_pose.pose.orientation.w = 1;
         break;
       default:
