@@ -14,4 +14,4 @@ TrajectoryPlannerROS:
   meter_scoring: true
 
   xy_goal_tolerance: 0.05
-  yaw_goal_tolerance: 0.25
+  yaw_goal_tolerance: 0.1
