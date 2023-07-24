@@ -50,16 +50,7 @@
     <param name="debug" value="false"/>
     <param name="self_diagnose" value="false"/>
   </node>
-<!-- Setting parameter AMCL -->
-    <!-- <node pkg="amcl" type="amcl" name="amcl" output="screen">
-    <remap from="scan" to="mybot/laser/scan"/>
-    <param name="odom_frame_id" value="odom"/>
-    <param name="odom_model_type" value="diff-corrected"/>
-    <param name="base_frame_id" value="chassis"/>
-    <param name="update_min_d" value="0.5"/>
-    <param name="update_min_a" value="1.0"/>
-  </node>
-	 -->
+
   <!-- Initial Pose and Goal Publisher -->
   <!-- Publish: /initialpose, /move_base_simple/goal -->
   <!-- <node pkg="rviz" type="rviz" name="rviz" args="-d /home/automaticaddison/catkin_ws/src/jetson_nano_bot/navigation_data_pub/maps/floorplan4.rviz">
