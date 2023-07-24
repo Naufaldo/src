@@ -16,7 +16,7 @@
   <!-- Extended Kalman Filter from robot_pose_ekf Node-->
   <!-- Subscribe: /odom, /imu_data, /vo -->
   <!-- Publish: /robot_pose_ekf/odom_combined -->
-  <remap from="odom" to="odom/data" />
+  <remap from="odom" to="odom/calculated" />
   <remap from="imu_data" to="imu/data" />
   <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
     <param name="output_frame" value="odom"/>
@@ -63,8 +63,8 @@
   <!-- Add AMCL example for differential drive robots for Localization -->
   <!-- Subscribe: /scan, /tf, /initialpose, /map -->
   <!-- Publish: /amcl_pose, /particlecloud, /tf -->
-  <include file="$(find amcl)/examples/amcl_omni.launch"/>
-  <!-- <include file="$(find amcl)/examples/amcl_diff.launch"/> -->
+  <!-- <include file="$(find amcl)/examples/amcl_omni.launch"/> -->
+  <include file="$(find amcl)/examples/amcl_diff.launch"/>
 	<include file="$(find hexapod_bringup)/launch/rviz.launch" />
   <!-- Move Base Node -->
   <!-- Subscribe: /move_base_simple/goal -->
