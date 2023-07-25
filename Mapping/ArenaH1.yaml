@@ -1,0 +1,7 @@
+image: ArenaH1.pgm
+resolution: 0.025000
+origin: [-2.572500, -4.492499, 0.000000]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+
