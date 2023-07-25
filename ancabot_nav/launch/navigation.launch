@@ -54,7 +54,7 @@
   </node>   --> 
 
   <!-- Map File -->
-  <arg name="map_file" default="$(find ancabot_nav)/maps/Arenafix3.yaml"/>
+  <arg name="map_file" default="$(find ancabot_nav)/maps/ArenaH1.yaml"/>
 	
   <!-- Map Server -->
   <!-- Publish: /map, /map_metadata -->
