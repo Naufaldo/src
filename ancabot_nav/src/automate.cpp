@@ -30,7 +30,8 @@ int main(int argc, char** argv) {
   initialPoseMsg.pose.pose.position.z = 0.0;
   initialPoseMsg.pose.pose.orientation.x = 0.0;
   initialPoseMsg.pose.pose.orientation.y = 0.0;
-  initialPoseMsg.pose.pose.orientation.w = 1;
+  initialPoseMsg.pose.pose.orientation.Z = 1.5;
+  // initialPoseMsg.pose.pose.orientation.w = 1;
 
   // Publish the initial pose
   initialPosePub.publish(initialPoseMsg);
