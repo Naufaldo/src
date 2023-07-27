@@ -30,7 +30,8 @@ int main(int argc, char** argv) {
   initialPoseMsg.pose.pose.position.z = 0.0;
   initialPoseMsg.pose.pose.orientation.x = 0.0;
   initialPoseMsg.pose.pose.orientation.y = 0.0;
-  initialPoseMsg.pose.pose.orientation.z = 1.5;
+  initialPoseMsg.pose.pose.orientation.z = 0.0;
+  // initialPoseMsg.pose.pose.orientation.z = 1.5;
   // initialPoseMsg.pose.pose.orientation.w = 1;
 
   // Publish the initial pose
@@ -49,11 +50,11 @@ int main(int argc, char** argv) {
 
     // {x, y, w, Lifter, Gripper, leg_height}
     {0.46,0.0, 0.0, -2, 0, 0}, // Arah Korban 1
-    {0.46, 0.0,1.5, -2, 0, 0}, // Arah Korban 1
-    {0.46,0.1,1.5, 0, -1, 1},    // Ambil Korban 1
-    {0.46,0.0,0.0, -2, 0, 1},    // Siap Pergi ke Target 2
+    // {0.46, 0.0,1.5, -2, 0, 0}, // Arah Korban 1
+    // {0.46,0.1,1.5, 0, -1, 1},    // Ambil Korban 1
+    // {0.46,0.0,0.0, -2, 0, 1},    // Siap Pergi ke Target 2
     {2.4,0.0,1, -2, 0, 1},    // Pergi ke Target 2
-    {2.4,0.0,-0.6, 0, -1, 1},    // Lepas korban di Target 2
+    // {2.4,0.0,-0.6, 0, -1, 1},    // Lepas korban di Target 2
     {2.4,0.0,1.5, -2, 0, 1},    // Jalan ke Target 3
     {2.4,0.7,1.5, -2, 0, 1},    // Jalan ke Target 3
     // {2.4658145904541016, 0.19893264770507812, 0.9196588897926539, -2, 0, 1},   // Simpen Korban 1

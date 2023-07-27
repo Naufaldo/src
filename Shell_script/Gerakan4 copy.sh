@@ -5,4 +5,4 @@ source /opt/ros/noetic/setup.bash
 source /home/pi/Ancabots/devel/setup.bash 
 
 echo "Launching application, please wait!"
-rosrun ancabot_nav automate
+rosrun navstack_pub Gerakan9
