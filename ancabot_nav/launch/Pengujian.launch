@@ -77,7 +77,7 @@
   </node>   --> 
 
   <!-- Map File -->
-  <arg name="map_file" default="$(find ancabot_nav)/maps/Demo.yaml"/>
+  <arg name="map_file" default="$(find ancabot_nav)/maps/Coba99.yaml"/>
 	
   <!-- Map Server -->
   <!-- Publish: /map, /map_metadata -->
