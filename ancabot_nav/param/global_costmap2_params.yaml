@@ -1,7 +1,7 @@
 global_costmap:
   global_frame: odom
-  update_frequency: 80.0 #30.0
-  publish_frequency: 80.0  #30.0
+  update_frequency: 50.0 #30.0
+  publish_frequency: 50.0  #30.0
   transform_tolerance: 0.1  #0.2
   resolution: 0.050 #0.1
 
