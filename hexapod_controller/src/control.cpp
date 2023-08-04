@@ -136,22 +136,35 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
         initialPose.position.z = body_.position.z;
         initialPose.orientation = tf::createQuaternionMsgFromYaw(pose_th_);
         initialPoseReceived = true;
+        return;
     }
 
     // Calculate time elapsed
     current_time_odometry_ = ros::Time::now();
     double dt = (current_time_odometry_ - last_time_odometry_).toSec();
 
+    // Calculate the change in orientation (yaw) based on the angular velocity (vth)
     double vth = gait_vel.angular.z;
     double delta_th = vth * dt;
     pose_th_ += delta_th;
 
+    // Calculate the change in position (x and y) based on the linear velocity (vx, vy)
     double vx = gait_vel.linear.x;
     double vy = gait_vel.linear.y;
     double delta_x = (vx * cos(pose_th_) - vy * sin(pose_th_)) * dt;
     double delta_y = (vx * sin(pose_th_) + vy * cos(pose_th_)) * dt;
-    pose_x_ += delta_x;
-    pose_y_ += delta_y;
+
+    // Update the position using the initialPose if it has been received
+    if (initialPoseReceived)
+    {
+        pose_x_ = initialPose.position.x + delta_x;
+        pose_y_ = initialPose.position.y + delta_y;
+    }
+    else
+    {
+        pose_x_ += delta_x;
+        pose_y_ += delta_y;
+    }
 
     // Since all odometry is 6DOF, we'll need a quaternion created from yaw
     tf2::Quaternion quat_tf;
@@ -207,6 +220,7 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     // Update the last time odometry was published
     last_time_odometry_ = current_time_odometry_;
 }
+
 
 
 //==============================================================================
