@@ -80,7 +80,7 @@ Control::Control(void)
     // Topics we are publishing
     sounds_pub_ = nh_.advertise<hexapod_msgs::Sounds>("/sounds", 10);
     joint_state_pub_ = nh_.advertise<sensor_msgs::JointState>("/joint_states", 10);
-    odom_pub_ = nh_.advertise<nav_msgs::Odometry>("/odom_data_quat", 50);
+    odom_pub_ = nh_.advertise<nav_msgs::Odometry>("/odom/calculated", 50);
     twist_pub_ = nh_.advertise<geometry_msgs::TwistWithCovarianceStamped>("/twist", 50);
     chatter_pub1 = nh_.advertise<std_msgs::Float32>("/chatter1", 1);
     chatter_pub2 = nh_.advertise<std_msgs::Float32>("/chatter2", 1);
@@ -174,17 +174,17 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
         odomNew.pose.pose.orientation.z = odomOld.pose.pose.orientation.z;
     }
     //Make sure theta stays in the correct range
-    if (odomNew.pose.pose.orientation.z > PI2)
-    {
-        odomNew.pose.pose.orientation.z -= 2 * PI2;
-    }
-    else if (odomNew.pose.pose.orientation.z < -PI2)
-    {
-        odomNew.pose.pose.orientation.z += 2 * PI2;
-    }
-    else
-    {
-    }
+    // if (odomNew.pose.pose.orientation.z > PI2)
+    // {
+    //     odomNew.pose.pose.orientation.z -= 2 * PI2;
+    // }
+    // else if (odomNew.pose.pose.orientation.z < -PI2)
+    // {
+    //     odomNew.pose.pose.orientation.z += 2 * PI2;
+    // }
+    // else
+    // {
+    // }
 
     // Save the pose data for the next cycle
     odomOld.pose.pose.position.x = odomNew.pose.pose.position.x;
