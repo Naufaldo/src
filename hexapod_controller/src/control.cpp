@@ -128,21 +128,23 @@ bool Control::getPrevHexActiveState(void)
 //==============================================================================
 void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
 {
+    // calculate time elapsed
     current_time_odometry_ = ros::Time::now();
-    double dt = (current_time_odometry_ - last_time_odometry_).toSec();
-    double vth = gait_vel.angular.z * kali_A;
+    double dt = ( current_time_odometry_ - last_time_odometry_ ).toSec();
+
+    double vth = gait_vel.angular.z;
     double delta_th = vth * dt;
     pose_th_ += delta_th;
 
-    double vx = gait_vel.linear.x * kali_L;
-    double vy = gait_vel.linear.y * kali_L;
-    double delta_x = vx * cos(pose_th_) - vy * sin(pose_th_) * dt;
-    double delta_y = vx * sin(pose_th_) + vy * cos(pose_th_) * dt;
+    double vx = gait_vel.linear.x;
+    double vy = gait_vel.linear.y;
+    double delta_x = ( vx * cos( pose_th_ ) - vy * sin( pose_th_ ) ) * dt;
+    double delta_y = ( vx * sin( pose_th_ ) + vy * cos( pose_th_ ) ) * dt;
     pose_x_ += delta_x;
     pose_y_ += delta_y;
 
     // since all odometry is 6DOF we'll need a quaternion created from yaw
-    geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(pose_th_);
+    geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw( pose_th_ );
 
     // first, we'll publish the transform over tf
     geometry_msgs::TransformStamped odom_trans;
@@ -156,7 +158,7 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     odom_trans.transform.rotation = odom_quat;
 
     // Uncomment odom_broadcaster to send the transform. Only used if debugging calculated odometry.
-    // odom_broadcaster.sendTransform(odom_trans);
+    // odom_broadcaster.sendTransform( odom_trans );
 
     // next, we'll publish the odometry message over ROS
     nav_msgs::Odometry odom;
@@ -170,12 +172,12 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     odom.pose.pose.position.z = body_.position.z;
     odom.pose.pose.orientation = odom_quat;
 
-    odom.pose.covariance[0] = 0.00001;          // x
-    odom.pose.covariance[7] = 0.00001;          // y
-    odom.pose.covariance[14] = 0.00001;         // z
+    odom.pose.covariance[0] = 0.00001;  // x
+    odom.pose.covariance[7] = 0.00001;  // y
+    odom.pose.covariance[14] = 0.00001; // z
     odom.pose.covariance[21] = 1000000000000.0; // rot x
     odom.pose.covariance[28] = 1000000000000.0; // rot y
-    odom.pose.covariance[35] = 0.001;           // rot z
+    odom.pose.covariance[35] = 0.001; // rot z
 
     // set the velocity
     odom.twist.twist.linear.x = vx;
@@ -183,10 +185,32 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     odom.twist.twist.angular.z = vth;
     odom.twist.covariance = odom.pose.covariance; // needed?
 
-    odom_pub_.publish(odom);
+    odom_pub_.publish( odom );
     last_time_odometry_ = current_time_odometry_;
 }
 
+//==============================================================================
+// Twist Publisher
+//==============================================================================
+void Control::publishTwist(const geometry_msgs::Twist &gait_vel)
+{
+    geometry_msgs::TwistWithCovarianceStamped twistStamped;
+    twistStamped.header.stamp = ros::Time::now();
+    twistStamped.header.frame_id = "odom";
+
+    twistStamped.twist.twist.linear.x = gait_vel.linear.x;
+    twistStamped.twist.twist.linear.y = gait_vel.linear.y;
+    twistStamped.twist.twist.angular.z = gait_vel.angular.z;
+
+    twistStamped.twist.covariance[0] = 0.00001;          // x
+    twistStamped.twist.covariance[7] = 0.00001;          // y
+    twistStamped.twist.covariance[14] = 0.00001;         // z
+    twistStamped.twist.covariance[21] = 1000000000000.0; // rot x
+    twistStamped.twist.covariance[28] = 1000000000000.0; // rot y
+    twistStamped.twist.covariance[35] = 0.001;           // rot z
+
+    twist_pub_.publish(twistStamped);
+}
 
 //==============================================================================
 // Joint State Publisher
