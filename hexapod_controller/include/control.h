@@ -85,6 +85,8 @@ private:
     std::vector<int> servo_orientation_;
     bool hex_state_;      // Current loop state
     bool prev_hex_state_; // Previous loop state
+    bool initialPoseReceived;
+    geometry_msgs::Pose initialPose;
     ros::Time current_time_odometry_, last_time_odometry_, current_time_cmd_vel_, last_time_cmd_vel_;
     tf2_ros::TransformBroadcaster odom_broadcaster_;
     geometry_msgs::Twist cmd_vel_incoming_;

@@ -93,10 +93,10 @@ Control::Control(void)
 
 void Control::set_initial_2d(const geometry_msgs::PoseStamped &rvizClick)
 {
-    odomOld.pose.pose.position.x = rvizClick.pose.position.x;
-    odomOld.pose.pose.position.y = rvizClick.pose.position.y;
-    odomOld.pose.pose.orientation.z = rvizClick.pose.orientation.z;
-    initialPoseRecieved = true;
+    initialPose.position.x = rvizClick.pose.position.x;
+    initialPose.position.y = rvizClick.pose.position.y;
+    initialPose.orientation.z = rvizClick.pose.orientation.z;
+    initialPoseReceived = true;
 }
 
 //==============================================================================
@@ -128,26 +128,28 @@ bool Control::getPrevHexActiveState(void)
 //==============================================================================
 void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
 {
+    if (!initialPoseReceived)
+    {
+        ROS_WARN("Initial pose not set. Waiting for initial pose.");
+        return; // Skip odometry calculations until the initial pose is received
+    }
     // calculate time elapsed
     current_time_odometry_ = ros::Time::now();
     double dt = (current_time_odometry_ - last_time_odometry_).toSec();
 
     double vth = gait_vel.angular.z * kali_A;
     double delta_th = vth * dt;
-    pose_th_ += delta_th;
+   initialPose.orientation.z += delta_th;
 
-    double vx = gait_vel.linear.x * kali_L;
-    double vy = gait_vel.linear.y * kali_L;
-
-    // compute odometry in a typical way given the velocities of the robot
-    double delta_x = (vx * cos(pose_th_) - vy * sin(pose_th_)) * dt;
-    double delta_y = (vx * sin(pose_th_) + vy * cos(pose_th_)) * dt;
-
-    pose_x_ += delta_x;
-    pose_y_ += delta_y;
+    double vx = gait_vel.linear.x;
+    double vy = gait_vel.linear.y;
+    double delta_x = (vx * cos(initialPose.orientation.z) - vy * sin(initialPose.orientation.z)) * dt;
+    double delta_y = (vx * sin(initialPose.orientation.z) + vy * cos(initialPose.orientation.z)) * dt;
+    initialPose.position.x += delta_x;
+    initialPose.position.y += delta_y;
 
     // since all odometry is 6DOF we'll need a quaternion created from yaw
-    geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(pose_th_);
+    geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(initialPose.orientation.z);
 
     // create the odometry transform
     geometry_msgs::TransformStamped odom_trans;
@@ -155,10 +157,10 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     odom_trans.header.frame_id = "odom";
     odom_trans.child_frame_id = "base_link";
 
-    odom_trans.transform.translation.x = pose_x_;
-    odom_trans.transform.translation.y = pose_y_;
-    odom_trans.transform.translation.z = body_.position.z;
-    odom_trans.transform.rotation = odom_quat;
+    odom.pose.pose.position.x = initialPose.position.x;
+    odom.pose.pose.position.y = initialPose.position.y;
+    odom.pose.pose.position.z = body_.position.z;
+    odom.pose.pose.orientation = odom_quat;
 
     // publish the transform over tf
     odom_broadcaster_.sendTransform(odom_trans);
