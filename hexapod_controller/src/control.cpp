@@ -153,9 +153,7 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     {
         tf2::Quaternion quat_tf;
         quat_tf.setRPY(0, 0, initialPose.orientation.z + pose_th_);
-        geometry_msgs::Quaternion odom_quat;
-        tf2::convert(quat_tf, odom_quat);
-        body_.orientation = tf2::toMsg(quat_tf);
+        body_.orientation.roll = tf2::getYaw(quat_tf);
     }
 
     // Calculate the change in position (x and y) based on the linear velocity (vx, vy)
@@ -230,8 +228,6 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     // Update the last time odometry was published
     last_time_odometry_ = current_time_odometry_;
 }
-
-
 
 
 //==============================================================================
