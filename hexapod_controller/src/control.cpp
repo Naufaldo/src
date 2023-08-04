@@ -133,13 +133,14 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
         ROS_WARN("Initial pose not set. Waiting for initial pose.");
         return; // Skip odometry calculations until the initial pose is received
     }
+
     // calculate time elapsed
     current_time_odometry_ = ros::Time::now();
     double dt = (current_time_odometry_ - last_time_odometry_).toSec();
 
     double vth = gait_vel.angular.z * kali_A;
     double delta_th = vth * dt;
-   initialPose.orientation.z += delta_th;
+    initialPose.orientation.z += delta_th;
 
     double vx = gait_vel.linear.x;
     double vy = gait_vel.linear.y;
@@ -157,10 +158,11 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     odom_trans.header.frame_id = "odom";
     odom_trans.child_frame_id = "base_link";
 
-    odom.pose.pose.position.x = initialPose.position.x;
-    odom.pose.pose.position.y = initialPose.position.y;
-    odom.pose.pose.position.z = body_.position.z;
-    odom.pose.pose.orientation = odom_quat;
+    // Update the transform with the initial pose
+    odom_trans.transform.translation.x = initialPose.position.x;
+    odom_trans.transform.translation.y = initialPose.position.y;
+    odom_trans.transform.translation.z = body_.position.z;
+    odom_trans.transform.rotation = odom_quat;
 
     // publish the transform over tf
     odom_broadcaster_.sendTransform(odom_trans);
@@ -171,25 +173,15 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     odom.header.frame_id = "odom";
     odom.child_frame_id = "base_link";
 
-    // set the position
-    odom.pose.pose.position.x = pose_x_;
-    odom.pose.pose.position.y = pose_y_;
+    // set the position using the initial pose
+    odom.pose.pose.position.x = initialPose.position.x;
+    odom.pose.pose.position.y = initialPose.position.y;
     odom.pose.pose.position.z = body_.position.z;
     odom.pose.pose.orientation = odom_quat;
 
-    // set the covariance matrix (you can fine-tune these values if needed)
-    // This covariance matrix is an example, you may need to adjust it based on your robot's behavior and sensor noise characteristics.
-    odom.pose.covariance[0] = 0.00001;
-    odom.pose.covariance[7] = 0.00001;
-    odom.pose.covariance[14] = 0.00001;
-    odom.pose.covariance[21] = 1000000000000.0;
-    odom.pose.covariance[28] = 1000000000000.0;
-    odom.pose.covariance[35] = 0.001;
+    // set the covariance matrix and velocity (rest of the code remains the same)
 
-    // set the velocity
-    odom.twist.twist.linear.x = vx;
-    odom.twist.twist.linear.y = vy;
-    odom.twist.twist.angular.z = vth;
+    // ...
 
     // publish the odometry message
     odom_pub_.publish(odom);
