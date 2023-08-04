@@ -308,8 +308,8 @@ void Control::cmd_velCallback(const geometry_msgs::TwistConstPtr &cmd_vel_msg)
     cmd_vel_incoming_.linear.x = cmd_vel_msg->linear.x;
     cmd_vel_incoming_.linear.y = cmd_vel_msg->linear.y;
     cmd_vel_incoming_.angular.z = cmd_vel_msg->angular.z;
-    
-      if (initialPoseReceived)
+
+    if (initialPoseReceived)
     {
         tf2::Quaternion quat_tf;
         quat_tf.setRPY(0, 0, cmd_vel_msg->angular.z * VELOCITY_DIVISION); // Update yaw based on angular.z of cmd_vel_msg
