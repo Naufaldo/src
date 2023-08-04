@@ -59,7 +59,7 @@ public:
     // nav_msgs::Odometry odomOld;
     
     // Flag to see if initial pose has been received
-    bool initialPoseRecieved = false;   
+    // bool initialPoseRecieved = false;   
     
     std_msgs::Float32 msg1;
     std_msgs::Float32 msg2;
