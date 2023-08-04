@@ -194,6 +194,7 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     odom.twist.twist.linear.x = vx;
     odom.twist.twist.linear.y = vy;
     odom.twist.twist.angular.z = vth;
+    odom.twist.covariance = odom.pose.covariance; // needed?
 
     // Publish the odometry message
     odom_pub_.publish(odom);
