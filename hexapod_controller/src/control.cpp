@@ -167,9 +167,10 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     odom_trans.transform.translation.z = body_.position.z;
     odom_trans.transform.rotation = odom_quat;
 
-    odom_broadcaster_.sendTransform(odom_trans);
+    // odom_broadcaster_.sendTransform(odom_trans);
 
     // Create the odometry message
+    geometry_msgs::TransformStamped odom_trans;
     nav_msgs::Odometry odom;
     odom.header.stamp = current_time_odometry_;
     odom.header.frame_id = "odom";
