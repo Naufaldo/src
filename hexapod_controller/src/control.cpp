@@ -128,7 +128,7 @@ bool Control::getPrevHexActiveState(void)
 //==============================================================================
 void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
 {
- // If initial pose has not been received, initialize it to the current pose
+    // If initial pose has not been received, initialize it to the current pose
     if (!initialPoseReceived)
     {
         initialPose.position.x = pose_x_;
@@ -154,7 +154,10 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     pose_y_ += delta_y;
 
     // Since all odometry is 6DOF, we'll need a quaternion created from yaw
-    geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(pose_th_);
+    tf2::Quaternion quat_tf;
+    quat_tf.setRPY(0, 0, pose_th_);
+    geometry_msgs::Quaternion odom_quat;
+    tf2::convert(quat_tf, odom_quat);
 
     // Publish the transform over tf
     geometry_msgs::TransformStamped odom_trans;
@@ -167,7 +170,9 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     odom_trans.transform.translation.z = body_.position.z;
     odom_trans.transform.rotation = odom_quat;
 
-    // odom_broadcaster_.sendTransform(odom_trans);
+    // Broadcast the transformation using the TF2 broadcaster
+    static tf2_ros::TransformBroadcaster tf_broadcaster;
+    tf_broadcaster.sendTransform(odom_trans);
 
     // Create the odometry message
     nav_msgs::Odometry odom;
