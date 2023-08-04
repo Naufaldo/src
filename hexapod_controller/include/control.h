@@ -53,8 +53,8 @@ public:
     geometry_msgs::Twist cmd_vel_;
     geometry_msgs::Twist head_Tws;
     
-    nav_msgs::Odometry odomNew;
-    nav_msgs::Odometry odomOld;
+    // nav_msgs::Odometry odomNew;
+    // nav_msgs::Odometry odomOld;
     
     // Flag to see if initial pose has been received
     bool initialPoseRecieved = false;   
