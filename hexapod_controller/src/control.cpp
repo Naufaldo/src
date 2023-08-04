@@ -97,6 +97,14 @@ void Control::set_initial_2d(const geometry_msgs::PoseStamped &rvizClick)
     initialPose.position.y = rvizClick.pose.position.y;
     initialPose.orientation.z = rvizClick.pose.orientation.z;
     initialPoseReceived = true;
+    
+    tf2::Quaternion quat;
+    tf2::fromMsg(rvizClick.pose.orientation, quat);
+    double roll, pitch, yaw;
+    tf2::Matrix3x3(quat).getRPY(roll, pitch, yaw);
+
+    // Store the initial yaw angle
+    initialYaw = yaw;
 }
 
 //==============================================================================
