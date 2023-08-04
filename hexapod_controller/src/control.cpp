@@ -134,7 +134,8 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
         initialPose.position.x = pose_x_;
         initialPose.position.y = pose_y_;
         initialPose.position.z = body_.position.z;
-        initialPose.orientation = tf::createQuaternionMsgFromYaw(pose_th_);
+        initialYaw = pose_th_; // Store the initial yaw angle
+        initialPose.orientation = tf::createQuaternionMsgFromYaw(initialYaw);
         initialPoseReceived = true;
         return;
     }
@@ -158,7 +159,7 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     if (initialPoseReceived)
     {
         tf2::Quaternion quat_tf;
-        quat_tf.setRPY(0, 0, initialPose.orientation.z + pose_th_);
+        quat_tf.setRPY(0, 0, initialYaw + pose_th_);
         initialPose.orientation = tf2::toMsg(quat_tf);
 
         pose_x_ = initialPose.position.x + delta_x;
@@ -308,17 +309,6 @@ void Control::cmd_velCallback(const geometry_msgs::TwistConstPtr &cmd_vel_msg)
     cmd_vel_incoming_.linear.x = cmd_vel_msg->linear.x;
     cmd_vel_incoming_.linear.y = cmd_vel_msg->linear.y;
     cmd_vel_incoming_.angular.z = cmd_vel_msg->angular.z;
-
-    if (initialPoseReceived)
-    {
-        tf2::Quaternion quat_tf;
-        quat_tf.setRPY(0, 0, cmd_vel_msg->angular.z * VELOCITY_DIVISION); // Update yaw based on angular.z of cmd_vel_msg
-        geometry_msgs::Quaternion orientation_quat;
-        tf2::convert(quat_tf, orientation_quat);
-
-        // Convert orientation_quat to the correct type for body_.orientation
-        body_.orientation = orientation_quat;
-    }
 }
 
 //==============================================================================
