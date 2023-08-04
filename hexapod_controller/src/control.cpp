@@ -130,8 +130,15 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
 {
     if (!initialPoseReceived)
     {
-        ROS_WARN("Initial pose not set. Waiting for initial pose.");
-        return; // Skip odometry calculations until the initial pose is received
+        initialPose.position.x = 0.0;
+        initialPose.position.y = 0.0;
+        initialPose.position.z = 0.0;
+        initialPose.orientation.x = 0.0;
+        initialPose.orientation.y = 0.0;
+        initialPose.orientation.z = 0.0;
+        initialPose.orientation.w = 1.0;
+        initialPoseReceived = true;
+            return; // Skip odometry calculations until the initial pose is received
     }
 
     // calculate time elapsed
