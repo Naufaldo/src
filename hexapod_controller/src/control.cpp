@@ -316,8 +316,8 @@ void Control::cmd_velCallback(const geometry_msgs::TwistConstPtr &cmd_vel_msg)
         geometry_msgs::Quaternion orientation_quat;
         tf2::convert(quat_tf, orientation_quat);
 
-        // Assign the new orientation to the body
-        body_.orientation = tf2::toMsg(orientation_quat);
+        // Convert orientation_quat to the correct type for body_.orientation
+        body_.orientation = orientation_quat;
     }
 }
 
