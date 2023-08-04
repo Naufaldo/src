@@ -86,7 +86,7 @@ private:
     bool hex_state_;      // Current loop state
     bool prev_hex_state_; // Previous loop state
     ros::Time current_time_odometry_, last_time_odometry_, current_time_cmd_vel_, last_time_cmd_vel_;
-    // tf::TransformBroadcaster odom_broadcaster;
+    tf2_ros::TransformBroadcaster odom_broadcaster_;
     geometry_msgs::Twist cmd_vel_incoming_;
     nav_msgs::Odometry odomNew;
     nav_msgs::Odometry odomOld;
