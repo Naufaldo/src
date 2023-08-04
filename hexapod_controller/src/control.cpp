@@ -148,23 +148,19 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     double delta_th = vth * dt;
     pose_th_ += delta_th;
 
-    // Update the orientation using the yaw from the initialPose if it has been received
-    if (initialPoseReceived)
-    {
-        tf2::Quaternion quat_tf;
-        quat_tf.setRPY(0, 0, initialPose.orientation.z + pose_th_);
-        initialPose.orientation = tf2::toMsg(quat_tf);
-    }
-
     // Calculate the change in position (x and y) based on the linear velocity (vx, vy)
     double vx = gait_vel.linear.x;
     double vy = gait_vel.linear.y;
     double delta_x = (vx * cos(pose_th_) - vy * sin(pose_th_)) * dt;
     double delta_y = (vx * sin(pose_th_) + vy * cos(pose_th_)) * dt;
 
-    // Update the position using the initialPose if it has been received
+    // Update the position and orientation using the initialPose if it has been received
     if (initialPoseReceived)
     {
+        tf2::Quaternion quat_tf;
+        quat_tf.setRPY(0, 0, initialPose.orientation.z + pose_th_);
+        initialPose.orientation = tf2::toMsg(quat_tf);
+
         pose_x_ = initialPose.position.x + delta_x;
         pose_y_ = initialPose.position.y + delta_y;
     }
