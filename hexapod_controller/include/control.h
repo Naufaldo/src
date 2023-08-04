@@ -88,7 +88,7 @@ private:
     bool initialPoseReceived;
     geometry_msgs::Pose initialPose;
     ros::Time current_time_odometry_, last_time_odometry_, current_time_cmd_vel_, last_time_cmd_vel_;
-    tf2_ros::TransformBroadcaster odom_broadcaster_;
+    // tf2_ros::TransformBroadcaster odom_broadcaster_;
     geometry_msgs::Twist cmd_vel_incoming_;
     nav_msgs::Odometry odomNew;
     nav_msgs::Odometry odomOld;
