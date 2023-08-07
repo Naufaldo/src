@@ -174,14 +174,14 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
         odomNew.pose.pose.orientation.z = odomOld.pose.pose.orientation.z;
     }
     //Make sure theta stays in the correct range
-    if (odomNew.pose.pose.orientation.z > PI2)
-    {
-        odomNew.pose.pose.orientation.z = odomNew.pose.pose.orientation.z;
-    }
-    else if (odomNew.pose.pose.orientation.z < -PI2)
-    {
-        odomNew.pose.pose.orientation.z = odomNew.pose.pose.orientation.z ;
-    }
+  if (odomNew.pose.pose.orientation.z > PI2)
+{
+    odomNew.pose.pose.orientation.z -= 2 * PI2;
+}
+else if (odomNew.pose.pose.orientation.z < -PI2)
+{
+    odomNew.pose.pose.orientation.z += 2 * PI2;
+}
     else
     {
     }
