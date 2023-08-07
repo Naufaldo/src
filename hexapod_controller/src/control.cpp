@@ -76,7 +76,7 @@ Control::Control(void)
     // imu_sub_ = nh_.subscribe<sensor_msgs::Imu>("/imu/data", 1, &Control::imuCallback, this);
     //subInitialPose = nh_.subscribe<geometry_msgs::PoseStamped>("/initial_2d", 1, &Control::set_initial_2d, this);
     //sub = n.subscribe("/tld_tracked_object", 20, &callback);
-    subInitialPose = nh_.subscribe("/initial_2d", 1, &Control::set_initial_2d, this);
+    subInitialPose = nh_.subscribe("initial_2d", 1, &Control::set_initial_2d, this);
     // Topics we are publishing
     sounds_pub_ = nh_.advertise<hexapod_msgs::Sounds>("/sounds", 10);
     joint_state_pub_ = nh_.advertise<sensor_msgs::JointState>("/joint_states", 10);
@@ -97,14 +97,6 @@ void Control::set_initial_2d(const geometry_msgs::PoseStamped &rvizClick)
     initialPose.position.y = rvizClick.pose.position.y;
     initialPose.orientation.z = rvizClick.pose.orientation.z;
     initialPoseReceived = true;
-    
-    tf2::Quaternion quat;
-    tf2::fromMsg(rvizClick.pose.orientation, quat);
-    double roll, pitch, yaw;
-    tf2::Matrix3x3(quat).getRPY(roll, pitch, yaw);
-
-    // Store the initial yaw angle
-    initialYaw = yaw;
 }
 
 //==============================================================================
@@ -136,54 +128,35 @@ bool Control::getPrevHexActiveState(void)
 //==============================================================================
 void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
 {
-    // If initial pose has not been received, initialize it to the current pose
+ // If initial pose has not been received, initialize it to the current pose
     if (!initialPoseReceived)
     {
         initialPose.position.x = pose_x_;
         initialPose.position.y = pose_y_;
         initialPose.position.z = body_.position.z;
-        initialYaw = pose_th_; // Store the initial yaw angle
-        initialPose.orientation = tf::createQuaternionMsgFromYaw(initialYaw);
+        initialPose.orientation = tf::createQuaternionMsgFromYaw(pose_th_);
         initialPoseReceived = true;
-        return;
     }
 
     // Calculate time elapsed
     current_time_odometry_ = ros::Time::now();
     double dt = (current_time_odometry_ - last_time_odometry_).toSec();
 
-    // Calculate the change in orientation (yaw) based on the angular velocity (vth)
     double vth = gait_vel.angular.z;
     double delta_th = vth * dt;
     pose_th_ += delta_th;
 
-    // Calculate the change in position (x and y) based on the linear velocity (vx, vy)
     double vx = gait_vel.linear.x;
     double vy = gait_vel.linear.y;
     double delta_x = (vx * cos(pose_th_) - vy * sin(pose_th_)) * dt;
     double delta_y = (vx * sin(pose_th_) + vy * cos(pose_th_)) * dt;
-
-    // Update the position and orientation using the initialPose if it has been received
-    if (initialPoseReceived)
-    {
-        tf2::Quaternion quat_tf;
-        quat_tf.setRPY(0, 0, initialYaw + pose_th_);
-        initialPose.orientation = tf2::toMsg(quat_tf);
-
-        pose_x_ = initialPose.position.x + delta_x;
-        pose_y_ = initialPose.position.y + delta_y;
-    }
-    else
-    {
-        pose_x_ += delta_x;
-        pose_y_ += delta_y;
-    }
+    pose_x_ += delta_x;
+    pose_y_ += delta_y;
 
     // Since all odometry is 6DOF, we'll need a quaternion created from yaw
     tf2::Quaternion quat_tf;
     quat_tf.setRPY(0, 0, pose_th_);
-    geometry_msgs::Quaternion odom_quat;
-    tf2::convert(quat_tf, odom_quat);
+    geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(pose_th_);
 
     // Publish the transform over tf
     geometry_msgs::TransformStamped odom_trans;
@@ -196,9 +169,6 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     odom_trans.transform.translation.z = body_.position.z;
     odom_trans.transform.rotation = odom_quat;
 
-    // Broadcast the transformation using the TF2 broadcaster
-    static tf2_ros::TransformBroadcaster tf_broadcaster;
-    tf_broadcaster.sendTransform(odom_trans);
 
     // Create the odometry message
     nav_msgs::Odometry odom;
@@ -233,7 +203,6 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     // Update the last time odometry was published
     last_time_odometry_ = current_time_odometry_;
 }
-
 
 
 //==============================================================================
