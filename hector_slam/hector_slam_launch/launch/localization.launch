@@ -1,0 +1,24 @@
+<launch>
+  <!-- Set up the LaserScan topic to use for localization -->
+  <arg name="scan_topic" default="/scan" />
+
+  <!-- Set up the map publication -->
+  <param name="map_publish_period" value="5.0" />
+
+  <!-- Disable map building (i.e., only perform localization) -->
+  <param name="map_update" value="false" />
+
+  <!-- Set the initial map size to zero -->
+  <param name="map_resolution" value="0.05" />
+  <param name="map_size" value="0" />
+
+  <!-- Enable publishing of the transform between map and base_link -->
+  <param name="pub_map_odom_transform" value="true" />
+
+  <!-- Launch Hector SLAM with the modified parameters -->
+  <include file="$(find hector_slam)/launch/hector_mapping.launch">
+    <arg name="base_frame" value="base_link" />
+    <arg name="odom_frame" value="odom" />
+    <arg name="scan_topic" value="$(arg scan_topic)" />
+  </include>
+</launch>
