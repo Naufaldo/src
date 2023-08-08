@@ -57,6 +57,8 @@ public:
     geometry_msgs::Twist cmd_vel_;
     geometry_msgs::Twist head_Tws;
     
+    geometry_msgs::Pose initialPose;
+    bool initialPoseReceived;
     // nav_msgs::Odometry odomNew;
     // nav_msgs::Odometry odomOld;
     
