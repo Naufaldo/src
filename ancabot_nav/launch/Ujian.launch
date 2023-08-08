@@ -1,0 +1,41 @@
+<launch>
+
+  <!-- Transformation Configuration ... Setting Up the Relationships Between Coordinate Frames --> 
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser" args="0 0 0.0155 0 0 0 base_link laser 50" />
+  <node pkg="tf" type="static_transform_publisher" name="imu_broadcaster" args="0 0.0 0.02 0 0 0 base_link imu 50" />
+  <node pkg="tf" type="static_transform_publisher" name="base_link_broadcaster" args="0 0 0.0115 0 0 0 base_footprint base_link 50" />
+  <!-- odom to base_footprint transform will be provided by the robot_pose_ekf node -->
+  <!-- map to odom will be provided by the AMCL -->
+  <node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom 50" />
+
+ <node pkg="laser_scan_matcher" type="laser_scan_matcher" name="laser_scan_matcher" output="screen">
+    <param name="scan_topic" value="/scan" />
+    <param name="base_frame" value="base_link" />
+    <param name="odom_frame" value="odom" />
+  </node>
+  <!-- Subscribe: /initialpose, /move_base_simple/goal -->
+  <!-- Publish: /initial_2d, /goal_2d --> 
+  <node pkg="localization_data_pub" type="rviz_click_to_2d" name="rviz_click_to_2d">
+  </node>   
+
+
+  <!-- Map File -->
+  <arg name="map_file" default="$(find ancabot_nav)/maps/Coba99.yaml"/>
+	
+  <!-- Map Server -->
+  <!-- Publish: /map, /map_metadata -->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)" />
+	
+	<include file="$(find hexapod_bringup)/launch/rviz.launch" />
+
+  <!-- Publish: /cmd_vel -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find ancabot_nav)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find ancabot_nav)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find ancabot_nav)/param/local_costmap_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find ancabot_nav)/param/global_costmap2_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find ancabot_nav)/param/base_local_planner_params.yaml" command="load" />
+  </node>
+
+</launch>
+
