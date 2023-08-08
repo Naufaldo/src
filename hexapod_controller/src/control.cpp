@@ -142,10 +142,10 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
 
     double vx = gait_vel.linear.x * kali_L;
     double vy = gait_vel.linear.y * kali_L;
-    double delta_x = (vx * cos(pose_th_) - vy * sin(pose_th_)) * dt;
-    double delta_y = (vx * sin(pose_th_) + vy * cos(pose_th_)) * dt;
-    // double delta_x = (vx * cos(odomNew.pose.pose.orientation.z) - vy * sin(odomNew.pose.pose.orientation.z)) * dt;
-    // double delta_y = (vx * sin(odomNew.pose.pose.orientation.z) + vy * cos(odomNew.pose.pose.orientation.z)) * dt;
+    //double delta_x = (vx * cos(pose_th_) - vy * sin(pose_th_)) * dt;
+    //double delta_y = (vx * sin(pose_th_) + vy * cos(pose_th_)) * dt;
+    double delta_x = (vx * cos(odomNew.pose.pose.orientation.z) - vy * sin(odomNew.pose.pose.orientation.z)) * dt;
+    double delta_y = (vx * sin(odomNew.pose.pose.orientation.z) + vy * cos(odomNew.pose.pose.orientation.z)) * dt;
     // double delta_x = vx * dt;
     // double delta_y = vy  * dt;
     pose_x_ += delta_x;
@@ -174,14 +174,6 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
         odomNew.pose.pose.orientation.z = odomOld.pose.pose.orientation.z;
     }
     //Make sure theta stays in the correct range
-    if (odomNew.pose.pose.orientation.z > PI2)
-    {
-    odomNew.pose.pose.orientation.z = odomNew.pose.pose.orientation.z;
-    }
-    else if (odomNew.pose.pose.orientation.z < -PI2)
-    {
-    odomNew.pose.pose.orientation.z = odomNew.pose.pose.orientation.z;
-    }
 
     // Save the pose data for the next cycle
     odomOld.pose.pose.position.x = odomNew.pose.pose.position.x;
@@ -207,9 +199,6 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     odom_trans.transform.translation.x = odomNew.pose.pose.position.x;
     odom_trans.transform.translation.y = odomNew.pose.pose.position.y;
     odom_trans.transform.translation.z = body_.position.z;
-    
-
-    
     odom_trans.transform.rotation = odom_quat;
     
 
@@ -223,7 +212,7 @@ void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
     odom.pose.pose.position.y = odomNew.pose.pose.position.y;
     odom.pose.pose.position.z = body_.position.z;
     odom.pose.pose.orientation = odom_quat;
-    
+
     // odom.pose.pose.orientation.x = q.x();
     // odom.pose.pose.orientation.y = q.y();
     // odom.pose.pose.orientation.z = odomNew.pose.pose.orientation.z; //q.z();
