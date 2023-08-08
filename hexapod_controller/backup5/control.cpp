@@ -126,50 +126,68 @@ bool Control::getPrevHexActiveState(void)
 //==============================================================================
 // Odometry Publisher
 //==============================================================================
-    void publishOdometry(const geometry_msgs::Twist &gait_vel) {
-        // Calculate time elapsed
-        current_time_odometry_ = ros::Time::now();
-        double dt = (current_time_odometry_ - last_time_odometry_).toSec();
+void Control::publishOdometry(const geometry_msgs::Twist &gait_vel)
+{
+    // calculate time elapsed
+    current_time_odometry_ = ros::Time::now();
+    double dt = ( current_time_odometry_ - last_time_odometry_ ).toSec();
 
-        double vth = gait_vel.angular.z;
-        double delta_th = vth * dt;
-        pose_th_ += delta_th;
+    double vth = gait_vel.angular.z;
+    double delta_th = vth * dt;
+    pose_th_ += delta_th;
 
-        double vx = gait_vel.linear.x;
-        double vy = gait_vel.linear.y;
-        double delta_x = (vx * cos(pose_th_) - vy * sin(pose_th_)) * dt;
-        double delta_y = (vx * sin(pose_th_) + vy * cos(pose_th_)) * dt;
-        pose_x_ += delta_x;
-        pose_y_ += delta_y;
+    double vx = gait_vel.linear.x;
+    double vy = gait_vel.linear.y;
+    double delta_x = ( vx * cos( pose_th_ ) - vy * sin( pose_th_ ) ) * dt;
+    double delta_y = ( vx * sin( pose_th_ ) + vy * cos( pose_th_ ) ) * dt;
+    pose_x_ += delta_x;
+    pose_y_ += delta_y;
 
-        // Integrate the initial pose received from RViz
-        if (initialPoseReceived) {
-            pose_x_ += initialPose.position.x;
-            pose_y_ += initialPose.position.y;
-            pose_th_ += tf::getYaw(initialPose.orientation);
-            initialPoseReceived = false; // Reset the flag
-        }
+    // since all odometry is 6DOF we'll need a quaternion created from yaw
+    geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw( pose_th_ );
 
-        // Since all odometry is 6DOF we'll need a quaternion created from yaw
-        geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(pose_th_);
+    // first, we'll publish the transform over tf
+    geometry_msgs::TransformStamped odom_trans;
+    odom_trans.header.stamp = current_time_odometry_;
+    odom_trans.header.frame_id = "odom";
+    odom_trans.child_frame_id = "base_link";
 
-        // Create and populate odometry message
-        nav_msgs::Odometry odom;
-        odom.header.stamp = current_time_odometry_;
-        odom.header.frame_id = "odom";
-        odom.child_frame_id = "base_link";
+    odom_trans.transform.translation.x = pose_x_;
+    odom_trans.transform.translation.y = pose_y_;
+    odom_trans.transform.translation.z = body_.position.z;
+    odom_trans.transform.rotation = odom_quat;
 
-        odom.pose.pose.position.x = pose_x_;
-        odom.pose.pose.position.y = pose_y_;
-        odom.pose.pose.position.z = body_.position.z;
-        odom.pose.pose.orientation = odom_quat;
+    // Uncomment odom_broadcaster to send the transform. Only used if debugging calculated odometry.
+    // odom_broadcaster.sendTransform( odom_trans );
 
-        // ... set covariances and velocities ...
+    // next, we'll publish the odometry message over ROS
+    nav_msgs::Odometry odom;
+    odom.header.stamp = current_time_odometry_;
+    odom.header.frame_id = "odom";
+    odom.child_frame_id = "base_link";
 
-        // Publish the odometry message
-        odom_pub_.publish(odom);
-        last_time_odometry_ = current_time_odometry_;
-    }
+    // set the position
+    odom.pose.pose.position.x = pose_x_;
+    odom.pose.pose.position.y = pose_y_;
+    odom.pose.pose.position.z = body_.position.z;
+    odom.pose.pose.orientation = odom_quat;
+
+    odom.pose.covariance[0] = 0.00001;  // x
+    odom.pose.covariance[7] = 0.00001;  // y
+    odom.pose.covariance[14] = 0.00001; // z
+    odom.pose.covariance[21] = 1000000000000.0; // rot x
+    odom.pose.covariance[28] = 1000000000000.0; // rot y
+    odom.pose.covariance[35] = 0.001; // rot z
+
+    // set the velocity
+    odom.twist.twist.linear.x = vx;
+    odom.twist.twist.linear.y = vy;
+    odom.twist.twist.angular.z = vth;
+    odom.twist.covariance = odom.pose.covariance; // needed?
+
+    odom_pub_.publish( odom );
+    last_time_odometry_ = current_time_odometry_;
+}
 
 
 //==============================================================================
