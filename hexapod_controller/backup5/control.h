@@ -4,10 +4,14 @@
 #include <cmath>
 #include <ros/ros.h>
 #include <tf2_ros/transform_broadcaster.h>
+#include <tf2/convert.h>
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf/transform_broadcaster.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <std_srvs/Empty.h>
 #include <std_msgs/Bool.h>
+#include <geometry_msgs/Quaternion.h>
 #include <geometry_msgs/Vector3.h>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/TwistWithCovarianceStamped.h>
@@ -53,11 +57,13 @@ public:
     geometry_msgs::Twist cmd_vel_;
     geometry_msgs::Twist head_Tws;
     
+    // geometry_msgs::Pose initialPose;
+    // bool initialPoseReceived;
     // nav_msgs::Odometry odomNew;
     // nav_msgs::Odometry odomOld;
     
     // Flag to see if initial pose has been received
-    bool initialPoseRecieved = false;   
+    // bool initialPoseRecieved = false;   
     
     std_msgs::Float32 msg1;
     std_msgs::Float32 msg2;
@@ -85,8 +91,11 @@ private:
     std::vector<int> servo_orientation_;
     bool hex_state_;      // Current loop state
     bool prev_hex_state_; // Previous loop state
+    bool initialPoseReceived;
+    geometry_msgs::Pose initialPose;
+    double initialYaw;
     ros::Time current_time_odometry_, last_time_odometry_, current_time_cmd_vel_, last_time_cmd_vel_;
-    // tf::TransformBroadcaster odom_broadcaster;
+    // tf2_ros::TransformBroadcaster odom_broadcaster_;
     geometry_msgs::Twist cmd_vel_incoming_;
     nav_msgs::Odometry odomNew;
     nav_msgs::Odometry odomOld;
