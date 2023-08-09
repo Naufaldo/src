@@ -1,5 +1,8 @@
 controller_frequency: 5.0
-
+NavfnROS:
+  allow_unknown: true # Specifies whether or not to allow navfn to create plans that traverse unknown space.
+  default_tolerance: 0.1 # A tolerance on the goal point for the planner.
+  
 TrajectoryPlannerROS:
   max_vel_x: 0.5 #1
   min_vel_x: 0 #-1
@@ -29,3 +32,33 @@ TrajectoryPlannerROS:
 
   xy_goal_tolerance: 0.05
   yaw_goal_tolerance: 0.05
+
+  heading_lookahead: 0.325  # How far to look ahead in meters when scoring different in-place-rotation trajectories
+  heading_scoring: false    # Whether to score based on the robot's heading to the path or its distance from the path. default false
+  heading_scoring_timestep: 0.8  # How far to look ahead in time in seconds along the simulated trajectory when using heading scoring (double, default: 0.8)
+  dwa: true # Whether to use the Dynamic Window Approach (DWA)_ or whether to use Trajectory Rollout
+  simple_attractor: false
+  publish_cost_grid_pc: true
+
+  # Oscillation Prevention Parameters
+  oscillation_reset_dist: 0.05 # How far the robot must travel in meters before oscillation flags are reset (double, default: 0.05)
+  escape_reset_dist: 0.1
+  escape_reset_theta: 0.1
+
+DWAPlannerROS:
+  # Robot configuration parameters
+
+  max_vel_x: 0.5
+  min_vel_x: 0.0
+  max_vel_y: 0.5
+  min_vel_y: 0.0
+
+  # max_trans_vel: 0.092
+  # min_trans_vel: 0.1
+  # max_rot_vel: 0.33
+  # min_rot_vel: 0.01
+
+  # Goal Tolerance Parameters
+  yaw_goal_tolerance: 0.05
+  xy_goal_tolerance: 0.01
+  latch_xy_goal_tolerance: false
