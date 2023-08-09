@@ -10,7 +10,7 @@ local_costmap:
   static_map: false
   rolling_window: true
   resolution: 0.050 #0.1 #0.025
-  inflation_radius: 0.08 #0.55 #0.20
+  inflation_radius: 0.04 #0.55 #0.20
   width: 2.5 #0.1 #2.5
   height: 2.5 #0.1 #2.5
 
