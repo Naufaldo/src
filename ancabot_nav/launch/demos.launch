@@ -54,7 +54,7 @@
     <rosparam file="$(find ancabot_nav)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find ancabot_nav)/param/local_costmap_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find ancabot_nav)/param/global_costmap2_params.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find ancabot_nav)/param/base_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find ancabot_nav)/param/base_local_planner_params2.yaml" command="load" />
   </node>
 
 </launch>
