@@ -5,10 +5,10 @@ from sensor_msgs.msg import LaserScan
 
 def callback(msg):
     # Extract the distance at specific angles in centimeters
-    S_0 = msg.ranges[0] 
-    S_90 = msg.ranges[90] 
-    S_180 = msg.ranges[180] 
-    S_270 = msg.ranges[270] 
+    S_0 = msg.ranges[0] *100
+    S_90 = msg.ranges[90] *100
+    S_180 = msg.ranges[180] *100
+    S_270 = msg.ranges[270] *100
 
     # Print the distances at specified angles
     print('Distance at 0/360 degrees:', S_0, 'cm')
