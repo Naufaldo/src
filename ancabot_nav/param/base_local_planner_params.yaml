@@ -15,13 +15,13 @@ TrajectoryPlannerROS:
   # acc_lim_x: 0.25
   # acc_lim_Y: 0.25
 
-  # Forward Simulation Parameters
-  sim_time: 2.0
-  sim_granularity: 0.02
-  angular_sim_granularity: 0.02
-  vx_samples: 6
-  vtheta_samples: 20
-  controller_frequency: 20.0
+  # # Forward Simulation Parameters
+  # sim_time: 2.0
+  # sim_granularity: 0.02
+  # angular_sim_granularity: 0.02
+  # vx_samples: 6
+  # vtheta_samples: 20
+  # controller_frequency: 20.0
 
   holonomic_robot: true
 
