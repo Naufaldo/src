@@ -4,19 +4,17 @@ import rospy
 from sensor_msgs.msg import LaserScan
 
 def callback(msg):
-    print('0:', msg.ranges[0])
-    print('90:', msg.ranges[90])
-    print('180:', msg.ranges[180])
-    print('270:', msg.ranges[270])
-    print('360:', msg.ranges[360])
-    print('450:', msg.ranges[450])
-    print('540:', msg.ranges[540])
-    print('630:', msg.ranges[630])
-    print('720:', msg.ranges[720])
-    print('810:', msg.ranges[810])
-    print('900:', msg.ranges[900])
-    print('990:', msg.ranges[990])
+    # Extract the distance at specific angles in centimeters
+    S_0 = int(msg.ranges[0] * 100)
+    S_90 = int(msg.ranges[90] * 100)
+    S_180 = int(msg.ranges[180] * 100)
+    S_270 = int(msg.ranges[270] * 100)
 
+    # Print the distances at specified angles
+    print('Distance at 0/360 degrees:', S_0, 'cm')
+    print('Distance at 90 degrees:', S_90, 'cm')
+    print('Distance at 180 degrees:', S_180, 'cm')
+    print('Distance at 270 degrees:', S_270, 'cm')
 
 rospy.init_node('data_lidar')
 sub = rospy.Subscriber('/scan', LaserScan, callback)
