@@ -35,7 +35,7 @@
 
 
   <!-- Map File -->
-  <arg name="map_file" default="$(find ancabot_nav)/maps/dcs.yaml"/>
+  <arg name="map_file" default="$(find ancabot_nav)/maps/dcs2.yaml"/>
 	
   <!-- Map Server -->
   <!-- Publish: /map, /map_metadata -->
