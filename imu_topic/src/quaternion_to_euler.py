@@ -8,7 +8,7 @@ from tf.transformations import euler_from_quaternion
 class ImuToEulerConverter:
     def __init__(self):
         rospy.init_node('imu_to_euler_converter_node')
-        self.imu_sub = rospy.Subscriber('/imu_topic', Imu, self.imu_callback)
+        self.imu_sub = rospy.Subscriber('/imu/data', Imu, self.imu_callback)
         self.euler_pub = rospy.Publisher('/euler_topic', PoseStamped, queue_size=10)
 
     def imu_callback(self, msg):
