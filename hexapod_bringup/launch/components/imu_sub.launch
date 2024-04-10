@@ -5,7 +5,7 @@
         <arg name="type" default="normal" doc="type [normal, modbus]"/>
     <!-- imu python -->
     <node pkg="imu_topic" type="wit_$(arg type)_ros.py" name="imu" output="screen">
-        <param name="port"               type = "str"    value="/dev/ttyUSB1"/>
+        <param name="port"               type = "str"    value="/dev/imu_usb"/>
         <param name="baud"               type = "int"    value="9600"/>
     </node>
 </launch>
