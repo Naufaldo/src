@@ -4,6 +4,7 @@ import rospy
 from sensor_msgs.msg import Imu
 from geometry_msgs.msg import PoseStamped
 from tf.transformations import euler_from_quaternion
+import math
 
 class ImuToEulerConverter:
     def __init__(self):
@@ -15,6 +16,14 @@ class ImuToEulerConverter:
         # Convert quaternion to Euler angles
         quat = (msg.orientation.x, msg.orientation.y, msg.orientation.z, msg.orientation.w)
         roll, pitch, yaw = euler_from_quaternion(quat)
+
+        # Convert angles to degrees
+        roll_deg = math.degrees(roll)
+        pitch_deg = math.degrees(pitch)
+        yaw_deg = math.degrees(yaw)
+
+        # Print Euler angles in degrees
+        rospy.loginfo("Roll: {:.2f} deg, Pitch: {:.2f} deg, Yaw: {:.2f} deg".format(roll_deg, pitch_deg, yaw_deg))
 
         # Create Euler angle message
         euler_msg = PoseStamped()
