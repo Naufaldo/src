@@ -111,7 +111,6 @@ catkin_package(
 #  LIBRARIES imu_topic
 #  CATKIN_DEPENDS roscpp rospy sensor_msgs std_msgs
 #  DEPENDS system_lib
-  rospy sensor_msgs geometry_msgs tf2 tf2_geometry_msgs
 )
 
 ###########
