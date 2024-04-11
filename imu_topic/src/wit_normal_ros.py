@@ -114,7 +114,10 @@ if __name__ == "__main__":
     python_version = platform.python_version()[0]
 
     rospy.init_node("imu")
-    port = rospy.get_param("~port", "/dev/ttyUSB0")
+
+    device_port = "/dev/ttyUSB0"
+
+    port = rospy.get_param("~port", device_port)
     baudrate = rospy.get_param("~baud", 9600)
     print("IMU Type: Normal Port:%s baud:%d" %(port,baudrate))
     imu_msg = Imu()
