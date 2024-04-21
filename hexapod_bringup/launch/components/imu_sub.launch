@@ -5,8 +5,9 @@
         <arg name="type" default="normal" doc="type [normal, modbus]"/>
         <arg name="port_value" default="/dev/ttyUSB0" doc="Device port value"/>
     <!-- imu python -->
-    <node pkg="imu_topic" type="wit_$(arg type)_ros.py" name="imu" output="screen">
+    <node pkg="imu_topic" type="wit_$(arg type)_ros.py" name="imu">
         <param name="port"               type = "str"    value="$(arg port_value)"/>
         <param name="baud"               type = "int"    value="9600"/>
     </node>
+    <node name="euler_topic" pkg="imu_topic" type="quaternion_to_euler.py" output="screen"/>
 </launch>
