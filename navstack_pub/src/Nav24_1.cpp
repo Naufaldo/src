@@ -257,6 +257,7 @@ void avoidance(){
 }
 
 bool pilih;
+bool diffOrient;
 void kontrol(char arah_, int step_){
   if (isAvoidanceActive) {
     return;
