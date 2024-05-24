@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Launch File to Start Robot Automatic Navigation (1) -->
+
+<launch>
+    <include file="$(find hexapod_bringup)/launch/components/imu_launch.launch" /> 
+    <node name="navigation_1" pkg="navigation" type="nav24_1"/>
+</launch> 
