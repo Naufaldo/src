@@ -2,5 +2,5 @@
 <!-- depth sensor and laser scan launch file -->
 
 <launch>
-  <node name="sensor_node" pkg="sensors" type="rostof.py"/>
+  <node name="sensor_node" pkg="sensors" type="rostof_OLED_Checked.py"/>
 </launch>

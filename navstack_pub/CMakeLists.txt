@@ -273,3 +273,6 @@ target_link_libraries(Gerakan8 ${catkin_LIBRARIES})
 
 add_executable(Gerakan9 src/Gerakan9.cpp)
 target_link_libraries(Gerakan9 ${catkin_LIBRARIES})
+
+add_executable(Nav24_1 src/Nav24_1.cpp)
+target_link_libraries(Nav24_1 ${catkin_LIBRARIES})

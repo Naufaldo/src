@@ -9,5 +9,5 @@
         <param name="port"               type = "str"    value="$(arg port_value)"/>
         <param name="baud"               type = "int"    value="9600"/>
     </node>
-    <node name="euler_topic" pkg="imu_topic" type="quaternion_to_euler.py" output="screen"/>
+    <node name="euler_topic" pkg="imu_topic" type="quaternion_to_euler.py"/>
 </launch>
