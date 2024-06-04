@@ -1,7 +1,5 @@
 # ROS Ancabot Stack
 
-https://rdzryan.github.io/src/
-
 ## 1. Dependencies
 
 ```
@@ -147,3 +145,34 @@ roslaunch hexapod_bringup hexapod_simple.launch
 ```
 Hector Slam Rqt Graph
 ![rqt grpah](documents/graph/rosgraph_map_2.png)
+
+## Research Paper
+
+**Title**: Autonomous navigation system for hexa-legged search and rescue robot using LiDAR
+
+**Published in**: IAES International Journal of Robotics and Automation (IJRA), March 2024, Volume 13, Issue 1, Pages 50-64
+
+**DOI**: [10.11591/ijra.v13i1.pp50-64](https://doi.org/10.11591/ijra.v13i1.pp50-64)
+
+**Authors**: Aris Budiyarto, Sarosa Castrena Abadi, Naufaldo
+
+**License**: CC BY-SA 4.0
+
+## Gazebo Simulation
+This is to do simulation with Gazebo and then tried using ROS Melodic , but still need to create the inverse Kinematic and the gait
+![Gazebo_simulation](documents/gazebo.png)
+to do run this launch : 
+```
+roslaunch hexapod_gazebo hexapod_gazebo2.launch 
+```
+then in the new tab terminal run this program :
+```
+rosrun hexapod_bringup gazebo_test.py 
+```
+if you can't do rosrun pls do chmod +X gazebo_test.py first in the hexapod_bringup/src
+
+then you can do control each joint and also dont forget to install 
+```
+sudo apt-get update
+sudo apt-get install ros-melodic-effort-controllers ros-melodic-joint-state-controller ros-melodic-controller-manager
+```
