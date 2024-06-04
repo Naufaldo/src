@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Controller launch file -->
+
+<launch>
+    <node name="Gazebo_Controller" pkg="hexapod_controller" type="gazebo_controller" />
+    <!--<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />-->
+    <!-- To robot_state_publisher -->
+   <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> -->
+</launch>
+

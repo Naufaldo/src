@@ -31,7 +31,17 @@ add_executable( hexapod_controller src/hexapod_controller.cpp )
 target_link_libraries( hexapod_controller ${catkin_LIBRARIES} control gait ik servo_driver )
 add_dependencies( hexapod_controller hexapod_msgs_generate_messages_cpp )
 
+add_executable( gazebo_controller src/gazebo_controller.cpp )
+target_link_libraries( gazebo_controller ${catkin_LIBRARIES} control gait ik servo_driver )
+add_dependencies( gazebo_controller hexapod_msgs_generate_messages_cpp )
+
 install(TARGETS hexapod_controller
+   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+install(TARGETS gazebo_controller
    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
